@@ -1,0 +1,10 @@
+**/tests/fixtures/**/*
+**/dist
+**/coverage
+**/shared-fixtures
+**/tests/integration/fixtures/**/*
+**/.vscode
+**/.nyc_output
+packages/eslint-plugin-tslint/tests/test-tslint-rules-directory/alwaysFailRule.js
+.github
+packages/eslint-plugin/src/configs/*.json
