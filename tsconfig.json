@@ -17,7 +17,7 @@
 		"noImplicitAny": true,
 		"noImplicitReturns": true,
 		"noEmit": true,
-		"jsx": "preserve",
+		"jsx": "react",
 		"types": ["node", "jest"]
 	},
 	"include": ["src/**/*"],

@@ -1,0 +1,30 @@
+.custom-scrollbar {
+	/* width */
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	/* Track */
+	&::-webkit-scrollbar-track {
+		border-radius: none;
+		background: var(--color-gray1);
+		transition: background 128ms var(--default-timing-function);
+
+		/* Handle on hover */
+		&:hover {
+			background: var(--color-gray2);
+		}
+	}
+
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+		background: $color-gray3;
+		border-radius: 4px;
+		transition: background 128ms var(--default-timing-function);
+
+		/* Handle on hover */
+		&:hover {
+			background: $color-gray4;
+		}
+	}
+}

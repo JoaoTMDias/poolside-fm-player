@@ -39,6 +39,7 @@
 		"cross-env": "^6.0.3",
 		"enzyme": "^3.10.0",
 		"enzyme-adapter-react-16": "^1.15.1",
+		"enzyme-to-json": "^3.4.2",
 		"eslint-config-airbnb": "^18.0.1",
 		"eslint-config-prettier": "^6.4.0",
 		"eslint-import-resolver-typescript": "^2.0.0",
@@ -59,7 +60,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"test": "react-scripts test",
+		"test": "react-scripts test --coverage",
 		"test:watch": "jest --watch",
 		"eject": "react-scripts eject",
 		"format:fix": "prettier --write 'src/**/*.{ts,tsx}'",

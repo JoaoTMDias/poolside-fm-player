@@ -1,0 +1,99 @@
+//  Global Variables
+//  -----------------------------
+$golden-ratio: 1.61803398875;
+$ratio: $golden-ratio;
+$base-sizing: 16;
+$viewport-unit: 1vh;
+// 1. Global
+// ---------
+$global-base-sizing: rem-calc(16);
+$global-font-size: rem-calc(16);
+$global-width: rem-calc(1200);
+$global-lineheight: $ratio;
+$global-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.2),
+	0 -1px 0 0 hsla(0, 0%, 0%, 0.02);
+
+// A2P Dashboard Base colors Colors
+$color-primary: hsl(360, 100%, 89%);
+$color-primary-dark: hsl(360, 49%, 81%);
+$color-primary-darker: hsl(360, 29%, 71%);
+$color-success: hsl(120, 51%, 81%);
+$color-warning: hsl(60, 100%, 89%);
+$color-alert: hsl(29, 100%, 50%);
+$color-cta: $color-primary-dark;
+$color-white: #faf9f9;
+$color-gray0: #f0ecec;
+$color-gray1: #e5dfdf;
+$color-gray2: #d7d1d1;
+$color-gray3: #c7c2c2;
+$color-gray4: #b6b1b1;
+$color-gray5: #a39e9e;
+$color-gray6: #8b8888;
+$color-gray7: #6e6b6b;
+$color-gray8: #403e3e;
+$color-black: hsl(0, 2%, 12%);
+$body-background: $color-primary;
+$body-font-color: $color-black;
+$heading-font-family: "poolside-headings", -apple-system, BlinkMacSystemFont,
+	"Open Sans", "Roboto", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+	"Helvetica Neue", sans-serif;
+$body-font-family: "poolside-body", -apple-system, BlinkMacSystemFont,
+	"Open Sans", "Roboto", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+	"Helvetica Neue", sans-serif;
+$body-antialiased: true;
+$base-sizing: 16;
+$global-margin: 1rem;
+$global-padding: 1rem;
+$global-position: 1rem;
+$global-weight-normal: normal;
+$global-weight-bold: bold;
+$global-radius: 0.25rem;
+$global-menu-padding: 0.7rem 1rem;
+$global-menu-nested-margin: 1rem;
+$global-text-direction: ltr;
+$global-flexbox: true;
+$global-prototype-breakpoints: false;
+$global-button-cursor: auto;
+$global-color-pick-contrast-tolerance: 0;
+$print-transparent-backgrounds: true;
+
+// 3. Base Typography
+// ------------------
+$header-height: 1.5rem;
+$header-font-weight: $global-weight-normal;
+$header-font-style: normal;
+$header-color: inherit;
+$header-lineheight: $ratio;
+$header-margin-bottom: 0;
+$anchor-color: $color-primary;
+$anchor-color-hover: scale-color($anchor-color, $lightness: -14%);
+$anchor-text-decoration: none;
+$anchor-text-decoration-hover: none;
+
+// 8. Easings
+// -----------
+$ease-in-sine: cubic-bezier(0.47, 0, 0.745, 0.715);
+$ease-out-sine: cubic-bezier(0.39, 0.575, 0.565, 1);
+$ease-in-out-sine: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+$ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+$ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+$ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+$ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+$ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
+$ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+$ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+$ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+$ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+$ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+$ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+$ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+$ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+$ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
+$ease-in-back: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+$ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$default-timing-function: $ease-in-out-quint;

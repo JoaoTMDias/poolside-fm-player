@@ -1,0 +1,3 @@
+@mixin responsive-typography($heading-breakpoint: large, $heading-size: h1) {
+	font-size: rem-calc(map-deep-get($header-styles, $heading-breakpoint, $heading-size, font-size));
+}

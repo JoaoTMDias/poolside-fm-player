@@ -1,0 +1,32 @@
+@font-face {
+	font-family: "poolside-headings";
+	src: url("./../../../fonts/poolside-headings.woff2") format("woff2"),
+		url("./../../../fonts/poolside-headings.woff") format("woff"),
+		url("./../../../fonts/poolside-headings.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	unicode-range: U+000-5FF;
+}
+
+@font-face {
+	font-family: "poolside-body";
+	src: url("./../../../fonts/poolside-body.woff2") format("woff2"),
+		url("./../../../fonts/poolside-body.woff") format("woff"),
+		url("./../../../fonts/poolside-body.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	unicode-range: U+000-5FF;
+}
+
+@font-face {
+	font-family: "poolside-media";
+	src: url("./../../../fonts/poolside-media.woff2") format("woff2"),
+		url("./../../../fonts/poolside-media.woff") format("woff"),
+		url("./../../../fonts/poolside-media.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	unicode-range: U+000-5FF;
+}

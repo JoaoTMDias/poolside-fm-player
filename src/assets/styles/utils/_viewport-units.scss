@@ -1,0 +1,22 @@
+$vw-viewport: 288;
+$vh-viewport: 276;
+$vw-enable: true;
+$vh-enable: true;
+
+@function get-vw($value) {
+	@if $vw-enable {
+		$vw-context: $vw-viewport * 0.01 * 1px;
+		@return $value / $vw-context * 1vw;
+	}
+
+	@return $font;
+}
+
+@function get-vh($value) {
+	@if $vh-enable {
+		$vh-context: $vh-viewport * 0.01 * 1px;
+		@return $value / $vh-context * 1vh;
+	}
+
+	@return $value;
+}

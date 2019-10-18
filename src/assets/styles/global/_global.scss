@@ -1,0 +1,493 @@
+@include css-vars(
+	(
+		--anchor-color: $anchor-color,
+		--anchor-color-hover: $anchor-color-hover,
+		--anchor-color-decoration: $anchor-text-decoration,
+		--anchor-color-decoration-hover: $anchor-text-decoration-hover,
+		--anchor-text-decoration: $anchor-text-decoration,
+		--body-antialiased: $body-antialiased,
+		--body-background: $body-background,
+		--body-font-color: $body-font-color,
+		--body-font-family: $body-font-family,
+		--color-primary: $color-primary,
+		--color-primary-dark: $color-primary-dark,
+		--color-primary-darker: $color-primary-darker,
+		--color-success: $color-success,
+		--color-warning: $color-warning,
+		--color-alert: $color-alert,
+		--color-caret: $color-primary,
+		--color-white: $color-white,
+		--color-gray0: $color-gray0,
+		--color-gray1: $color-gray1,
+		--color-gray2: $color-gray2,
+		--color-gray3: $color-gray3,
+		--color-gray4: $color-gray4,
+		--color-gray5: $color-gray5,
+		--color-gray6: $color-gray6,
+		--color-gray7: $color-gray7,
+		--color-gray8: $color-gray8,
+		--color-black: $color-black,
+		--default-timing-function: $default-timing-function,
+		--global-font-size: $global-font-size,
+		--global-lineheight: $ratio,
+		--global-margin: rem-calc(16),
+		--global-padding: rem-calc(16),
+		--global-radius: $global-radius,
+		--global-shadow: $global-shadow,
+		--global-weight-bold: $global-weight-bold,
+		--global-weight-normal: $global-weight-normal,
+		--global-width: $global-width,
+		--global-base-sizing: $global-base-sizing,
+		--header-height: $header-height,
+		--viewport-height-unit: $viewport-unit,
+		--viewport-height: calc(var(--viewport-height-unit, 1vh) * 100),
+		--heading-font-family: $heading-font-family,
+		--heading-1: rem-calc(28),
+		--heading-2: rem-calc(26),
+		--heading-3: rem-calc(24),
+		--heading-4: rem-calc(20),
+		--heading-5: rem-calc(18),
+		--heading-6: rem-calc(16),
+		--body-font-size: rem-calc(16),
+		--label-font-size: rem-calc(13),
+		--small-font-size: var(--label-font-size),
+		--options-panel-width: rem-calc(375),
+		--default-outline: 1px dotted var(--color-gray8),
+	)
+);
+
+html {
+	box-sizing: border-box;
+	font-family: var(--body-font-family, $body-font-family);
+	font-size: 16px;
+	line-height: var(--global-lineheight, $ratio);
+	height: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	-ms-overflow-style: scrollbar;
+	-webkit-tap-highlight-color: hsla(0, 0%, 0%, 0);
+	-webkit-font-smoothing: none;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit; // 1
+}
+
+*:focus {
+	outline: var(--default-outline);
+}
+
+.js-focus-visible :focus:not(.focus-visible) {
+	outline: none;
+}
+
+// IE10+ doesn't honor `<meta name="viewport">` in some cases.
+@at-root {
+	@-ms-viewport {
+		width: device-width;
+	}
+}
+
+// Shim for "new" HTML5 structural elements to display correctly (IE10, older browsers)
+article,
+aside,
+dialog,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+	display: block;
+}
+
+// Body
+//
+// 1. Remove the margin in all browsers.
+// 2. As a best practice, apply a default `background-color`.
+
+#window,
+.root__inner,
+body,
+#root {
+	background-color: transparent;
+	height: 100%;
+	max-height: var(--viewport-height, 100vh);
+	width: 100%;
+	z-index: 1;
+}
+
+.app,
+body,
+#root {
+	overflow-y: hidden;
+}
+
+body {
+	margin: 0; // 1
+	font-family: var(--body-font-family, $body-font-family);
+	font-size: var(--global-font-size, $global-font-size);
+	font-weight: var(--global-weight-normal, $global-weight-normal);
+	line-height: var(--global-lineheight, $ratio);
+	color: var(--color-black, $color-black);
+	background-color: var(--body-background, $body-background);
+	flex-grow: 1;
+}
+
+#window {
+	display: grid;
+	grid-template-rows: rem-calc(24) 1fr;
+	grid-gap: 0;
+}
+
+// Suppress the focus outline on elements that cannot be accessed via keyboard.
+// This prevents an unwanted focus outline from appearing around elements that
+// might still respond to pointer events.
+//
+// Credit: https://github.com/suitcss/base
+[tabindex="-1"]:focus {
+	outline: none !important;
+}
+
+// Content grouping
+//
+// 1. Add the correct box sizing in Firefox.
+// 2. Show the overflow in Edge and IE.
+hr {
+	box-sizing: content-box; // 1
+	height: 0; // 1
+	overflow: visible; // 2
+}
+
+//
+// Typography
+//
+// Remove top margins from headings
+//
+// By default, `<h1>`-`<h6>` all receive top and bottom margins. We nuke the top
+// margin for easier control within type scales as it avoids margin collapsing.
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-family: var(--heading-font-family, $heading-font-family);
+}
+
+// Reset margins on paragraphs
+//
+// Similarly, the top margin on `<p>`s get reset. However, we also reset the
+// bottom margin to use `rem` units instead of `em`.
+p {
+	margin-top: 0;
+	margin-bottom: var(--global-margin, $global-margin);
+	font-family: var(--body-font-family, $body-font-family);
+	font-size: var(--global-font-size, $global-font-size);
+	font-weight: 400;
+}
+
+ol,
+ul,
+dl {
+	margin-top: 0;
+	margin-bottom: var(--global-margin, $global-margin);
+}
+
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+	margin-bottom: 0;
+}
+
+b,
+strong {
+	font-weight: bolder; // Add the correct font weight in Chrome, Edge, and Safari
+}
+
+small {
+	font-size: rem-calc(13);
+}
+
+//
+// Links
+//
+a,
+.as-link,
+.as-anchor {
+	color: var(--anchor-color, $anchor-color);
+	text-decoration: var(--anchor-text-decoration, $anchor-text-decoration);
+	background-color: transparent; // Remove the gray background on active links in IE 10.
+	-webkit-text-decoration-skip: objects; // Remove gaps in links underline in iOS 8+ and Safari 8+.
+	font-size: var(--global-font-size, $global-font-size);
+
+	&:hover {
+		color: var(--anchor-color-hover, $anchor-color-hover);
+		text-decoration: var(
+			--anchor-text-decoration-hover,
+			$anchor-text-decoration-hover
+		);
+	}
+}
+
+// And undo these styles for placeholder links/named anchors (without href)
+// which have not been made explicitly keyboard-focusable (without tabindex).
+// It would be more straightforward to just use a[href] in previous block, but that
+// causes specificity issues in many other styles that are too complex to fix.
+// See https://github.com/twbs/bootstrap/issues/19402
+a:not([href]):not([tabindex]) {
+	color: inherit;
+	text-decoration: none;
+
+	&:hover,
+	&:focus {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	&:focus {
+		outline: 0;
+	}
+}
+//
+// Figures
+//
+figure {
+	// Apply a consistent margin strategy (matches our type styles).
+	margin: 0;
+}
+
+svg:not(:root) {
+	overflow: hidden; // Hide the overflow in IE
+}
+
+img,
+video {
+	vertical-align: middle;
+	border-style: none;
+	image-rendering: pixelated;
+}
+
+a,
+button,
+[role="button"],
+select {
+	cursor: pointer; // default for showing interactivity
+}
+
+a,
+area,
+button,
+[role="button"],
+input,
+label,
+select,
+summary,
+textarea {
+	touch-action: manipulation;
+
+	&.disabled,
+	&::disabled,
+	&[data-disabled],
+	&[disabled] {
+		cursor: not-allowed;
+		user-select: none;
+		pointer-events: none;
+		filter: brightness(50%);
+	}
+}
+
+//
+// Forms
+//
+label {
+	// Allow labels to use `margin` for spacing.
+	display: inline-block;
+	margin-bottom: 0.25rem;
+}
+
+// Work around a Firefox/IE bug where the transparent `button` background
+// results in a loss of the default `button` focus styles.
+//
+// Credit: https://github.com/suitcss/base/
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+	font-family: inherit;
+	/* 1 */
+	font-size: var(--global-font-size, $global-font-size);
+	/* 1 */
+	line-height: 1.15;
+	/* 1 */
+	margin: 0;
+	/* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input {
+	/* 1 */
+	overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select {
+	/* 1 */
+	text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+	-webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+	border-style: none;
+	padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+// button:-moz-focusring,
+// [type='button']:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+	outline: 1px solid ButtonText;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+
+[type="checkbox"],
+[type="radio"] {
+	box-sizing: border-box;
+	/* 1 */
+	padding: 0;
+	/* 2 */
+}
+
+fieldset {
+	// Browsers set a default `min-width: min-content;` on fieldsets,
+	// unlike e.g. `<div>`s, which have `min-width: 0;` by default.
+	// So we reset that to ensure fieldsets behave more like a standard block element.
+	// See https://github.com/twbs/bootstrap/issues/12359
+	// and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements
+	min-width: 0; // Reset the default outline behavior of fieldsets so they don't affect page layout.
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+progress {
+	vertical-align: baseline; // Add the correct vertical alignment in Chrome, Firefox, and Opera.
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+	height: auto;
+}
+
+// Always hide an element with the `hidden` HTML attribute (from PureCSS).
+// Needed for proper display in IE 10-.
+[hidden] {
+	display: none !important;
+}
+
+::-moz-selection,
+::selection {
+	color: var(--color-primary, $color-primary);
+	background: var(--color-black, $color-black);
+}
+
+.no-javascript {
+	display: flex;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+	color: var(--color-white, $color-white);
+	background-color: var(--color-primary, $color-primary);
+	background-size: 40px 40px;
+	background-repeat: repeat;
+	text-align: center;
+	z-index: 999;
+}
+
+.show-for-screen-readers,
+.sr-only,
+.visually-hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: auto;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	white-space: nowrap;
+}
+
+@keyframes open {
+	0% {
+		transform: translate3d(rem-calc(375), 0, 0);
+	}
+	100% {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes close {
+	100% {
+		transform: translate3d(rem-calc(375), 0, 0);
+	}
+	0% {
+		transform: translate3d(0, 0, 0);
+	}
+}
