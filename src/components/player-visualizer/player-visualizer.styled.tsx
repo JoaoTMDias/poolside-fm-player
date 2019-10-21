@@ -26,7 +26,7 @@ export const PlayerVisualizerWrapper = styled.figure`
 		top: 0;
 		left: 0;
 		content: "";
-		z-index: 5;
+		z-index: 1;
 		display: block;
 	}
 
