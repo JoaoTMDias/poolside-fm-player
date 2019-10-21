@@ -11,13 +11,35 @@ export const PlayerVisualizerWrapper = styled.figure`
 	background-color: var(--color-black);
 	margin: 0;
 	padding: 0;
+	position: relative;
+	overflow: hidden;
 
-	.player-visualizer {
-		&__image {
-			width: 100%;
-			height: 100%;
-			background-color: var(--color-black);
+	&::after {
+		background-color: var(--color-black);
+		width: 100%;
+		height: 100%;
+		transform: translateY(-0.25rem);
+		transition-property: transform;
+		transition-duration: 500ms;
+		transition-timing-function: linear;
+		position: absolute;
+		top: 0;
+		left: 0;
+		content: "";
+		z-index: 5;
+		display: block;
+	}
+
+	&.player-visualizer--is-playing {
+		&::after {
+			transform: translateY(2.5rem);
 		}
+	}
+
+	.player-visualizer__image {
+		width: 100%;
+		height: 100%;
+		background-color: var(--color-black);
 	}
 `;
 

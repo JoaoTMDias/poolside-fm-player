@@ -52,6 +52,10 @@ export const SelectWrapper = styled.div`
 
 			box-shadow: 0 1px 0 var(--color-black);
 
+			&:active {
+				background-color: var(--color-primary-dark);
+			}
+
 			&:after {
 				position: absolute;
 				right: calc(var(--global-margin) * 0.25);
