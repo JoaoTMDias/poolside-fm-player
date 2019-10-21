@@ -15,7 +15,7 @@ interface ITopBarProps {
  */
 const TopBar: React.FunctionComponent<ITopBarProps> = props => {
 	return (
-		<S.Wrapper>
+		<S.Wrapper id="top-bar" className="row">
 			<button className="top-bar__button" type="button">
 				<span className="sr-only">Close this window</span>
 			</button>

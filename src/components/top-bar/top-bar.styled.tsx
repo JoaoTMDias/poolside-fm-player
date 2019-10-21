@@ -15,7 +15,6 @@ export const Wrapper = styled.header`
 	grid-template-columns: ${rem("14px")} 1fr ${rem("82px")};
 	align-items: center;
 	margin: 0;
-	padding: 0 ${rem("8px")};
 	border-top: 1px solid var(--color-white);
 	text-align: right;
 

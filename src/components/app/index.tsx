@@ -1,6 +1,6 @@
 // Libraries
 import * as React from "react";
-import { TopBar, PlayerVisualizer } from "../index.components";
+import { TopBar, PlayerVisualizer, Select } from "../index.components";
 
 /**
  * @description AppComponent
@@ -13,8 +13,40 @@ const App: React.FunctionComponent = () => {
 		<div id="app" className="root__inner">
 			<div id="window" className="window">
 				<TopBar />
-				<main id="main-content" className="window__main">
+				<main id="main-content" className="window__main row">
 					<PlayerVisualizer />
+					<Select
+						id="channel"
+						label="Channel:"
+						placeholder="Choose a radio channel"
+						options={[
+							{
+								id: "poolside-fm",
+								label: "Poolside FM (default)",
+								value: "poolside-fm",
+							},
+							{
+								id: "indie-summer",
+								label: "Indie Summer",
+								value: "indie-summer",
+							},
+							{
+								id: "hangover-club",
+								label: "Hangover Club",
+								value: "hangover-club",
+							},
+							{
+								id: "tokyo-disco",
+								label: "Tokyo Disco",
+								value: "tokyo-disco",
+							},
+							{
+								id: "friday-nite-heat",
+								label: "Friday Nite Heat",
+								value: "friday-nite-heat",
+							},
+						]}
+					/>
 				</main>
 			</div>
 		</div>
