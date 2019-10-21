@@ -41,20 +41,12 @@ module.exports = {
 		"import/no-extraneous-dependencies": [
 			"error",
 			{
-				devDependencies: [
-					"**/*.test.js",
-					"**/*.spec.js",
-					"**/*.stories.tsx",
-					"**/*.stories.jsx",
-				],
+				devDependencies: ["**/*.test.js", "**/*.spec.js", "**/*.stories.tsx", "**/*.stories.jsx"],
 			},
 		],
 		"comma-dangle": [1, "always-multiline"],
 
-		"no-param-reassign": [
-			"error",
-			{ ignorePropertyModificationsFor: ["draftState", "draft"] },
-		],
+		"no-param-reassign": ["error", { ignorePropertyModificationsFor: ["draftState", "draft"] }],
 		"class-methods-use-this": "off",
 		"require-jsdoc": 2,
 		"lines-around-comment": [
@@ -131,5 +123,7 @@ module.exports = {
 		// https://eslint.org/docs/rules/no-duplicate-imports
 		// replaced by https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-duplicates.md
 		"no-duplicate-imports": "off",
+
+		"react/static-property-placement": "off",
 	},
 };

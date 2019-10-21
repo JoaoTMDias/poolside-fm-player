@@ -5,6 +5,6 @@
  * @since 1.0.0
  */
 module.exports = {
-	extends: ['plugin:prettier/recommended'],
-	plugins: ['prettier'],
+	extends: ["plugin:prettier/recommended"],
+	plugins: ["prettier"],
 };

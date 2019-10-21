@@ -7,13 +7,13 @@
 
 module.exports = {
 	rules: {
-		'jsx-a11y/href-no-hash': 'off',
-		'jsx-a11y/anchor-is-valid': [
-			'warn',
+		"jsx-a11y/href-no-hash": "off",
+		"jsx-a11y/anchor-is-valid": [
+			"warn",
 			{
-				aspects: ['invalidHref'],
+				aspects: ["invalidHref"],
 			},
 		],
-		'jsx-a11y/label-has-for': 0,
+		"jsx-a11y/label-has-for": 0,
 	},
 };
