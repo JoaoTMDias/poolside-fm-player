@@ -1,30 +1,56 @@
 .custom-scrollbar {
-	/* width */
 	&::-webkit-scrollbar {
-		width: 4px;
+		width: var(--global-size);
 	}
 
-	/* Track */
+	&::-webkit-scrollbar-button {
+		width: 0;
+		height: 0;
+	}
+
+	&::-webkit-scrollbar,
+	&::-webkit-scrollbar-thumb,
 	&::-webkit-scrollbar-track {
-		border-radius: none;
-		background: var(--color-gray1);
-		transition: background 128ms var(--default-timing-function);
+		background-color: var(--color-gray0);
+		border-radius: 0;
+		border: 1px solid var(--color-black);
+		border-right-width: 0;
 
-		/* Handle on hover */
-		&:hover {
-			background: var(--color-gray2);
+		&:hover,
+		&:active {
+			cursor: pointer;
 		}
 	}
 
-	/* Handle */
 	&::-webkit-scrollbar-thumb {
-		background: $color-gray3;
-		border-radius: 4px;
-		transition: background 128ms var(--default-timing-function);
+		background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='14' height='14' fill='transparent'/%3E%3Cline x1='2' y1='5.5' x2='12' y2='5.5' stroke='black'/%3E%3Cline x1='2' y1='8.5' x2='12' y2='8.5' stroke='black'/%3E%3C/svg%3E%0A");
+		background-size: 14px 14px;
+		background-repeat: no-repeat;
+		background-position: 1px calc(50% - 1px);
 
-		/* Handle on hover */
 		&:hover {
-			background: $color-gray4;
+			background-color: var(--color-gray2);
 		}
+
+		&:active {
+			background-color: var(--color-gray4);
+		}
+	}
+
+	&::-webkit-scrollbar-track {
+		box-shadow: none;
+		border-top-width: 0;
+		border-bottom-width: 0;
+
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARYAAAAKAQMAAABL4ONYAAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMA32D/An0AAAC0SURBVBjTXcYxboRADEDR75ELK5VBOYBBHMSsiLR7Ky+aghLlxGln86qHtNYoFsPOpqqCDufhOM8I9xljzrgzI7aPO1vBZbtwn15i4n42ieGLLsDKGwulxcUhDU/7uO6Ouc7Zl+3S2Dxse9s+/PFyS6onCgQiYoX9ewKORE3+bKta0HbWGH/rYeyTN+9JVca5hi7Wh5cIhYITX7PZhEGQ8/DvzT3wY+0vqoKucf3YrzBcSLE/lKQuSiByDCcAAAAASUVORK5CYII=);
+
+		&:hover,
+		&:active {
+			background-color: var(--color-gray1);
+		}
+	}
+
+	&::-webkit-scrollbar-corner {
+		background: transparent;
 	}
 }

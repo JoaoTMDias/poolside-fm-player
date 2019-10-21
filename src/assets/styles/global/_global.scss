@@ -36,7 +36,7 @@
 		--global-shadow: $global-shadow,
 		--global-weight-bold: $global-weight-bold,
 		--global-weight-normal: $global-weight-normal,
-		--global-width: $global-width,
+		--global-size: $global-size,
 		--global-base-sizing: $global-base-sizing,
 		--header-height: $header-height,
 		--viewport-height-unit: $viewport-unit,
@@ -230,10 +230,7 @@ a,
 
 	&:hover {
 		color: var(--anchor-color-hover, $anchor-color-hover);
-		text-decoration: var(
-			--anchor-text-decoration-hover,
-			$anchor-text-decoration-hover
-		);
+		text-decoration: var(--anchor-text-decoration-hover, $anchor-text-decoration-hover);
 	}
 }
 

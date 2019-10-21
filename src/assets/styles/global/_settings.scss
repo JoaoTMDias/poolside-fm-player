@@ -8,10 +8,9 @@ $viewport-unit: 1vh;
 // ---------
 $global-base-sizing: rem-calc(16);
 $global-font-size: rem-calc(16);
-$global-width: rem-calc(1200);
+$global-size: rem-calc(16);
 $global-lineheight: $ratio;
-$global-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.2),
-	0 -1px 0 0 hsla(0, 0%, 0%, 0.02);
+$global-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.2), 0 -1px 0 0 hsla(0, 0%, 0%, 0.02);
 
 // A2P Dashboard Base colors Colors
 $color-primary: hsl(360, 100%, 89%);
@@ -34,12 +33,10 @@ $color-gray8: #403e3e;
 $color-black: hsl(0, 2%, 12%);
 $body-background: $color-primary;
 $body-font-color: $color-black;
-$heading-font-family: "poolside-headings", -apple-system, BlinkMacSystemFont,
-	"Open Sans", "Roboto", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
-	"Helvetica Neue", sans-serif;
-$body-font-family: "poolside-body", -apple-system, BlinkMacSystemFont,
-	"Open Sans", "Roboto", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
-	"Helvetica Neue", sans-serif;
+$heading-font-family: "poolside-headings", -apple-system, BlinkMacSystemFont, "Open Sans", "Roboto", "Segoe UI", Roboto,
+	Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+$body-font-family: "poolside-body", -apple-system, BlinkMacSystemFont, "Open Sans", "Roboto", "Segoe UI", Roboto, Oxygen,
+	Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 $body-antialiased: true;
 $base-sizing: 16;
 $global-margin: 1rem;
