@@ -19,7 +19,7 @@ const TopBar: React.FunctionComponent = () => {
 
 	return (
 		<S.Wrapper id="top-bar" className="row">
-			<button className="top-bar__button" type="button" onClick={onClick}>
+			<button className="top-bar__button button" type="button" onClick={onClick}>
 				<span className="sr-only">Close this window</span>
 			</button>
 			<div role="presentation" className="top-bar__handle" tabIndex={-1}>

@@ -44,6 +44,8 @@ export const SelectWrapper = styled.div`
 
 		box-shadow: 0 1px 0 var(--color-black);
 
+		&:hover,
+		&:focus,
 		&:active {
 			background-color: var(--color-primary-dark);
 		}

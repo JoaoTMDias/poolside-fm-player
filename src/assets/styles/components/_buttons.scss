@@ -1,3 +1,30 @@
 .button {
 	height: rem-calc(32);
+	background-color: var(--color-button);
+	color: var(--color-button-icon);
+	border: 1px solid var(--color-button-icon);
+	border-radius: rem-calc(2);
+
+	.icon path {
+		fill: var(--color-button-icon);
+	}
+
+	&--large {
+		border-radius: rem-calc(4);
+	}
+
+	&:hover,
+	&:active {
+		background-color: var(--color-button-hover);
+		color: var(--color-button-icon-hover);
+
+		.icon path {
+			fill: var(--color-button-icon-hover);
+		}
+	}
+
+	&:focus {
+		outline-offset: -1px;
+		outline-color: var(--color-white);
+	}
 }

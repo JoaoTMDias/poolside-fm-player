@@ -16,19 +16,6 @@ export const Wrapper = styled.header`
 			width: ${rem("14px")};
 			height: ${rem("14px")};
 			flex-basis: ${rem("14px")};
-			-webkit-appearance: none;
-			appearance: none;
-			background-color: var(--color-primary);
-			border: 1px solid var(--color-black);
-
-			&:hover,
-			&:focus {
-				background-color: var(--color-primary-dark);
-			}
-
-			&:active {
-				background-color: var(--color-black);
-			}
 		}
 
 		&__handle {
