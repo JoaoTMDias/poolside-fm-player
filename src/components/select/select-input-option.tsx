@@ -158,6 +158,7 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 		const { onChangeOptionFromList } = this.props;
 
 		switch (event.keyCode) {
+			case KEY_CODES.SPACE:
 			case KEY_CODES.ENTER:
 				onChangeOptionFromList(option, event);
 				break;

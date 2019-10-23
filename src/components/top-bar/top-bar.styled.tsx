@@ -1,13 +1,6 @@
 import { rem } from "polished";
 import styled from "styled-components";
 
-// Styling
-interface IHeaderWrapper {
-	backgroundColor: string;
-	borderColor: string;
-	isTransparent: boolean;
-}
-
 export const Wrapper = styled.header`
 	width: 100%;
 	height: ${rem("24px")};
@@ -39,7 +32,7 @@ export const Wrapper = styled.header`
 		}
 
 		&__handle {
-			width: ${rem("160px")};
+			width: calc(100% - 1rem);
 			height: ${rem("13px")};
 			flex-basis: ${rem("160px")};
 			display: flex;

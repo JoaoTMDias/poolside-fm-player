@@ -1,6 +1,6 @@
 // Libraries
 import * as React from "react";
-import { TopBar, PlayerVisualizer, Select } from "../index.components";
+import { TopBar, PlayerVisualizer, Select, CurrentSong } from "../index.components";
 
 /**
  * @description AppComponent
@@ -47,6 +47,20 @@ const App: React.FunctionComponent = () => {
 							},
 						]}
 					/>
+					<CurrentSong title="Catch you slippin" artist="E.Live" currentTime="03:28" />
+					<div id="controls" data-testid="component-controls" className="controls">
+						<ul id="controls-media" className="controls__media">
+							<li className="controls-media__item controls-media__item--first">
+								<button className="controls-media__button">Review</button>
+							</li>
+							<li className="controls-media__item">
+								<button className="controls-media__button">Play</button>
+							</li>
+							<li className="controls-media__item controls-media__item--last">
+								<button className="controls-media__button">Next</button>
+							</li>
+						</ul>
+					</div>
 				</main>
 			</div>
 		</div>

@@ -16,6 +16,8 @@ export const defaultProps = {
 class Select extends React.Component<ISelectProps, ISelectState> {
 	static defaultProps = defaultProps;
 
+	private selectInputButton: React.RefObject<HTMLButtonElement>;
+
 	constructor(props: ISelectProps) {
 		super(props);
 
@@ -28,7 +30,11 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 			},
 		};
 
+		// Bindings
 		this.onClickOnSelectButton = this.onClickOnSelectButton.bind(this);
+
+		// Refs
+		this.selectInputButton = React.createRef<HTMLButtonElement>();
 	}
 
 	/**
@@ -72,9 +78,16 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 			event.stopPropagation();
 		}
 
-		this.setState({
-			isOpen: false,
-		});
+		this.setState(
+			{
+				isOpen: false,
+			},
+			() => {
+				if (this.selectInputButton.current) {
+					this.selectInputButton.current.focus();
+				}
+			},
+		);
 	}
 
 	public render() {
@@ -82,13 +95,10 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 		const { isOpen, selectButton } = this.state;
 
 		return (
-			<S.SelectWrapper
-				id={id}
-				data-testid="component-select"
-				className={`select-input ${isOpen ? "select-input--is-open" : ""}`}
-			>
+			<S.SelectWrapper id={id} data-testid="component-select" className={`select-input ${isOpen ? "is-open" : ""}`}>
 				<div className="select-input__container">
 					<button
+						ref={this.selectInputButton}
 						key={selectButton.id}
 						type="button"
 						data-testid="component-select-button"
