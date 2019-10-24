@@ -7,9 +7,8 @@ const client = new net.Socket();
 
 let startedElectron = false;
 const tryConnection = () =>
-  client.connect({
-      port: port
-    },
+  client.connect(
+    { port: port },
     () => {
       client.end();
       if (!startedElectron) {

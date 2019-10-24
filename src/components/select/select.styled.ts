@@ -103,7 +103,7 @@ export const SelectOptionsList = styled.ul`
 	padding: 0;
 	margin: 0;
 
-	max-height: ${rem("128px")};
+	max-height: ${rem("148px")};
 	overflow-x: hidden;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: "smooth";

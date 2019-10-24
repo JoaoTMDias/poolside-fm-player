@@ -1,44 +1,160 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Electron Create-React-App TypeScript
 
-## Available Scripts
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and TypeScript.
 
-In the project directory, you can run:
+## How to make this boilerplate
 
-### `yarn start`
+> You can also just clone this repository. But if you just clone and use this repository, may be legacy project. So I recommend you following this description.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+At First, Bootstrap Project using [Create React App](https://github.com/facebook/create-react-app).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```sh
+$ npx create-react-app <YOUR-PROJECT-NAME> --typescript
+$ cd <YOUR-PROJECT-NAME>
+```
 
-### `yarn test`
+Install **Electron**
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+$ yarn add -D electron
+```
 
-### `yarn build`
+Create `electron-starter.js` in Root Directory
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> Note: Don't use **.ts** extension. YOU MUST USE **.js** EXTENSION.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```js
+// Modules to control application life and create native browser window
+const { app, BrowserWindow } = require('electron');
+const url = require('url');
+const path = require('path');
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow;
 
-### `yarn eject`
+function createWindow() {
+	// Create the browser window.
+	mainWindow = new BrowserWindow({ width: 800, height: 600 });
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+	// and load the index.html of the app.
+	const startUrl =
+		process.env.ELECTRON_START_URL ||
+		url.format({
+			pathname: path.join(__dirname, '/../build/index.html'),
+			protocol: 'file:',
+			slashes: true,
+		});
+	mainWindow.loadURL(startUrl);
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+	// Open the DevTools.
+	// mainWindow.webContents.openDevTools()
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+	// Emitted when the window is closed.
+	mainWindow.on('closed', function() {
+		// Dereference the window object, usually you would store windows
+		// in an array if your app supports multi windows, this is the time
+		// when you should delete the corresponding element.
+		mainWindow = null;
+	});
+}
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', createWindow);
 
-## Learn More
+// Quit when all windows are closed.
+app.on('window-all-closed', function() {
+	// On macOS it is common for applications and their menu bar
+	// to stay active until the user quits explicitly with Cmd + Q
+	if (process.platform !== 'darwin') {
+		app.quit();
+	}
+});
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+app.on('activate', function() {
+	// On macOS it's common to re-create a window in the app when the
+	// dock icon is clicked and there are no other windows open.
+	if (mainWindow === null) {
+		createWindow();
+	}
+});
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and require them here.
+```
+
+Also Create `electron-wait-react.js` in Root Directory.
+
+> Note: Don't use **.ts** extension. YOU MUST USE **.js** EXTENSION.
+
+```js
+const net = require('net');
+const port = process.env.PORT ? process.env.PORT - 100 : 3000;
+
+process.env.ELECTRON_START_URL = `http://localhost:${port}`;
+
+const client = new net.Socket();
+
+let startedElectron = false;
+const tryConnection = () =>
+	client.connect({ port: port }, () => {
+		client.end();
+		if (!startedElectron) {
+			console.log('starting electron');
+			startedElectron = true;
+			const exec = require('child_process').exec;
+			exec('npm run electron');
+		}
+	});
+
+tryConnection();
+
+client.on('error', error => {
+	setTimeout(tryConnection, 1000);
+});
+```
+
+Install `foreman` and `cross-env`
+
+```sh
+$ yarn add -D foreman cross-env
+```
+
+Edit `package.json`
+
+```json
+...
+"main": "./electron-starter.js",
+"scripts": {
+  "start": "cross-env BROWSER=none nf start -p 3000",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "electron": "electron .",
+  "electron-start": "node ./electron-wait-react",
+  "react-start": "react-scripts start"
+},
+```
+
+Create `Procfile` in Root Directory.
+
+```
+react: npm run react-start
+electron: npm run electron-start
+```
+
+## Run
+
+```sh
+$ yarn start
+```
+
+## Referenced
+
+https://gist.github.com/matthewjberger/6f42452cb1a2253667942d333ff53404
+
+## LICENSE
+
+[MIT Licensed](./LICENSE)

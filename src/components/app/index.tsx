@@ -1,6 +1,6 @@
 // Libraries
 import * as React from "react";
-import { TopBar, PlayerVisualizer, Select, CurrentSong, ControlsMedia, AudioPlayer } from "../index.components";
+import { TopBar, PlayerVisualizer, Select, CurrentSong, AudioPlayer } from "../index.components";
 
 /**
  * @description AppComponent

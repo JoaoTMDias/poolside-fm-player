@@ -21,11 +21,5 @@
 		"types": ["node", "jest"]
 	},
 	"include": ["src/**/*"],
-	"exclude": [
-		"node_modules",
-		"src/sw-*.js",
-		"**/*.spec.ts",
-		"**/*.test.ts",
-		"__tests__"
-	]
+	"exclude": ["node_modules", "src/sw-*.js", "**/*.spec.ts", "**/*.test.ts", "__tests__"]
 }

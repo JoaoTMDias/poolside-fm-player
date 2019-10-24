@@ -1,23 +1,45 @@
 {
-	"name": "poolside",
+	"name": "poolside-fm-player",
 	"version": "0.1.0",
 	"private": true,
-	"main": "./index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JoaoTMDias/poolside-fm-player"
+	},
+	"bugs": {
+		"url": "https://github.com/JoaoTMDias/poolside-fm-player/issues"
+	},
+	"homepage": ".",
+	"main": "./electron-starter.js",
+	"scripts": {
+		"start": "cross-env BROWSER=none nf start -p 3000",
+		"build": "react-scripts build",
+		"test": "react-scripts test --coverage",
+		"test:watch": "jest --watch",
+		"format:fix": "prettier --write 'src/**/*.{ts,tsx}'",
+		"format:lint": "eslint --fix src/**/*.tsx",
+		"pre-commit": "npm run lint-staged",
+		"pre-push": "npm run format-check",
+		"eject": "react-scripts eject",
+		"electron": "electron .",
+		"electron-start": "node ./electron-wait-react",
+		"react-start": "react-scripts start"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
 	"dependencies": {
 		"@babel/preset-typescript": "^7.6.0",
 		"axios": "^0.19.0",
-		"node-sass": "^4.12.0",
-		"electron": "^6.0.12",
+		"electron": "^7.0.0",
 		"electron-devtools-installer": "^2.2.4",
+		"node-sass": "^4.12.0",
+		"react": "^16.11.0",
+		"react-dom": "^16.11.0",
+		"react-scripts": "^3.2.0",
+		"typescript": "^3.6.4",
 		"polished": "^3.4.1",
-		"react": "^16.10.2",
-		"react-dom": "^16.10.2",
-		"react-redux": "^7.1.1",
-		"react-scripts": "3.2.0",
-		"redux": "^4.0.4",
-		"redux-persist": "^6.0.0",
-		"styled-components": "^4.4.0",
-		"typescript": "3.6.4"
+		"styled-components": "^4.4.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.6.4",
@@ -30,12 +52,10 @@
 		"@types/node": "12.7.12",
 		"@types/react": "16.9.6",
 		"@types/react-dom": "16.9.2",
-		"@types/react-redux": "^7.1.4",
 		"@types/styled-components": "^4.1.19",
 		"@typescript-eslint/eslint-plugin": "^2.4.0",
 		"@typescript-eslint/parser": "^2.4.0",
 		"babel-jest": "^24.9.0",
-		"chalk": "^2.4.2",
 		"cross-env": "^6.0.3",
 		"enzyme": "^3.10.0",
 		"enzyme-adapter-react-16": "^1.15.1",
@@ -51,39 +71,70 @@
 		"husky": "^3.0.9",
 		"lint-staged": "^9.4.2",
 		"prettier": "^1.18.2",
-		"progress-bar-webpack-plugin": "^1.12.1",
-		"redux-devtools": "^3.5.0",
-		"redux-devtools-extension": "^2.13.8",
-		"ts-jest": "^24.1.0",
-		"webpack-bundle-analyzer": "^3.5.2"
+		"ts-jest": "^24.1.0"
 	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test --coverage",
-		"test:watch": "jest --watch",
-		"eject": "react-scripts eject",
-		"format:fix": "prettier --write 'src/**/*.{ts,tsx}'",
-		"format:lint": "eslint --fix src/**/*.tsx",
-		"lint": "tslint -c tslint.json src//.{ts,tsx}",
-		"pre-commit": "npm run lint-staged",
-		"pre-push": "npm run format-check",
-		"electron": "tsc && electron .",
-		"electron-start": "node ./electron-wait-react"
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
 	},
-	"eslintConfig": {
-		"extends": "react-app"
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
+	"lint-staged": {
+		"*.{ts,tsx}": ["eslint", "prettier --ignore-path .eslintignore --write", "git add"],
+		"{*.json,.{babelrc,eslintrc,prettierrc}}": [
+			"prettier --ignore-path .eslintignore --parser json --write",
+			"git add"
 		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
-	}
+		"*.{css,scss}": ["prettier --ignore-path .eslintignore --single-quote --write", "git add"],
+		"*.{yml,md}": ["prettier --ignore-path .eslintignore --single-quote --write", "git add"]
+	},
+	"build": {
+		"productName": "React App",
+		"appId": "React App",
+		"directories": {
+			"buildResources": "public",
+			"output": "release"
+		},
+		"files": ["build/index.html", "build/**/*", "electron/*.js", "package.json"],
+		"extraFiles": ["credentials"],
+		"mac": {
+			"target": ["dmg", "pkg", "zip"],
+			"darkModeSupport": true,
+			"icon": "public/icon/icon.png",
+			"type": "distribution"
+		},
+		"dmg": {
+			"contents": [
+				{
+					"x": 130,
+					"y": 220
+				},
+				{
+					"x": 410,
+					"y": 220,
+					"type": "link",
+					"path": "/Applications"
+				}
+			]
+		},
+		"pkg": {
+			"license": "LICENSE"
+		},
+		"win": {
+			"target": ["nsis", "portable", "zip"],
+			"icon": "public/icon/icon.ico"
+		},
+		"nsis": {
+			"installerIcon": "public/icon/icon.ico",
+			"license": "LICENSE",
+			"warningsAsErrors": false
+		},
+		"linux": {
+			"target": ["AppImage", "deb", "rpm", "snap"],
+			"icon": "public/icon"
+		},
+		"snap": {
+			"grade": "stable"
+		}
+	},
+	"browserslist": ["last 1 chrome version"]
 }
