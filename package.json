@@ -34,12 +34,13 @@
 		"electron": "^7.0.0",
 		"electron-devtools-installer": "^2.2.4",
 		"node-sass": "^4.12.0",
+		"polished": "^3.4.1",
 		"react": "^16.11.0",
 		"react-dom": "^16.11.0",
+		"react-router-dom": "^5.1.2",
 		"react-scripts": "^3.2.0",
-		"typescript": "^3.6.4",
-		"polished": "^3.4.1",
-		"styled-components": "^4.4.0"
+		"styled-components": "^4.4.0",
+		"typescript": "^3.6.4"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.6.4",
@@ -52,6 +53,7 @@
 		"@types/node": "12.7.12",
 		"@types/react": "16.9.6",
 		"@types/react-dom": "16.9.2",
+		"@types/react-router-dom": "^5.1.0",
 		"@types/styled-components": "^4.1.19",
 		"@typescript-eslint/eslint-plugin": "^2.4.0",
 		"@typescript-eslint/parser": "^2.4.0",
