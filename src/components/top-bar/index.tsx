@@ -2,13 +2,17 @@
 import * as React from "react";
 import * as S from "./top-bar.styled";
 
+interface ITopBarProps {
+	title?: string;
+}
+
 /**
  * @description Window Top Bar
  * @author João Dias
  * @date 2019-02-16
- * @returns {React.FunctionComponent}
+ * @returns {React.FunctionComponent<ITopBarProps>}
  */
-const TopBar: React.FunctionComponent = () => {
+const TopBar: React.FunctionComponent<ITopBarProps> = ({ title }) => {
 	/**
 	 * When the user clicks on this button, it closes the whole app.
 	 *
@@ -30,9 +34,13 @@ const TopBar: React.FunctionComponent = () => {
 				<span className="top-bar__handle__item" tabIndex={-1} />
 				<span className="top-bar__handle__item" tabIndex={-1} />
 			</div>
-			<h2 className="top-bar__title">Poolside FM</h2>
+			<h2 className="top-bar__title">{title}</h2>
 		</S.Wrapper>
 	);
+};
+
+TopBar.defaultProps = {
+	title: "Poolside FM",
 };
 
 export default React.memo(TopBar);

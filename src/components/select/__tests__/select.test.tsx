@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import { Select } from "../../index.components";
+import Select from "components/select/index.component";
 import SelectInputOptions from "../select-input-option";
 import { ISelectProps } from "../select.interface";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import { TopBar } from "../../index.components";
+import TopBar from "components/top-bar/index";
 
 describe("<TopBar />", () => {
 	it("should render a top-bar", () => {

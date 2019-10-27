@@ -17,7 +17,7 @@ interface ICurrentSongProps {
  */
 const CurrentSong: React.FunctionComponent<ICurrentSongProps> = ({ artist, title, currentTime }) => {
 	return (
-		<S.Wrapper id="current-song" data-testid="component-current-song" className="current-song row">
+		<S.Wrapper id="current-song" data-testid="component-current-song" className="current-song">
 			<h5 className="current-song__time ui-label">
 				<span className="current-song__time__initial">00:00</span>
 				<span className="current-song__time__divider">/</span>

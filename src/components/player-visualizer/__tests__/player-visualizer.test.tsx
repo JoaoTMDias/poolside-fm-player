@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import { PlayerVisualizer } from "../../index.components";
+import PlayerVisualizer from "components/player-visualizer/index";
 
 describe("<PlayerVisualizer />", () => {
 	it("should render a visualizer", () => {

@@ -1,5 +1,7 @@
 // Libraries
 import * as React from "react";
+import { Link } from "react-router-dom";
+import { ROUTE_SETTINGS } from "data/constants/routes";
 import * as S from "./controls-media.styled";
 import { IControlsMediaProps, EPlayingStatus } from "../player.interfaces";
 
@@ -11,10 +13,9 @@ import { IControlsMediaProps, EPlayingStatus } from "../player.interfaces";
  */
 const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 	onClickOnPrevious,
-	onClickOnPlay,
+	onTogglePlay,
 	onClickOnNext,
 	onClickOnVolume,
-	onClickOnSettings,
 	status,
 }) => {
 	return (
@@ -69,15 +70,15 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 						onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 							event.preventDefault();
 
-							if (onClickOnPlay) {
-								onClickOnPlay();
+							if (onTogglePlay) {
+								onTogglePlay();
 							}
 						}}
 						onKeyUp={(event: React.KeyboardEvent<HTMLButtonElement>) => {
 							event.preventDefault();
 
-							if (onClickOnPlay) {
-								onClickOnPlay();
+							if (onTogglePlay) {
+								onTogglePlay();
 							}
 						}}
 					>
@@ -103,7 +104,8 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 							>
 								<path d="M2 0H4V9H2V0Z" fill="var(--color-icon, #000)" />
 								<path d="M5 0H7V9H5V0Z" fill="var(--color-icon, #000)" />
-							</svg>)}
+							</svg>
+						)}
 					</button>
 				</li>
 				<li className="controls-media__item controls-media__item--last">
@@ -177,27 +179,13 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 				</button>
 			</div>
 			<div className="controls-media__item">
-				<button
+				<Link
+					to={ROUTE_SETTINGS}
 					id="controls-button-settings"
 					data-testid="component-controls-button-settings"
 					title="Settings"
 					aria-label="Click to navigate to the app's settings page"
-					type="button"
 					className="controls-media__button button button--large"
-					onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-						event.preventDefault();
-
-						if (onClickOnSettings) {
-							onClickOnSettings();
-						}
-					}}
-					onKeyUp={(event: React.KeyboardEvent<HTMLButtonElement>) => {
-						event.preventDefault();
-
-						if (onClickOnSettings) {
-							onClickOnSettings();
-						}
-					}}
 				>
 					<svg className="icon" xmlns="http://www.w3.org/2000/svg" width="9" height="9" fill="none" viewBox="0 0 9 9">
 						<path
@@ -205,7 +193,7 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 							d="M8.413 3.913v-.587h-.587V2.152h.587v-.978h-.587V.587h-.978v.587H5.674V.587h-.587V0H3.913v.587h-.587v.587H2.152V.587h-.978v.587H.587v.978h.587v1.174H.587v.587H0v1.174h.587v.587h.587v1.174H.587v.978h.587v.587h.978v-.587h1.174v.587h.587V9h1.174v-.587h.587v-.587h1.174v.587h.978v-.587h.587v-.978h-.587V5.674h.587v-.587H9V3.913h-.587zM6.065 5.478h-.587v.587H3.522v-.587h-.587V3.522h.587v-.587h1.956v.587h.587v1.956z"
 						/>
 					</svg>
-				</button>
+				</Link>
 			</div>
 		</S.Wrapper>
 	);
