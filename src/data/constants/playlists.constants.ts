@@ -1,11 +1,18 @@
 /* eslint-disable import/prefer-default-export */
-export const PoolsidePlaylists = [
+export interface IPoolsidePlaylist {
+	id: string;
+	value: string;
+	label: string;
+	url: string;
+	isNew?: boolean;
+}
+
+export const PoolsidePlaylists: IPoolsidePlaylist[] = [
 	{
 		id: "poolside-fm",
 		value: "poolside-fm",
 		label: "poolside.fm (Official Playlist)",
 		url: "https://soundcloud.com/poolsidefm/sets/poolside-fm-official-playlist",
-		isNew: false,
 	},
 	{
 		id: "indie-summer",
@@ -19,20 +26,17 @@ export const PoolsidePlaylists = [
 		label: "Tokyo Disco",
 		value: "tokyo-disco",
 		url: "https://soundcloud.com/poolsidefm/sets/tokyo-disco",
-		isNew: false,
 	},
 	{
 		id: "friday-nite-heat",
 		label: "Friday Nite Heat",
 		value: "friday-nite-heat",
 		url: "https://soundcloud.com/poolsidefm/sets/its-friday-somewhere",
-		isNew: false,
 	},
 	{
 		id: "hangover-club",
 		label: "Hangover Club",
 		value: "hangover-club",
 		url: "https://soundcloud.com/poolsidefm/sets/hangover-club",
-		isNew: false,
 	},
 ];

@@ -5,6 +5,7 @@ import MediaPlayer from "components/player/media-player";
 import TopBar from "components/top-bar";
 import Select from "components/select/index.component";
 import PlayerVisualizer from "components/player-visualizer";
+import PlayerController from "components/player/controller/player-controller";
 
 /**
  * @description Home page
@@ -17,9 +18,11 @@ const Homepage: React.FunctionComponent = () => {
 		<>
 			<TopBar />
 			<main id="main-content" className="window__main row">
-				<PlayerVisualizer />
-				<Select id="channel" label="Channel:" placeholder="Choose a radio channel" options={PoolsidePlaylists} />
-				<MediaPlayer />
+				<PlayerController>
+					<PlayerVisualizer />
+					<Select id="channel" label="Channel:" placeholder="Choose a radio channel" options={PoolsidePlaylists} />
+					<MediaPlayer />
+				</PlayerController>
 			</main>
 		</>
 	);

@@ -11,7 +11,7 @@ interface ISelectInputOptionsProps {
 	isOpen: boolean;
 	options: ISelectOption[];
 	onChangeOptionFromList(
-		option: ISelectOption | null,
+		index: number | null,
 		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
 	): void;
 }
@@ -150,17 +150,17 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 	 * @description Handles the key down presses whilst on the select input
 	 * @author João Dias
 	 * @date 2019-07-11
+	 * @param {number} index
 	 * @param {React.KeyboardEvent<HTMLLabelElement>} event
-	 * @param {ISelectOption} option
 	 * @memberof SelectInputOptions
 	 */
-	handleOnKeyDownPress(event: React.KeyboardEvent<HTMLLabelElement>, option: ISelectOption) {
+	handleOnKeyDownPress(index: number, event: React.KeyboardEvent<HTMLLabelElement>) {
 		const { onChangeOptionFromList } = this.props;
 
 		switch (event.keyCode) {
 			case KEY_CODES.SPACE:
 			case KEY_CODES.ENTER:
-				onChangeOptionFromList(option, event);
+				onChangeOptionFromList(index, event);
 				break;
 
 			case KEY_CODES.ESC:
@@ -207,7 +207,7 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 						htmlFor={`${option.id}-input`}
 						tabIndex={0}
 						onKeyDown={(event: React.KeyboardEvent<HTMLLabelElement>) => {
-							this.handleOnKeyDownPress(event, option);
+							this.handleOnKeyDownPress(index, event);
 						}}
 					>
 						<input
@@ -217,7 +217,7 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 							type="radio"
 							className="sr-only"
 							checked={isSelected}
-							onChange={(event: React.ChangeEvent<HTMLInputElement>) => onChangeOptionFromList(option, event)}
+							onChange={(event: React.ChangeEvent<HTMLInputElement>) => onChangeOptionFromList(index, event)}
 							tabIndex={-1}
 						/>
 

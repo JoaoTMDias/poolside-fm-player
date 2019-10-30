@@ -1,6 +1,7 @@
 import * as React from "react";
+import { PlayerControllerContext } from "contexts/player-controller-context";
 import SelectInputOptions from "./select-input-option";
-import { ISelectOption, ISelectProps, ISelectState } from "./select.interface";
+import { ISelectProps, ISelectState } from "./select.interface";
 import * as S from "./select.styled";
 
 export const defaultProps = {
@@ -14,24 +15,21 @@ export const defaultProps = {
  * @extends {React.Component<ISelectProps, ISelectState>}
  */
 class Select extends React.Component<ISelectProps, ISelectState> {
-	static defaultProps = defaultProps;
-
 	private selectInputButton: React.RefObject<HTMLButtonElement>;
+
+	context!: React.ContextType<typeof PlayerControllerContext>;
+
+	static defaultProps = defaultProps;
 
 	constructor(props: ISelectProps) {
 		super(props);
 
 		this.state = {
 			isOpen: false,
-			selectButton: {
-				id: "poolside-fm",
-				label: "Poolside FM (default)",
-				value: "poolside-fm",
-			},
 		};
 
 		// Bindings
-		this.onClickOnSelectButton = this.onClickOnSelectButton.bind(this);
+		this.onClickOnSelect = this.onClickOnSelect.bind(this);
 
 		// Refs
 		this.selectInputButton = React.createRef<HTMLButtonElement>();
@@ -42,7 +40,7 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 	 *
 	 * @returns {void}
 	 */
-	onClickOnSelectButton() {
+	onClickOnSelect() {
 		const { isOpen } = this.state;
 
 		this.setState({
@@ -53,27 +51,19 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 	/**
 	 * Handles the onChange event on the list.
 	 *
-	 * @param {ISelectOption} option
-	 * @returns {void}
+	 * @param {(number | null)} index
+	 * @param {(React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>)} event
+	 * @memberof Select
 	 */
 	onChangeOptionFromList(
-		option: ISelectOption | null,
+		index: number | null,
 		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
 	) {
 		event.preventDefault();
-		const { onSelectOption } = this.props;
+		const { changePlaylist } = this.context;
 
-		if (option) {
-			this.setState(
-				{
-					selectButton: option,
-				},
-				() => {
-					if (onSelectOption) {
-						onSelectOption(option);
-					}
-				},
-			);
+		if (index !== null && index >= 0) {
+			changePlaylist(index);
 		} else {
 			event.stopPropagation();
 		}
@@ -90,45 +80,54 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 		);
 	}
 
+	static contextType = PlayerControllerContext;
+
 	public render() {
 		const { id, label, options } = this.props;
-		const { isOpen, selectButton } = this.state;
+		const { isOpen } = this.state;
 
 		return (
 			<S.SelectWrapper id={id} data-testid="component-select" className={`select-input ${isOpen ? "is-open" : ""}`}>
-				<div className="select-input__container">
-					<button
-						ref={this.selectInputButton}
-						key={selectButton.id}
-						type="button"
-						data-testid="component-select-button"
-						id={`${id}-button`}
-						aria-haspopup="listbox"
-						aria-labelledby={`${id}-label ${id}-title`}
-						aria-expanded={isOpen ? "true" : "false"}
-						className={`row select-input__button ${isOpen ? "select-input__button--is-open" : ""}`}
-						onClick={this.onClickOnSelectButton}
-					>
-						<span id={`${id}-label`} className="select-input__label">
-							{label}
-						</span>
-						<span id={`${id}-title`} className="select-input__value as-paragraph">
-							{selectButton.label}
-						</span>
-					</button>
-					{isOpen && options && (
-						<SelectInputOptions
-							id={id}
-							activeElement={selectButton}
-							isOpen={isOpen}
-							options={options}
-							onChangeOptionFromList={(
-								option: ISelectOption | null,
-								event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
-							) => this.onChangeOptionFromList(option, event)}
-						/>
-					)}
-				</div>
+				<PlayerControllerContext.Consumer>
+					{({ currentPlaylistIndex }) => {
+						const selectedPlaylist = options[currentPlaylistIndex];
+						return (
+							<div className="select-input__container">
+								<button
+									ref={this.selectInputButton}
+									key={selectedPlaylist.id}
+									type="button"
+									data-testid="component-select-button"
+									id={`${id}-button`}
+									aria-haspopup="listbox"
+									aria-labelledby={`${id}-label ${id}-title`}
+									aria-expanded={isOpen ? "true" : "false"}
+									className={`row select-input__button ${isOpen ? "select-input__button--is-open" : ""}`}
+									onClick={this.onClickOnSelect}
+								>
+									<span id={`${id}-label`} className="select-input__label">
+										{label}
+									</span>
+									<span id={`${id}-title`} className="select-input__value as-paragraph">
+										{selectedPlaylist.label}
+									</span>
+								</button>
+								{isOpen && options && (
+									<SelectInputOptions
+										id={id}
+										activeElement={selectedPlaylist}
+										isOpen={isOpen}
+										options={options}
+										onChangeOptionFromList={(
+											index: number | null,
+											event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
+										) => this.onChangeOptionFromList(index, event)}
+									/>
+								)}
+							</div>
+						);
+					}}
+				</PlayerControllerContext.Consumer>
 			</S.SelectWrapper>
 		);
 	}

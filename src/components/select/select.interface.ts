@@ -14,5 +14,4 @@ export interface ISelectProps {
 
 export interface ISelectState {
 	isOpen: boolean;
-	selectButton: ISelectOption;
 }

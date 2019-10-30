@@ -32,7 +32,7 @@ export interface IMediaPlayerProps {
 }
 
 export interface IMediaPlayerState {
-	isReadyToPlay: boolean;
+	ready: boolean;
 	status: EPlayingStatus;
 }
 
@@ -45,8 +45,8 @@ export interface IControlsMediaProps {
 }
 
 interface ISoucloudPlayerMethodsPlay {
-	streamUrl: string;
-	playlistIndex: number;
+	streamUrl?: string;
+	playlistIndex?: number;
 }
 
 export interface ISoundcloudPlayer {
@@ -222,7 +222,7 @@ export interface ISoundcloudTrack {
 	attachments_uri: string;
 	download_count: number;
 	likes_count: number;
-	ISoundcloudLicense: ISoundcloudLicense;
+	license: ISoundcloudLicense;
 	purchase_title: null | string;
 	user_id: number;
 	embeddable_by: ISoundcloudEmbeddableBy;
