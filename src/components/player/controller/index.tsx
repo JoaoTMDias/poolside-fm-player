@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as React from "react";
 import produce from "immer";
 import SoundCloudAudio from "soundcloud-audio";
@@ -13,6 +14,7 @@ import {
 	EPlayingStatus,
 	ISoundcloudPlaylist,
 	ESoundCloudPlayerEvents,
+	IMediaPlayerTrackMetadata,
 } from "../media-player/player.interfaces";
 
 /**
@@ -52,7 +54,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	}
 
 	componentDidMount() {
-		this.initSoundcloudPlayer();
+		this.initPlaylist();
 	}
 
 	/**
@@ -138,9 +140,47 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 				status: EPlayingStatus.paused,
 			},
 			() => {
-				this.initSoundcloudPlayer();
+				this.initPlaylist();
 			},
 		);
+	}
+
+	/**
+	 * Returns the current tracks title and artist
+	 *
+	 * @param {number} index
+	 * @param {ISoundcloudPlayer} player
+	 * @returns {(IMediaPlayerTrackMetadata | null)}
+	 * @memberof PlayerController
+	 */
+	getCurrentTrackAndArtist(index: number, player: ISoundcloudPlayer): IMediaPlayerTrackMetadata | null {
+		const { title } = player._playlist.tracks[index];
+		const { user } = player._playlist.tracks[index];
+
+		const artist = user && user.username;
+
+		if (title && artist) {
+			return {
+				title,
+				artist,
+			};
+		}
+
+		return null;
+	}
+
+	/**
+	 * Updates the Player metadata
+	 *
+	 * @param {string} title
+	 * @param {string} artist
+	 * @memberof PlayerController
+	 */
+	updatePlayerMetadata(metadata: IMediaPlayerTrackMetadata) {
+		this.setState({
+			title: metadata.title,
+			artist: metadata.artist,
+		});
 	}
 
 	/**
@@ -148,7 +188,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 *
 	 * @memberof PlayerController
 	 */
-	initSoundcloudPlayer() {
+	initPlaylist() {
 		const { currentPlaylistIndex } = this.state;
 		const currentPlaylist = PoolsidePlaylists[currentPlaylistIndex].url;
 
@@ -163,10 +203,25 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 				},
 			});
 
+			player.on(ESoundCloudPlayerEvents.canplay, () => {
+				const { _playlistIndex } = player;
+
+				let metadata = null;
+
+				if (_playlistIndex) {
+					metadata = this.getCurrentTrackAndArtist(_playlistIndex, player);
+				}
+
+				if (metadata) {
+					this.updatePlayerMetadata(metadata);
+				}
+			});
+
 			// for playlists it's possible to switch to another track in queue
 			// e.g. we do it here when playing track is finished
 			player.on(ESoundCloudPlayerEvents.ended, () => {
-				this.onClickOnNext();
+				const { track } = this.state;
+				this.onClickOnNext(track);
 			});
 		});
 	}

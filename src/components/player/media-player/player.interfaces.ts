@@ -1,3 +1,8 @@
+export interface IMediaPlayerTrackMetadata {
+	title: string;
+	artist: string;
+}
+
 export enum EPlayingStatus {
 	playing = "playing",
 	paused = "paused",
