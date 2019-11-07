@@ -1,12 +1,12 @@
 // Libraries
 import * as React from "react";
 import { PlayerControllerContext, IPlayerControllerState } from "contexts/player-controller-context";
-import { EPlayingStatus } from "components/player/player.interfaces";
-import Preview from "../../assets/images/now-playing.gif";
+import { EPlayingStatus } from "components/player/media-player/player.interfaces";
+import Preview from "assets/images/now-playing.gif";
 import * as S from "./player-visualizer.styled";
 
 /**
- * @description And audio visualizer for the player
+ * @description An audio visualizer for the player
  * @author João Dias
  * @date 2019-02-16
  * @returns {React.FunctionComponent}
@@ -17,6 +17,7 @@ const PlayerVisualizer: React.FunctionComponent = () => {
 			{(state: IPlayerControllerState) => (
 				<S.PlayerVisualizerWrapper
 					role="presentation"
+					data-testid="player-visualizer-wrapper"
 					id="player-visualizer"
 					className={`player-visualizer ${state.status === EPlayingStatus.playing && "player-visualizer--is-playing"}`}
 				>
@@ -26,10 +27,6 @@ const PlayerVisualizer: React.FunctionComponent = () => {
 			)}
 		</PlayerControllerContext.Consumer>
 	);
-};
-
-PlayerVisualizer.defaultProps = {
-	isPlaying: false,
 };
 
 export default React.memo(PlayerVisualizer);

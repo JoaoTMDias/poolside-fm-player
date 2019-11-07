@@ -41,7 +41,7 @@ export interface IControlsMediaProps {
 	onTogglePlay?: () => void;
 	onClickOnNext?: () => void;
 	onClickOnVolume?: () => void;
-	status: EPlayingStatus;
+	status?: EPlayingStatus;
 }
 
 interface ISoucloudPlayerMethodsPlay {

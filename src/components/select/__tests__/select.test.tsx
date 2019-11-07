@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 
 import Select from "components/select/index.component";
 import SelectInputOptions from "../select-input-option";
@@ -50,8 +50,8 @@ describe("<Select />", () => {
 	});
 
 	it("should display a list on click on the button", () => {
-		const component = shallow(<Select {...initialProps} />);
-		const selectButton = component.find("[data-testid='component-select-button']");
+		const component = mount(<Select {...initialProps} />);
+		const selectButton = component.find("[data-testid='component-select-button']").first();
 
 		selectButton.simulate("click");
 
@@ -60,7 +60,7 @@ describe("<Select />", () => {
 	});
 
 	it("should display a default label on the button", () => {
-		const component = shallow(<Select {...initialProps} />);
+		const component = mount(<Select {...initialProps} />);
 		const selectButton = component.find("[data-testid='component-select-button']");
 		const selectButtonValue = selectButton.find(".select-input__value");
 

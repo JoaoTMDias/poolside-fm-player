@@ -1,23 +1,17 @@
 module.exports = {
-	clearMocks: true,
-
-	moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-	preset: "ts-jest",
 	roots: ["<rootDir>/src"],
 	transform: {
 		"^.+\\.tsx?$": "ts-jest",
 	},
 	testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+	moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+	clearMocks: true,
+	preset: "ts-jest",
 	testPathIgnorePatterns: ["\\\\node_modules\\\\"],
 	verbose: false,
-	testEnvironment: "node",
-
-	// Setup Enzyme
 	snapshotSerializers: ["enzyme-to-json/serializer"],
-	setupFiles: "<rootDir>/src/setupEnzyme.ts",
-	setupTestFrameworkScriptFile: "<rootDir>/src/setupEnzyme.ts",
-
-	// Code Coverage
+	setupFiles: ["<rootDir>/src/setupTests.js"],
+	setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"],
 	collectCoverage: true,
 	coverageDirectory: "coverage",
 };

@@ -15,7 +15,7 @@
 		"start": "cross-env BROWSER=none nf start -p 3000",
 		"build": "react-scripts build",
 		"test": "react-scripts test --coverage",
-		"test:watch": "jest --watch",
+		"test:watch": "react-scripts test --watch --coverage",
 		"format:fix": "prettier --write 'src/**/*.{ts,tsx}'",
 		"format:lint": "eslint --fix src/**/*.tsx",
 		"pre-commit": "npm run lint-staged",

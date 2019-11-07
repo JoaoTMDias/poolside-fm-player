@@ -1,22 +1,23 @@
 import React from "react";
-import { EPlayingStatus } from "components/player/player.interfaces";
+import { EPlayingStatus } from "components/player/media-player/player.interfaces";
 
+export interface IPlayerControllerTrack {
+	current: number;
+	last: number;
+}
 export interface IPlayerControllerState {
-	track: {
-		current: number;
-		last: number;
-	};
+	track: IPlayerControllerTrack;
 	currentPlaylistIndex: number;
 	currentTime: number;
 	status: EPlayingStatus;
 	duration: number;
 	artist: string;
 	title: string;
-	previous(): void;
-	next(): void;
-	togglePlay(): void;
-	changeVolume(): void;
-	changePlaylist(index: number): void;
+	previous: () => void;
+	next: () => void;
+	togglePlay: () => void;
+	changeVolume: () => void;
+	changePlaylist: (index: number) => void;
 }
 
 export const defaultPlayerControllerState = {

@@ -2,14 +2,38 @@ import * as React from "react";
 import produce from "immer";
 import SoundCloudAudio from "soundcloud-audio";
 import { PoolsidePlaylists } from "data/constants/playlists.constants";
-
 import {
 	PlayerControllerContext,
 	IPlayerControllerState,
 	defaultPlayerControllerState,
+	IPlayerControllerTrack,
 } from "contexts/player-controller-context";
-import { ISoundcloudPlayer, EPlayingStatus, ISoundcloudPlaylist, ESoundCloudPlayerEvents } from "../player.interfaces";
+import {
+	ISoundcloudPlayer,
+	EPlayingStatus,
+	ISoundcloudPlaylist,
+	ESoundCloudPlayerEvents,
+} from "../media-player/player.interfaces";
 
+/**
+ * Get a random number between a range
+ *
+ * @param {number} allTracks
+ * @returns
+ * @memberof PlayerController
+ */
+export function getRandomTrackIndex(allTracks: number) {
+	const min = Math.ceil(0);
+	const max = Math.floor(allTracks);
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+/**
+ * Controls the player
+ *
+ * @class PlayerController
+ * @extends {React.Component<{}, IPlayerControllerState>}
+ */
 class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	private player: ISoundcloudPlayer;
 
@@ -24,14 +48,11 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 		this.onClickOnNext = this.onClickOnNext.bind(this);
 
 		// Refs
-		this.player = new SoundCloudAudio("417cbb93a08aacd6fe709f7ae764d91a");
+		this.player = new SoundCloudAudio("72f2cb50fbbfa902c9d4aea72abbb8b0");
 	}
 
 	componentDidMount() {
-		const { currentPlaylistIndex } = this.state;
-		const currentPlaylist = PoolsidePlaylists[currentPlaylistIndex].url;
-
-		this.initSoundcloudPlayer(currentPlaylist);
+		this.initSoundcloudPlayer();
 	}
 
 	/**
@@ -39,18 +60,19 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 *
 	 * @memberof MediaPlayer
 	 */
-	onClickOnPrevious() {
-		const { track } = this.state;
-
+	onClickOnPrevious(track: IPlayerControllerTrack) {
 		if (this.player) {
-			const previousIndex = track.current <= 0 ? track.last : track.current - 1;
+			const { current, last } = track;
+			const previousIndex = current <= 0 ? last : current - 1;
 
 			this.setState(
 				produce((draftState: IPlayerControllerState) => {
 					draftState.track.current = previousIndex;
 				}),
 				() => {
-					this.player.previous();
+					if (this.player.playing) {
+						this.player.previous();
+					}
 				},
 			);
 		}
@@ -61,30 +83,31 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 *
 	 * @memberof MediaPlayer
 	 */
-	onClickOnNext() {
-		const { track } = this.state;
+	onClickOnNext(track: IPlayerControllerTrack) {
 		if (this.player) {
-			const nextIndex = track.current === track.last ? 0 : track.current + 1;
+			const { current, last } = track;
+
+			const nextIndex = current === last ? 0 : current + 1;
 
 			this.setState(
 				produce((draftState: IPlayerControllerState) => {
 					draftState.track.current = nextIndex;
 				}),
 				() => {
-					this.player.next();
+					if (this.player.playing) {
+						this.player.next();
+					}
 				},
 			);
 		}
 	}
 
 	/**
-	 *
+	 * Callback for handling the clicking on the play button
 	 *
 	 * @memberof MediaPlayer
 	 */
-	onTogglePlay() {
-		const { status } = this.state;
-
+	onTogglePlay(status: EPlayingStatus) {
 		let nextStatus;
 
 		switch (status) {
@@ -107,44 +130,37 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 * @memberof PlayerController
 	 */
 	onChangePlaylist(index: number) {
-		this.setState({
-			currentPlaylistIndex: index,
-		});
-	}
+		this.player.stop();
 
-	/**
-	 * Get a random number between a range
-	 *
-	 * @param {number} allTracks
-	 * @returns
-	 * @memberof PlayerController
-	 */
-	getRandomTrackIndex(allTracks: number) {
-		const min = Math.ceil(0);
-		const max = Math.floor(allTracks);
-		return Math.floor(Math.random() * (max - min)) + min;
+		this.setState(
+			{
+				currentPlaylistIndex: index,
+				status: EPlayingStatus.paused,
+			},
+			() => {
+				this.initSoundcloudPlayer();
+			},
+		);
 	}
 
 	/**
 	 * Initiates a new playlist
 	 *
-	 * @param {string} currentPlaylist
 	 * @memberof PlayerController
 	 */
-	initSoundcloudPlayer(currentPlaylist: string) {
+	initSoundcloudPlayer() {
+		const { currentPlaylistIndex } = this.state;
+		const currentPlaylist = PoolsidePlaylists[currentPlaylistIndex].url;
+
 		this.player.resolve(currentPlaylist, (playlist: ISoundcloudPlaylist) => {
 			const { player } = this;
 
-			const randomTrack = this.getRandomTrackIndex(playlist.track_count);
-
 			// once playlist is loaded it can be played
-			player.on(ESoundCloudPlayerEvents.canplay, () => {
-				this.setState({
-					track: {
-						current: randomTrack,
-						last: playlist.track_count - 1,
-					},
-				});
+			this.setState({
+				track: {
+					current: getRandomTrackIndex(playlist.track_count),
+					last: playlist.track_count - 1,
+				},
 			});
 
 			// for playlists it's possible to switch to another track in queue
@@ -156,7 +172,8 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	}
 
 	/**
-	 *
+	 * Handles the playing status.
+	 * If playing, it becomes paused and reverse.
 	 *
 	 * @param {EPlayingStatus} status
 	 * @memberof MediaPlayer
@@ -186,7 +203,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	}
 
 	/**
-	 *
+	 * Updates the state with the playing states (paused or playing)
 	 *
 	 * @param {EPlayingStatus} status
 	 * @memberof MediaPlayer
@@ -199,12 +216,13 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 
 	public render() {
 		const { children } = this.props;
+		const { status, track } = this.state;
 
 		const contextValue = {
 			...this.state,
-			previous: () => this.onClickOnPrevious(),
-			next: () => this.onClickOnNext(),
-			togglePlay: () => this.onTogglePlay(),
+			previous: () => this.onClickOnPrevious(track),
+			next: () => this.onClickOnNext(track),
+			togglePlay: () => this.onTogglePlay(status),
 			changeVolume: () => {},
 			changePlaylist: (index: number) => this.onChangePlaylist(index),
 		};

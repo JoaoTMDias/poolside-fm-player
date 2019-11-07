@@ -2,8 +2,23 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { ROUTE_SETTINGS } from "data/constants/routes";
+import { KEY_CODES } from "helpers";
 import * as S from "./controls-media.styled";
-import { IControlsMediaProps, EPlayingStatus } from "../player.interfaces";
+import { IControlsMediaProps, EPlayingStatus } from "../media-player/player.interfaces";
+
+/**
+ * Checks if the user has pressed space or enter
+ *
+ * @param {number} keyCode
+ * @returns {boolean}
+ */
+export function hasPressedSpaceOrEnter(keyCode: number) {
+	if (keyCode === KEY_CODES.ENTER || keyCode === KEY_CODES.SPACE) {
+		return true;
+	}
+
+	return false;
+}
 
 /**
  * @description Controls - Media Buttons
@@ -23,23 +38,19 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 			<S.Buttons id="controls-media" className="controls__media">
 				<li className="controls-media__item controls-media__item--first">
 					<button
-						id="controls-media-button-review"
-						data-testid="component-controls-media-button-review"
+						id="controls-media-button-previous"
+						data-testid="component-controls-media-button-previous"
 						title="Previous Song"
 						aria-label="Click play the previous song"
 						type="button"
 						className="controls-media__button button button--large"
-						onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-							event.preventDefault();
-
+						onClick={() => {
 							if (onClickOnPrevious) {
 								onClickOnPrevious();
 							}
 						}}
 						onKeyUp={(event: React.KeyboardEvent<HTMLButtonElement>) => {
-							event.preventDefault();
-
-							if (onClickOnPrevious) {
+							if (onClickOnPrevious && hasPressedSpaceOrEnter(event.keyCode)) {
 								onClickOnPrevious();
 							}
 						}}
@@ -67,23 +78,20 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 						aria-label="Click play the song"
 						type="button"
 						className="controls-media__button button button--large"
-						onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-							event.preventDefault();
-
+						onClick={() => {
 							if (onTogglePlay) {
 								onTogglePlay();
 							}
 						}}
 						onKeyUp={(event: React.KeyboardEvent<HTMLButtonElement>) => {
-							event.preventDefault();
-
-							if (onTogglePlay) {
+							if (onTogglePlay && hasPressedSpaceOrEnter(event.keyCode)) {
 								onTogglePlay();
 							}
 						}}
 					>
 						{status === EPlayingStatus.paused ? (
 							<svg
+								id="icon-pause"
 								className="icon"
 								xmlns="http://www.w3.org/2000/svg"
 								width="9"
@@ -95,6 +103,7 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 							</svg>
 						) : (
 							<svg
+								id="icon-play"
 								className="icon"
 								width="9"
 								height="9"
@@ -116,17 +125,13 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 						aria-label="Click play the next song"
 						type="button"
 						className="controls-media__button button button--large"
-						onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-							event.preventDefault();
-
+						onClick={() => {
 							if (onClickOnNext) {
 								onClickOnNext();
 							}
 						}}
 						onKeyUp={(event: React.KeyboardEvent<HTMLButtonElement>) => {
-							event.preventDefault();
-
-							if (onClickOnNext) {
+							if (onClickOnNext && hasPressedSpaceOrEnter(event.keyCode)) {
 								onClickOnNext();
 							}
 						}}
@@ -150,22 +155,18 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 			<div className="controls-media__item">
 				<button
 					id="controls-button-volume"
-					data-testid="component-controls-button-volume"
+					data-testid="component-controls-media-button-volume"
 					title="Control Volume"
 					aria-label="Click to control the volume of the song"
 					type="button"
 					className="controls-media__button button button--large"
-					onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-						event.preventDefault();
-
+					onClick={() => {
 						if (onClickOnVolume) {
 							onClickOnVolume();
 						}
 					}}
 					onKeyUp={(event: React.KeyboardEvent<HTMLButtonElement>) => {
-						event.preventDefault();
-
-						if (onClickOnVolume) {
+						if (onClickOnVolume && hasPressedSpaceOrEnter(event.keyCode)) {
 							onClickOnVolume();
 						}
 					}}

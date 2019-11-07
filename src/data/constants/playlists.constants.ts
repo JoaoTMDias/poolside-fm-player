@@ -11,7 +11,7 @@ export const PoolsidePlaylists: IPoolsidePlaylist[] = [
 	{
 		id: "poolside-fm",
 		value: "poolside-fm",
-		label: "poolside.fm (Official Playlist)",
+		label: "Poolside.Fm (Official Playlist)",
 		url: "https://soundcloud.com/poolsidefm/sets/poolside-fm-official-playlist",
 	},
 	{
