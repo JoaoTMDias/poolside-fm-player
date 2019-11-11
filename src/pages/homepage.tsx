@@ -6,6 +6,7 @@ import TopBar from "components/top-bar";
 import Select from "components/select/index.component";
 import PlayerVisualizer from "components/player/visualizer";
 import PlayerController from "components/player/controller";
+import { PlayerControllerContext, IPlayerControllerContext } from "contexts/player-controller-context";
 
 /**
  * @description Home page
@@ -19,7 +20,15 @@ const Homepage: React.FunctionComponent = () => {
 			<TopBar />
 			<main id="main-content" className="window__main row">
 				<PlayerController>
-					<PlayerVisualizer />
+					<PlayerControllerContext.Consumer>
+						{(context: IPlayerControllerContext) => {
+							if (context.player && context.player.audio.src) {
+								return <PlayerVisualizer status={context.status} audio={context.player && context.player.audio} />;
+							}
+
+							return <PlayerVisualizer status={context.status} />;
+						}}
+					</PlayerControllerContext.Consumer>
 					<Select id="channel" label="Channel:" placeholder="Choose a radio channel" options={PoolsidePlaylists} />
 					<MediaPlayer />
 				</PlayerController>

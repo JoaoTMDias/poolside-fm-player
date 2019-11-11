@@ -50,7 +50,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 		this.onClickOnNext = this.onClickOnNext.bind(this);
 
 		// Refs
-		this.player = new SoundCloudAudio("72f2cb50fbbfa902c9d4aea72abbb8b0");
+		this.player = new SoundCloudAudio("xkpqYPmDf6KG7aL1xM4qfWaJQrHBLSOh");
 	}
 
 	componentDidMount() {
@@ -275,6 +275,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 
 		const contextValue = {
 			...this.state,
+			player: this.player,
 			previous: () => this.onClickOnPrevious(track),
 			next: () => this.onClickOnNext(track),
 			togglePlay: () => this.onTogglePlay(status),

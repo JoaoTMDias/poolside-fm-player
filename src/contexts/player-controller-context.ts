@@ -1,5 +1,5 @@
 import React from "react";
-import { EPlayingStatus } from "components/player/media-player/player.interfaces";
+import { EPlayingStatus, ISoundcloudPlayer } from "components/player/media-player/player.interfaces";
 
 export interface IPlayerControllerTrack {
 	current: number;
@@ -20,6 +20,10 @@ export interface IPlayerControllerState {
 	changePlaylist: (index: number) => void;
 }
 
+export interface IPlayerControllerContext extends IPlayerControllerState {
+	player: ISoundcloudPlayer | null;
+}
+
 export const defaultPlayerControllerState = {
 	track: {
 		current: 0,
@@ -38,6 +42,11 @@ export const defaultPlayerControllerState = {
 	changePlaylist: () => {},
 };
 
+export const defaultPlayerControllerContext = {
+	...defaultPlayerControllerState,
+	player: null,
+};
+
 /**
  * @description Context for Player Controller
  * @author João Dias
@@ -45,6 +54,6 @@ export const defaultPlayerControllerState = {
  * @returns
  * @memberof SidebarPortal
  */
-export const PlayerControllerContext = React.createContext<IPlayerControllerState>(defaultPlayerControllerState);
+export const PlayerControllerContext = React.createContext<IPlayerControllerContext>(defaultPlayerControllerContext);
 
 export default PlayerControllerContext;

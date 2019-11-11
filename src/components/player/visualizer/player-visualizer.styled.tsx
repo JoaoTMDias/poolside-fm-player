@@ -32,14 +32,18 @@ export const PlayerVisualizerWrapper = styled.figure`
 
 	&.player-visualizer--is-playing {
 		&::after {
-			transform: translateY(2.5rem);
+			transform: translateY(-2.5rem);
 		}
 	}
 
-	.player-visualizer__image {
+	.player-visualizer__image,
+	.player-visualizer__canvas {
 		width: 100%;
-		height: 100%;
 		background-color: var(--color-black);
+	}
+
+	.player-visualizer__canvas {
+		height: ${rem("32px")};
 	}
 `;
 
