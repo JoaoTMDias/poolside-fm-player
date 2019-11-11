@@ -1,5 +1,5 @@
 import React from "react";
-import { EPlayingStatus, ISoundcloudPlayer } from "components/player/media-player/player.interfaces";
+import { EPlayingStatus } from "components/player/media-player/player.interfaces";
 
 export interface IPlayerControllerTrack {
 	current: number;
@@ -21,7 +21,7 @@ export interface IPlayerControllerState {
 }
 
 export interface IPlayerControllerContext extends IPlayerControllerState {
-	player: ISoundcloudPlayer | null;
+	audio: HTMLAudioElement | null;
 }
 
 export const defaultPlayerControllerState = {
@@ -44,7 +44,7 @@ export const defaultPlayerControllerState = {
 
 export const defaultPlayerControllerContext = {
 	...defaultPlayerControllerState,
-	player: null,
+	audio: null,
 };
 
 /**

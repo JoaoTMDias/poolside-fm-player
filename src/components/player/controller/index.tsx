@@ -8,6 +8,7 @@ import {
 	IPlayerControllerState,
 	defaultPlayerControllerState,
 	IPlayerControllerTrack,
+	IPlayerControllerContext,
 } from "contexts/player-controller-context";
 import {
 	ISoundcloudPlayer,
@@ -273,9 +274,9 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 		const { children } = this.props;
 		const { status, track } = this.state;
 
-		const contextValue = {
+		const contextValue: IPlayerControllerContext = {
 			...this.state,
-			player: this.player,
+			audio: this.player.audio,
 			previous: () => this.onClickOnPrevious(track),
 			next: () => this.onClickOnNext(track),
 			togglePlay: () => this.onTogglePlay(status),

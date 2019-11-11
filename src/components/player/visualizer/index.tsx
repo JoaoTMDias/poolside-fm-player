@@ -83,13 +83,17 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 		const { audio } = this.props;
 		const { width, height } = this.state;
 
+		const dpi = this.getDevicePixelRatio();
+
 		this.getColorsFromRoot();
 
 		if (this.canvas && this.canvas.current) {
 			this.canvasElement = this.canvas.current;
 
-			this.canvasElement.width = width;
-			this.canvasElement.height = height;
+			this.canvasElement.width = width * dpi;
+			this.canvasElement.height = height * dpi;
+			this.canvasElement.setAttribute("width", `${width}`);
+			this.canvasElement.setAttribute("height", `${height}`);
 
 			if (audio && audio.src.length > 0) {
 				this.initCanvas(audio);
@@ -128,6 +132,16 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	}
 
 	/**
+	 * Gets the device pixel ratio
+	 *
+	 * @returns {void}
+	 * @memberof PlayerVisualizer
+	 */
+	getDevicePixelRatio() {
+		return window.devicePixelRatio || 1;
+	}
+
+	/**
 	 * Gets the black and white css colors from the html element
 	 *
 	 * @memberof PlayerVisualizer
@@ -149,36 +163,19 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	}
 
 	/**
-	 *
+	 * Initializes the Canvas creation.
+	 * 1- Creates the player context
+	 * 2- Creates an analyser based on the current audio
+	 * 3- Renders the frames onto the canvas
 	 *
 	 * @param {HTMLCanvasElement} player
 	 * @memberof PlayerVisualizer
 	 */
 	initCanvas(audio: HTMLAudioElement) {
-		const { width, height, bars } = this.state;
-
 		if (this.canvasElement) {
-			this.playerContext = this.canvasElement.getContext("2d");
+			this.createPlayerContext(this.canvasElement);
 
-			if (this.playerContext) {
-				this.playerContext.fillStyle = bars.background;
-				this.playerContext.fill();
-				this.playerContext.fillRect(0, 0, width, height);
-			}
-
-			const context = new AudioContext();
-			const mediaElementSource = context.createMediaElementSource(audio);
-			audio.crossOrigin = "anonymous";
-
-			this.playerAnalyser = context.createAnalyser();
-			this.playerAnalyser.connect(context.destination);
-			this.playerAnalyser.fftSize = 256;
-
-			mediaElementSource.connect(this.playerAnalyser);
-
-			this.bufferLength = this.playerAnalyser.frequencyBinCount;
-
-			this.dataArray = new Uint8Array(this.bufferLength);
+			this.createAudioAnalyser(audio);
 
 			this.playerBarWidth = 1;
 
@@ -189,7 +186,48 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	static contextType = PlayerControllerContext;
 
 	/**
+	 * Creates an object that provides methods and properties
+	 * for drawing graphics on the canvas element
 	 *
+	 * @param {HTMLCanvasElement} canvasElement
+	 * @memberof PlayerVisualizer
+	 */
+	createPlayerContext(canvasElement: HTMLCanvasElement) {
+		const { width, height, bars } = this.state;
+
+		this.playerContext = canvasElement.getContext("2d");
+
+		if (this.playerContext) {
+			this.playerContext.fillStyle = bars.background;
+			this.playerContext.fill();
+			this.playerContext.fillRect(0, 0, width, height);
+		}
+	}
+
+	/**
+	 * Creates the Audio Analyser that feeds on the current audio
+	 *
+	 * @param {HTMLAudioElement} audio
+	 * @memberof PlayerVisualizer
+	 */
+	createAudioAnalyser(audio: HTMLAudioElement) {
+		const context = new AudioContext();
+		const mediaElementSource = context.createMediaElementSource(audio);
+		audio.crossOrigin = "anonymous";
+
+		this.playerAnalyser = context.createAnalyser();
+		this.playerAnalyser.connect(context.destination);
+		this.playerAnalyser.fftSize = 256;
+
+		mediaElementSource.connect(this.playerAnalyser);
+
+		this.bufferLength = this.playerAnalyser.frequencyBinCount;
+
+		this.dataArray = new Uint8Array(this.bufferLength);
+	}
+
+	/**
+	 * Renders the bars frames onto the canvas
 	 *
 	 * @memberof PlayerVisualizer
 	 */
@@ -245,4 +283,4 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	}
 }
 
-export default React.memo(PlayerVisualizer);
+export default PlayerVisualizer;

@@ -15,20 +15,29 @@ import { PlayerControllerContext, IPlayerControllerContext } from "contexts/play
  * @returns {React.FunctionComponent}
  */
 const Homepage: React.FunctionComponent = () => {
+	/**
+	 * Renders the playlist visualizer component.
+	 * It is based on the context state.
+	 *
+	 * @returns {JSX.Element}
+	 */
+	function renderPlayerVisualizer() {
+		return (
+			<PlayerControllerContext.Consumer>
+				{(context: IPlayerControllerContext) => {
+					const audio = context.audio && context.audio.src ? context.audio : null;
+					return <PlayerVisualizer status={context.status} audio={audio} />;
+				}}
+			</PlayerControllerContext.Consumer>
+		);
+	}
+
 	return (
 		<>
 			<TopBar />
 			<main id="main-content" className="window__main row">
 				<PlayerController>
-					<PlayerControllerContext.Consumer>
-						{(context: IPlayerControllerContext) => {
-							if (context.player && context.player.audio.src) {
-								return <PlayerVisualizer status={context.status} audio={context.player && context.player.audio} />;
-							}
-
-							return <PlayerVisualizer status={context.status} />;
-						}}
-					</PlayerControllerContext.Consumer>
+					{renderPlayerVisualizer()}
 					<Select id="channel" label="Channel:" placeholder="Choose a radio channel" options={PoolsidePlaylists} />
 					<MediaPlayer />
 				</PlayerController>
