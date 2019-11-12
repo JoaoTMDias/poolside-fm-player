@@ -5,7 +5,7 @@ import { ROUTE_SETTINGS } from "data/constants/routes";
 import { hasPressedSpaceOrEnter } from "helpers";
 import * as S from "./controls-media.styled";
 import { IControlsMediaProps, EPlayingStatus } from "../media-player/player.interfaces";
-import ButtonVolume from "./buttons/button-volume";
+import ButtonVolume from "./button-volume";
 
 /**
  * @description Controls - Media Buttons

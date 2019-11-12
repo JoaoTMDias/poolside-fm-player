@@ -12,6 +12,12 @@ interface IButtonVolumeState {
 	value: string;
 }
 
+/**
+ * Volume button
+ *
+ * @class ButtonVolume
+ * @extends {React.Component<IButtonVolumeProps, IButtonVolumeState>}
+ */
 class ButtonVolume extends React.Component<IButtonVolumeProps, IButtonVolumeState> {
 	constructor(props: IButtonVolumeProps) {
 		super(props);
