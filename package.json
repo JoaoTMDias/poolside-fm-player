@@ -29,7 +29,6 @@
 		"extends": "react-app"
 	},
 	"dependencies": {
-		"@babel/preset-typescript": "^7.6.0",
 		"axios": "^0.19.0",
 		"electron": "^7.0.0",
 		"electron-devtools-installer": "^2.2.4",
@@ -46,9 +45,12 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.6.4",
+		"@babel/plugin-proposal-class-properties": "^7.7.0",
+		"@babel/plugin-proposal-object-rest-spread": "^7.6.2",
 		"@babel/plugin-transform-modules-commonjs": "^7.6.0",
 		"@babel/polyfill": "^7.6.0",
 		"@babel/preset-env": "^7.6.3",
+		"@babel/preset-typescript": "^7.7.2",
 		"@types/enzyme": "^3.10.3",
 		"@types/enzyme-adapter-react-16": "^1.0.5",
 		"@types/jest": "24.0.19",
