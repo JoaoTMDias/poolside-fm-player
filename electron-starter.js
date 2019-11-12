@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, nativeImage, Tray } = require("electron");
+const { app, BrowserWindow, Tray } = require("electron");
 const url = require("url");
 const path = require("path");
 
@@ -113,6 +113,7 @@ async function createWindow() {
 		await installExtensions();
 		mainWindow.openDevTools();
 	}
+
 	// and load the index.html of the app.
 	const startUrl =
 		process.env.ELECTRON_START_URL ||
