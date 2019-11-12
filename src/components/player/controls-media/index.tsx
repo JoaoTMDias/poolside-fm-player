@@ -17,7 +17,7 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 	onClickOnPrevious,
 	onTogglePlay,
 	onClickOnNext,
-	onClickOnVolume,
+	onChangeVolume,
 	status,
 }) => {
 	return (
@@ -140,7 +140,13 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 				</li>
 			</S.Buttons>
 			<div className="controls-media__item">
-				<ButtonVolume onClickOnVolume={onClickOnVolume} />
+				<ButtonVolume
+					onChangeVolume={(value: string) => {
+						if (onChangeVolume) {
+							onChangeVolume(value);
+						}
+					}}
+				/>
 			</div>
 			<div className="controls-media__item">
 				<Link

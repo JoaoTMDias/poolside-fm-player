@@ -4,10 +4,10 @@ import { hasPressedSpaceOrEnter } from "helpers";
 import * as S from "./button-volume.styled";
 
 interface IButtonVolumeProps {
-	onClickOnVolume?: () => void;
+	onChangeVolume?: (value: string) => void;
 }
 
-interface IButtonVolumeState {
+export interface IButtonVolumeState {
 	showControls: boolean;
 	value: string;
 }
@@ -28,12 +28,19 @@ class ButtonVolume extends React.Component<IButtonVolumeProps, IButtonVolumeStat
 		};
 	}
 
-	onChangeRangeInput(event: React.ChangeEvent<HTMLInputElement>) {
-		const value = `${event.target.value}`;
+	onChangeRangeInput(value: string) {
+		this.setState(
+			{
+				value,
+			},
+			() => {
+				const { onChangeVolume } = this.props;
 
-		this.setState({
-			value,
-		});
+				if (onChangeVolume) {
+					onChangeVolume(value);
+				}
+			},
+		);
 	}
 
 	handleOnClick() {
@@ -46,7 +53,6 @@ class ButtonVolume extends React.Component<IButtonVolumeProps, IButtonVolumeStat
 
 	render() {
 		const { showControls, value } = this.state;
-		const { onClickOnVolume } = this.props;
 		return (
 			<>
 				<button
@@ -58,7 +64,7 @@ class ButtonVolume extends React.Component<IButtonVolumeProps, IButtonVolumeStat
 					className="controls-media__button button button--large"
 					onClick={() => this.handleOnClick()}
 					onKeyUp={(event: React.KeyboardEvent<HTMLButtonElement>) => {
-						if (onClickOnVolume && hasPressedSpaceOrEnter(event.keyCode)) {
+						if (hasPressedSpaceOrEnter(event.keyCode)) {
 							this.handleOnClick();
 						}
 					}}
@@ -71,23 +77,22 @@ class ButtonVolume extends React.Component<IButtonVolumeProps, IButtonVolumeStat
 					</svg>
 				</button>
 				{showControls && (
-					<>
-						<ClickTrapPortal title="Click to close the volume controls" onClickToClose={() => this.handleOnClick()}>
-							<S.Wrapper id="volume-input-wrapper" tabIndex={-1}>
-								<S.Input
-									type="range"
-									id="volume-input-control"
-									className="volume-input__wrapper"
-									min="0"
-									max="1"
-									step="0.1"
-									value={value}
-									tabIndex={0}
-									onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeRangeInput(event)}
-								/>
-							</S.Wrapper>
-						</ClickTrapPortal>
-					</>
+					<ClickTrapPortal title="Click to close the volume controls" onClickToClose={() => this.handleOnClick()}>
+						<S.Wrapper id="volume-input-wrapper" tabIndex={-1}>
+							<S.Input
+								type="range"
+								id="volume-input-control"
+								data-testid="component-button-volume-range-input"
+								className="volume-input__wrapper"
+								min="0"
+								max="1"
+								step="0.1"
+								value={value}
+								tabIndex={0}
+								onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.onChangeRangeInput(event.target.value)}
+							/>
+						</S.Wrapper>
+					</ClickTrapPortal>
 				)}
 			</>
 		);

@@ -45,7 +45,7 @@ export interface IControlsMediaProps {
 	onClickOnPrevious?: () => void;
 	onTogglePlay?: () => void;
 	onClickOnNext?: () => void;
-	onClickOnVolume?: () => void;
+	onChangeVolume?: (value: string) => void;
 	status?: EPlayingStatus;
 }
 

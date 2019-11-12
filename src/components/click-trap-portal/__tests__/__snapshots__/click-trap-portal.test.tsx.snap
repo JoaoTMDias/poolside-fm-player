@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClickTrapPortal /> should render the portal 1`] = `ReactWrapper {}`;
