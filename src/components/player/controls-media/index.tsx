@@ -2,23 +2,10 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { ROUTE_SETTINGS } from "data/constants/routes";
-import { KEY_CODES } from "helpers";
+import { hasPressedSpaceOrEnter } from "helpers";
 import * as S from "./controls-media.styled";
 import { IControlsMediaProps, EPlayingStatus } from "../media-player/player.interfaces";
-
-/**
- * Checks if the user has pressed space or enter
- *
- * @param {number} keyCode
- * @returns {boolean}
- */
-export function hasPressedSpaceOrEnter(keyCode: number) {
-	if (keyCode === KEY_CODES.ENTER || keyCode === KEY_CODES.SPACE) {
-		return true;
-	}
-
-	return false;
-}
+import ButtonVolume from "./buttons/button-volume";
 
 /**
  * @description Controls - Media Buttons
@@ -153,31 +140,7 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 				</li>
 			</S.Buttons>
 			<div className="controls-media__item">
-				<button
-					id="controls-button-volume"
-					data-testid="component-controls-media-button-volume"
-					title="Control Volume"
-					aria-label="Click to control the volume of the song"
-					type="button"
-					className="controls-media__button button button--large"
-					onClick={() => {
-						if (onClickOnVolume) {
-							onClickOnVolume();
-						}
-					}}
-					onKeyUp={(event: React.KeyboardEvent<HTMLButtonElement>) => {
-						if (onClickOnVolume && hasPressedSpaceOrEnter(event.keyCode)) {
-							onClickOnVolume();
-						}
-					}}
-				>
-					<svg className="icon" xmlns="http://www.w3.org/2000/svg" width="9" height="9" fill="none" viewBox="0 0 9 9">
-						<path
-							fill="var(--color-icon, #000)"
-							d="M6.652.587V0H5.478v.587h-.587v.587h-.587v.587h-.587v.587h-1.37v.587h-.586v3.13h.587v.587h1.37v.587h.586v.587h.587v.587h.587V9h1.174v-.587h.587V.587h-.587z"
-						/>
-					</svg>
-				</button>
+				<ButtonVolume onClickOnVolume={onClickOnVolume} />
 			</div>
 			<div className="controls-media__item">
 				<Link

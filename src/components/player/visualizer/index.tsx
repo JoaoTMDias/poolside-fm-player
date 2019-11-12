@@ -30,17 +30,15 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 
 	private canvasElement: HTMLCanvasElement | null;
 
-	private playerContext: CanvasRenderingContext2D | null;
+	private canvasContext: CanvasRenderingContext2D | null;
 
-	private playerAnalyser: AnalyserNode | null;
+	private audioAnalyser: AnalyserNode | null;
 
 	private playerBarWidth: number;
 
 	private dataArray: Uint8Array | null;
 
 	private bufferLength: number;
-
-	private rAF: number;
 
 	context!: React.ContextType<typeof PlayerControllerContext>;
 
@@ -54,12 +52,11 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 
 		this.canvas = React.createRef<HTMLCanvasElement>();
 		this.canvasElement = null;
-		this.playerContext = null;
-		this.playerAnalyser = null;
+		this.canvasContext = null;
+		this.audioAnalyser = null;
 		this.playerBarWidth = 0;
 		this.dataArray = null;
 		this.bufferLength = 0;
-		this.rAF = 0;
 
 		this.state = {
 			width: 256,
@@ -90,10 +87,7 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 		if (this.canvas && this.canvas.current) {
 			this.canvasElement = this.canvas.current;
 
-			this.canvasElement.width = width * dpi;
-			this.canvasElement.height = height * dpi;
-			this.canvasElement.setAttribute("width", `${width}`);
-			this.canvasElement.setAttribute("height", `${height}`);
+			this.setCanvasPixelRatio(width, dpi, height);
 
 			if (audio && audio.src.length > 0) {
 				this.initCanvas(audio);
@@ -128,6 +122,24 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 
 		if (prevProps.audio !== audio && audio && audio.src.length > 0) {
 			this.initCanvas(audio);
+		}
+	}
+
+	/**
+	 * Defines the canvas width and height base on the devices pixel ratio
+	 *
+	 * @private
+	 * @param {number} width
+	 * @param {number} dpi
+	 * @param {number} height
+	 * @memberof PlayerVisualizer
+	 */
+	private setCanvasPixelRatio(width: number, dpi: number, height: number) {
+		if (this.canvasElement) {
+			this.canvasElement.width = width * dpi;
+			this.canvasElement.height = height * dpi;
+			this.canvasElement.setAttribute("width", `${width}`);
+			this.canvasElement.setAttribute("height", `${height}`);
 		}
 	}
 
@@ -173,7 +185,7 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	 */
 	initCanvas(audio: HTMLAudioElement) {
 		if (this.canvasElement) {
-			this.createPlayerContext(this.canvasElement);
+			this.createCanvasContext(this.canvasElement);
 
 			this.createAudioAnalyser(audio);
 
@@ -192,15 +204,15 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	 * @param {HTMLCanvasElement} canvasElement
 	 * @memberof PlayerVisualizer
 	 */
-	createPlayerContext(canvasElement: HTMLCanvasElement) {
+	createCanvasContext(canvasElement: HTMLCanvasElement) {
 		const { width, height, bars } = this.state;
 
-		this.playerContext = canvasElement.getContext("2d");
+		this.canvasContext = canvasElement.getContext("2d");
 
-		if (this.playerContext) {
-			this.playerContext.fillStyle = bars.background;
-			this.playerContext.fill();
-			this.playerContext.fillRect(0, 0, width, height);
+		if (this.canvasContext) {
+			this.canvasContext.fillStyle = bars.background;
+			this.canvasContext.fill();
+			this.canvasContext.fillRect(0, 0, width, height);
 		}
 	}
 
@@ -215,13 +227,13 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 		const mediaElementSource = context.createMediaElementSource(audio);
 		audio.crossOrigin = "anonymous";
 
-		this.playerAnalyser = context.createAnalyser();
-		this.playerAnalyser.connect(context.destination);
-		this.playerAnalyser.fftSize = 256;
+		this.audioAnalyser = context.createAnalyser();
+		this.audioAnalyser.connect(context.destination);
+		this.audioAnalyser.fftSize = 256;
 
-		mediaElementSource.connect(this.playerAnalyser);
+		mediaElementSource.connect(this.audioAnalyser);
 
-		this.bufferLength = this.playerAnalyser.frequencyBinCount;
+		this.bufferLength = this.audioAnalyser.frequencyBinCount;
 
 		this.dataArray = new Uint8Array(this.bufferLength);
 	}
@@ -238,19 +250,19 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 		let xAxis = 0;
 		let barHeight;
 
-		if (this.playerContext && this.dataArray && this.playerBarWidth && this.canvasElement) {
-			if (this.playerAnalyser && this.playerAnalyser !== undefined) {
-				this.playerAnalyser.getByteFrequencyData(this.dataArray);
+		if (this.canvasContext && this.dataArray && this.playerBarWidth && this.canvasElement) {
+			if (this.audioAnalyser && this.audioAnalyser !== undefined) {
+				this.audioAnalyser.getByteFrequencyData(this.dataArray);
 			}
 
-			this.playerContext.fillStyle = bars.background;
-			this.playerContext.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
+			this.canvasContext.fillStyle = bars.background;
+			this.canvasContext.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 
 			for (let i = 0; i < this.bufferLength; i += 1) {
 				barHeight = this.dataArray[i] * 0.1;
 
-				this.playerContext.fillStyle = bars.color;
-				this.playerContext.fillRect(xAxis, this.canvasElement.height - barHeight, this.playerBarWidth, barHeight);
+				this.canvasContext.fillStyle = bars.color;
+				this.canvasContext.fillRect(xAxis, this.canvasElement.height - barHeight, this.playerBarWidth, barHeight);
 
 				xAxis += this.playerBarWidth + 2;
 			}

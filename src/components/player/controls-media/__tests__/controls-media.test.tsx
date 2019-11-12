@@ -1,8 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
-import ControlsMedia, { hasPressedSpaceOrEnter } from "components/player/controls-media";
+import ControlsMedia from "components/player/controls-media";
 import { EPlayingStatus } from "components/player/media-player/player.interfaces";
-import { KEY_CODES } from "helpers";
+import { KEY_CODES, hasPressedSpaceOrEnter } from "helpers";
 
 describe("<ControlsMedia />", () => {
 	it("should render the component without errors", () => {
