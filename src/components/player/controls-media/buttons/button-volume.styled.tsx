@@ -125,11 +125,3 @@ export const Input = styled.input`
 		}
 	}
 `;
-
-export const Trap = styled.div`
-	width: 100vh;
-	height: 100vh;
-	position: absolute;
-	z-index: 10;
-	border: 1px solid red;
-`;
