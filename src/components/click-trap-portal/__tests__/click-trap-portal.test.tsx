@@ -1,6 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
-import { KEY_CODES } from "helpers";
+import { KEY_CODES, findByTestAttr } from "helpers";
 import ClickTrapPortal from "..";
 
 describe("<ClickTrapPortal />", () => {
@@ -28,7 +28,7 @@ describe("<ClickTrapPortal />", () => {
 				</div>,
 			);
 
-			const button = wrapper.find("[data-testid='component-portal-click-trap']").first();
+			const button = findByTestAttr(wrapper, "component-portal-click-trap").first();
 			button.simulate("click");
 
 			expect(onClickToCloseMock).toHaveBeenCalled();

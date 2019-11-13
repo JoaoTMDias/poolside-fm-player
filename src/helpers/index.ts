@@ -1,5 +1,6 @@
 import hasPressedSpaceOrEnter from "./has-pressed-space-or-enter";
 
+export * from "./test-utilties";
 export * from "./logger.helper";
 export * from "./key-codes";
 export * from "./with-memo.helper";

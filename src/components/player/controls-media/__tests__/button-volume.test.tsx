@@ -1,5 +1,6 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
+import { findByTestAttr } from "helpers";
 import ButtonVolume from "../button-volume";
 
 describe("<ButtonVolume />", () => {
@@ -25,12 +26,11 @@ describe("<ButtonVolume />", () => {
 			ButtonVolume.prototype.onChangeRangeInput = jest.fn();
 
 			const wrapper = mount(root);
-
-			const button = wrapper.find("[data-testid='component-controls-media-button-volume']").first();
+			const button = findByTestAttr(wrapper, "component-controls-media-button-volume").first();
 
 			button.simulate("click");
 
-			const input = wrapper.find("[data-testid='component-button-volume-range-input']").first();
+			const input = findByTestAttr(wrapper, "component-button-volume-range-input").first();
 
 			input.simulate("change", {
 				target: {

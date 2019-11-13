@@ -2,7 +2,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import ControlsMedia from "components/player/controls-media";
 import { EPlayingStatus } from "components/player/media-player/player.interfaces";
-import { KEY_CODES, hasPressedSpaceOrEnter } from "helpers";
+import { KEY_CODES, hasPressedSpaceOrEnter, findByTestAttr, findById } from "helpers";
 import { HashRouter as Router } from "react-router-dom";
 import ButtonVolume from "../button-volume";
 
@@ -16,9 +16,10 @@ describe("<ControlsMedia />", () => {
 	describe("Play button", () => {
 		it("should be paused by default", () => {
 			const component = shallow(<ControlsMedia status={EPlayingStatus.paused} />);
-			const playButton = component.find("[data-testid='component-controls-media-button-play']").first();
-			const iconPlay = playButton.find("#icon-play");
-			const iconPause = playButton.find("#icon-pause");
+			const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
+
+			const iconPlay = findById(playButton, "icon-play");
+			const iconPause = findById(playButton, "icon-pause");
 
 			expect(iconPlay.length).toBe(0);
 			expect(iconPause.length).toBe(1);
@@ -26,9 +27,9 @@ describe("<ControlsMedia />", () => {
 
 		it("should be play when a song is playing", () => {
 			const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-			const playButton = component.find("[data-testid='component-controls-media-button-play']").first();
-			const iconPlay = playButton.find("#icon-play");
-			const iconPause = playButton.find("#icon-pause");
+			const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
+			const iconPlay = findById(playButton, "icon-play");
+			const iconPause = findById(playButton, "icon-pause");
 
 			expect(iconPlay.length).toBe(1);
 			expect(iconPause.length).toBe(0);
@@ -39,7 +40,7 @@ describe("<ControlsMedia />", () => {
 		it("should call on click", () => {
 			const onTogglePlayMock = jest.fn();
 			const component = shallow(<ControlsMedia onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />);
-			const playButton = component.find("[data-testid='component-controls-media-button-play']").first();
+			const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
 
 			playButton.simulate("click");
 
@@ -49,7 +50,7 @@ describe("<ControlsMedia />", () => {
 		it("should not call on click", () => {
 			const onTogglePlayMock = jest.fn();
 			const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-			const playButton = component.find("[data-testid='component-controls-media-button-play']").first();
+			const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
 
 			playButton.simulate("click");
 
@@ -60,7 +61,7 @@ describe("<ControlsMedia />", () => {
 			it("on SPACE key", () => {
 				const onTogglePlayMock = jest.fn();
 				const component = shallow(<ControlsMedia onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />);
-				const playButton = component.find("[data-testid='component-controls-media-button-play']").first();
+				const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
 
 				playButton.simulate("keyup", {
 					keyCode: KEY_CODES.SPACE,
@@ -72,7 +73,7 @@ describe("<ControlsMedia />", () => {
 			it("on ENTER key", () => {
 				const onTogglePlayMock = jest.fn();
 				const component = shallow(<ControlsMedia onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />);
-				const playButton = component.find("[data-testid='component-controls-media-button-play']").first();
+				const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
 
 				playButton.simulate("keyup", {
 					keyCode: KEY_CODES.ENTER,
@@ -86,7 +87,7 @@ describe("<ControlsMedia />", () => {
 			it("on SPACE key", () => {
 				const onTogglePlayMock = jest.fn();
 				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-				const playButton = component.find("[data-testid='component-controls-media-button-play']").first();
+				const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
 
 				playButton.simulate("keyup", {
 					keyCode: KEY_CODES.SPACE,
@@ -98,7 +99,7 @@ describe("<ControlsMedia />", () => {
 			it("on ENTER key", () => {
 				const onTogglePlayMock = jest.fn();
 				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-				const playButton = component.find("[data-testid='component-controls-media-button-play']").first();
+				const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
 
 				playButton.simulate("keyup", {
 					keyCode: KEY_CODES.ENTER,
@@ -129,7 +130,7 @@ describe("<ControlsMedia />", () => {
 			const component = shallow(
 				<ControlsMedia onClickOnPrevious={onClickOnPreviousMock} status={EPlayingStatus.playing} />,
 			);
-			const previousButton = component.find("[data-testid='component-controls-media-button-previous']").first();
+			const previousButton = findByTestAttr(component, "component-controls-media-button-previous").first();
 
 			previousButton.simulate("click");
 
@@ -139,7 +140,7 @@ describe("<ControlsMedia />", () => {
 		it("should not call on click if no props are passed", () => {
 			const onClickOnPreviousMock = jest.fn();
 			const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-			const previousButton = component.find("[data-testid='component-controls-media-button-previous']").first();
+			const previousButton = findByTestAttr(component, "component-controls-media-button-previous").first();
 
 			previousButton.simulate("click");
 
@@ -153,7 +154,7 @@ describe("<ControlsMedia />", () => {
 					<ControlsMedia onClickOnPrevious={onClickOnPreviousMock} status={EPlayingStatus.playing} />,
 				);
 
-				const previousButton = component.find("[data-testid='component-controls-media-button-previous']").first();
+				const previousButton = findByTestAttr(component, "component-controls-media-button-previous").first();
 
 				previousButton.simulate("keyup", {
 					keyCode: KEY_CODES.SPACE,
@@ -168,7 +169,7 @@ describe("<ControlsMedia />", () => {
 					<ControlsMedia onClickOnPrevious={onClickOnPreviousMock} status={EPlayingStatus.playing} />,
 				);
 
-				const previousButton = component.find("[data-testid='component-controls-media-button-previous']").first();
+				const previousButton = findByTestAttr(component, "component-controls-media-button-previous").first();
 
 				previousButton.simulate("keyup", {
 					keyCode: KEY_CODES.ENTER,
@@ -183,7 +184,7 @@ describe("<ControlsMedia />", () => {
 				const onClickOnPreviousMock = jest.fn();
 				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
 
-				const previousButton = component.find("[data-testid='component-controls-media-button-previous']").first();
+				const previousButton = findByTestAttr(component, "component-controls-media-button-previous").first();
 
 				previousButton.simulate("keyup", {
 					keyCode: KEY_CODES.SPACE,
@@ -196,7 +197,7 @@ describe("<ControlsMedia />", () => {
 				const onClickOnPreviousMock = jest.fn();
 				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
 
-				const previousButton = component.find("[data-testid='component-controls-media-button-previous']").first();
+				const previousButton = findByTestAttr(component, "component-controls-media-button-previous").first();
 
 				previousButton.simulate("keyup", {
 					keyCode: KEY_CODES.ENTER,
@@ -211,7 +212,7 @@ describe("<ControlsMedia />", () => {
 		it("should call on click", () => {
 			const onClickOnNextMock = jest.fn();
 			const component = shallow(<ControlsMedia onClickOnNext={onClickOnNextMock} status={EPlayingStatus.playing} />);
-			const nextButton = component.find("[data-testid='component-controls-media-button-next']").first();
+			const nextButton = findByTestAttr(component, "component-controls-media-button-next").first();
 
 			nextButton.simulate("click");
 
@@ -221,7 +222,7 @@ describe("<ControlsMedia />", () => {
 		it("should not call on click", () => {
 			const onClickOnNextMock = jest.fn();
 			const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-			const nextButton = component.find("[data-testid='component-controls-media-button-next']").first();
+			const nextButton = findByTestAttr(component, "component-controls-media-button-next").first();
 
 			nextButton.simulate("click");
 
@@ -232,8 +233,7 @@ describe("<ControlsMedia />", () => {
 			it("on SPACE key", () => {
 				const onClickOnNextMock = jest.fn();
 				const component = shallow(<ControlsMedia onClickOnNext={onClickOnNextMock} status={EPlayingStatus.playing} />);
-
-				const nextButton = component.find("[data-testid='component-controls-media-button-next']").first();
+				const nextButton = findByTestAttr(component, "component-controls-media-button-next").first();
 
 				nextButton.simulate("keyup", {
 					keyCode: KEY_CODES.SPACE,
@@ -245,8 +245,7 @@ describe("<ControlsMedia />", () => {
 			it("on ENTER key", () => {
 				const onClickOnNextMock = jest.fn();
 				const component = shallow(<ControlsMedia onClickOnNext={onClickOnNextMock} status={EPlayingStatus.playing} />);
-
-				const nextButton = component.find("[data-testid='component-controls-media-button-next']").first();
+				const nextButton = findByTestAttr(component, "component-controls-media-button-next").first();
 
 				nextButton.simulate("keyup", {
 					keyCode: KEY_CODES.ENTER,
@@ -260,8 +259,7 @@ describe("<ControlsMedia />", () => {
 			it("on SPACE key", () => {
 				const onClickOnNextMock = jest.fn();
 				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-
-				const nextButton = component.find("[data-testid='component-controls-media-button-next']").first();
+				const nextButton = findByTestAttr(component, "component-controls-media-button-next").first();
 
 				nextButton.simulate("keyup", {
 					keyCode: KEY_CODES.SPACE,
@@ -273,8 +271,7 @@ describe("<ControlsMedia />", () => {
 			it("on ENTER key", () => {
 				const onClickOnNextMock = jest.fn();
 				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-
-				const nextButton = component.find("[data-testid='component-controls-media-button-next']").first();
+				const nextButton = findByTestAttr(component, "component-controls-media-button-next").first();
 
 				nextButton.simulate("keyup", {
 					keyCode: KEY_CODES.ENTER,
@@ -296,7 +293,7 @@ describe("<ControlsMedia />", () => {
 			);
 
 			const ButtonComponent = component.find(ButtonVolume).first();
-			const volumeButton = ButtonComponent.find("button[data-testid='component-controls-media-button-volume']").first();
+			const volumeButton = findByTestAttr(ButtonComponent, "component-controls-media-button-volume").first();
 			volumeButton.simulate("click");
 
 			expect(ButtonVolume.prototype.handleOnClick).toHaveBeenCalled();

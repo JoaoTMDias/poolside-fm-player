@@ -6,23 +6,22 @@ import { memo } from "react";
  * @author João Dias
  * @date 2019-04-29
  * @param {*} Component
- * @param {*} checkedProps
+ * @param {*} ComponentProps
  * @returns
  */
-export function withMemo(Component: React.FunctionComponent<any>, checkedProps: string[]) {
+export function withMemo<Type>(Component: React.FunctionComponent<Type>, ComponentProps: string[]) {
 	/**
-	 * @description Check if props are equal
-	 * @author João Dias
-	 * @date 2019-07-03
+	 * Check if props are equal
+	 *
 	 * @param {*} prevProps
 	 * @param {*} nextProps
-	 * @returns
+	 * @returns {boolean}
 	 */
-	function areEqual(prevProps: any, nextProps: any) {
+	function areEqual(prevProps: Type | any, nextProps: Type | any) {
 		let isEqual = true;
 		// eslint-disable-next-line no-plusplus
-		for (let i = 0; i < checkedProps.length; i++) {
-			const checkedProp = checkedProps[i];
+		for (let i = 0; i < ComponentProps.length; i++) {
+			const checkedProp = ComponentProps[i];
 			if (JSON.stringify(prevProps[checkedProp]) !== JSON.stringify(nextProps[checkedProp])) {
 				isEqual = false;
 				break;
