@@ -15,7 +15,7 @@ export const PlayerVisualizerWrapper = styled.figure`
 	overflow: hidden;
 
 	&::after {
-		background-color: var(--color-black);
+		background-color: transparent;
 		width: 100%;
 		height: 100%;
 		transform: translateY(-0.25rem);
@@ -30,10 +30,27 @@ export const PlayerVisualizerWrapper = styled.figure`
 		display: block;
 	}
 
-	&.player-visualizer--is-playing {
+	&.is-playing {
+		background-color: var(--color-black);
 		&::after {
 			transform: translateY(-2.5rem);
 		}
+	}
+
+	.player-visualizer__label {
+		color: var(--color-white);
+		width: 100%;
+		font-size: 10px;
+		letter-spacing: 2px;
+		animation-duration: 1000ms;
+		animation-timing-function: step-start;
+		animation-delay: 0s;
+		animation-iteration-count: infinite;
+		animation-direction: normal;
+		animation-fill-mode: none;
+		animation-play-state: running;
+		animation-name: blink;
+		text-align: center;
 	}
 
 	.player-visualizer__image,

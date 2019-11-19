@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PlayerControllerContext } from "contexts/player-controller-context";
-import SelectInputOptions from "./select-input-option";
+import SelectInputOptions from "./select-option";
 import { ISelectProps, ISelectState } from "./select.interface";
 import * as S from "./select.styled";
 

@@ -1,15 +1,15 @@
 // Libraries
 import * as React from "react";
 import { KEY_CODES, holdOn } from "helpers";
-import { ISelectOption } from "./select.interface";
+import { IPoolsidePlaylist } from "data/constants/playlists.constants";
 import * as S from "./select.styled";
 
 // Interface
 interface ISelectInputOptionsProps {
 	id: string;
-	activeElement: ISelectOption;
+	activeElement: IPoolsidePlaylist;
 	isOpen: boolean;
-	options: ISelectOption[];
+	options: IPoolsidePlaylist[];
 	onChangeOptionFromList(
 		index: number | null,
 		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
@@ -23,10 +23,24 @@ interface ISelectInputOptionsState {
 	lastIndex: number;
 }
 
-const SelectInputOptionLabel: React.FunctionComponent<{
+interface ISelectInputOptionLabel {
+	isNew?: boolean;
 	label: string;
-}> = ({ label }) => {
-	return <span className="ui-label">{label}</span>;
+}
+
+/**
+ * Returns the label for each option
+ *
+ * @param {ISelectInputOptionLabel} props
+ * @returns {JSX.Element}
+ */
+const SelectInputOptionLabel: React.FunctionComponent<ISelectInputOptionLabel> = ({ isNew, label }): JSX.Element => {
+	return (
+		<span className="ui-label">
+			{label}
+			{isNew && <span className="is-new">New</span>}
+		</span>
+	);
 };
 
 class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, ISelectInputOptionsState> {
@@ -61,15 +75,15 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 			const allOptions: HTMLElement[] = Array.from(document.querySelectorAll(".select-input__option"));
 
 			if (allOptions && allOptions.length > 0) {
-				let currentIndex = firstIndex;
 				const first = allOptions[firstIndex];
 				const lastIndex = allOptions.length - 1;
-
-				let focusableElement: HTMLElement | null = null;
 				const currentActiveElementIndex =
 					allOptions && allOptions.findIndex(option => option.classList.contains("is-selected"));
+				const hasCurrentActiveElementIndex = !!(currentActiveElementIndex && currentActiveElementIndex !== -1);
+				let currentIndex = firstIndex;
+				let focusableElement: HTMLElement | null = null;
 
-				if (currentActiveElementIndex && currentActiveElementIndex !== -1) {
+				if (hasCurrentActiveElementIndex) {
 					currentIndex = currentActiveElementIndex;
 					focusableElement = allOptions[currentIndex];
 				} else if (first) {
@@ -183,14 +197,13 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 	 * @description Constroi uma lista de opções
 	 * @author João Dias
 	 * @date 2019-06-28
-	 * @param {ISelectOption[]} options
+	 * @param {IPoolsidePlaylist[]} options
 	 * @returns
 	 * @memberof SelectInputOptions
 	 */
 	renderListOfOptions() {
 		const { id, options, onChangeOptionFromList, activeElement } = this.props;
-
-		const list = options.map((option: ISelectOption, index: number) => {
+		const list = options.map((option: IPoolsidePlaylist, index: number) => {
 			const key = `${option.id}-id-${index}`;
 			const isSelected = !!(activeElement.id === option.id);
 
@@ -220,8 +233,7 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 							onChange={(event: React.ChangeEvent<HTMLInputElement>) => onChangeOptionFromList(index, event)}
 							tabIndex={-1}
 						/>
-
-						<SelectInputOptionLabel label={`${option.label}`} />
+						<SelectInputOptionLabel isNew={option.isNew} label={`${option.label}`} />
 					</label>
 				</li>
 			);

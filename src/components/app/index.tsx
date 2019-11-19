@@ -14,7 +14,7 @@ import Window from "../window/index";
  */
 const App: React.FunctionComponent = () => {
 	return (
-		<Router>
+		<Router basename="/">
 			<Switch>
 				<Window exact path={ROUTE_HOME} component={Homepage} />
 				<Window exact path={ROUTE_SETTINGS} component={Settings} />

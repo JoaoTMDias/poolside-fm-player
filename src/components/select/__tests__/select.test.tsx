@@ -1,8 +1,8 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 
-import Select from "components/select/index.component";
-import SelectInputOptions from "../select-input-option";
+import Select from "components/select/select";
+import SelectInputOptions from "../select-option";
 import { ISelectProps } from "../select.interface";
 
 const initialProps: ISelectProps = {

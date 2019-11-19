@@ -1,9 +1,8 @@
-// Modules to control application life and create native browser window
+// Libraries
 import { app, BrowserWindow, nativeImage, Tray } from "electron";
 import url from "url";
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+// Global reference of the window object
 let mainWindow: Electron.BrowserWindow;
 let tray: Electron.Tray;
 
@@ -13,13 +12,12 @@ let tray: Electron.Tray;
  * @returns
  */
 async function installExtensions() {
+	// eslint-disable-next-line global-require
 	const installer = require("electron-devtools-installer");
 	const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
 	const extensions = ["REACT_DEVELOPER_TOOLS", "REDUX_DEVTOOLS"];
 
-	return Promise.all(
-		extensions.map(name => installer.default(installer[name], forceDownload)),
-	).catch(console.log);
+	return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload))).catch(console.log);
 }
 
 /**
@@ -78,9 +76,7 @@ function getWindowPosition() {
 	const trayBounds = tray.getBounds();
 
 	// Center window horizontally below the tray icon
-	const x = Math.round(
-		trayBounds.x + trayBounds.width / 2 - windowBounds.width / 2,
-	);
+	const x = Math.round(trayBounds.x + trayBounds.width / 2 - windowBounds.width / 2);
 
 	// Position window 4 pixels vertically below the tray icon
 	const y = Math.round(trayBounds.y + trayBounds.height + 4);

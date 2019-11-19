@@ -4,6 +4,7 @@ import * as S from "./top-bar.styled";
 
 interface ITopBarProps {
 	title?: string;
+	onClick?: () => void;
 }
 
 /**
@@ -12,18 +13,30 @@ interface ITopBarProps {
  * @date 2019-02-16
  * @returns {React.FunctionComponent<ITopBarProps>}
  */
-const TopBar: React.FunctionComponent<ITopBarProps> = ({ title }) => {
+const TopBar: React.FunctionComponent<ITopBarProps> = ({ title, onClick }) => {
 	/**
-	 * When the user clicks on this button, it closes the whole app.
+	 * When the user clicks on this button:
+	 * - it closes the window and returns to the homepage
+	 * - or it closes the whole app.
 	 *
+	 * @returns {void}
 	 */
-	function onClick() {
-		window.close();
+	function onClickOnButton() {
+		if (onClick) {
+			onClick();
+		} else {
+			window.close();
+		}
 	}
 
 	return (
 		<S.Wrapper id="top-bar" className="row">
-			<button className="top-bar__button button" type="button" onClick={onClick}>
+			<button
+				type="button"
+				data-testid="component-top-bar-button"
+				className="top-bar__button button"
+				onClick={onClickOnButton}
+			>
 				<span className="sr-only">Close this window</span>
 			</button>
 			<div role="presentation" className="top-bar__handle" tabIndex={-1}>

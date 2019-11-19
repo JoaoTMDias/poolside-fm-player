@@ -272,24 +272,31 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	render() {
 		const { status } = this.props;
 
+		const isPlaying = status === EPlayingStatus.playing;
+		const wrapperClassname = isPlaying ? "is-playing" : "";
+		const caption = isPlaying ? "This is an audio visualizer for the music that is playing" : "Press play to start";
+		const captionClassname = isPlaying ? "sr-only" : "";
+
 		return (
 			<S.PlayerVisualizerWrapper
 				role="presentation"
 				data-testid="player-visualizer-wrapper"
 				id="player-visualizer"
-				className={`player-visualizer ${status === EPlayingStatus.playing && "player-visualizer--is-playing"}`}
+				className={`player-visualizer ${wrapperClassname}`}
 			>
-				<figcaption id="player-visualizer-label" className="sr-only">
-					This is an audio visualizer for the music that is playing
+				<figcaption id="player-visualizer-label" className={`player-visualizer__label ${captionClassname}`}>
+					{caption}
 				</figcaption>
-				<canvas
-					ref={this.canvas}
-					id="player-visualizer-canvas"
-					aria-labelledby="player-visualizer-label"
-					width="272"
-					height="40"
-					className="player-visualizer__canvas"
-				/>
+				{isPlaying && (
+					<canvas
+						ref={this.canvas}
+						id="player-visualizer-canvas"
+						aria-labelledby="player-visualizer-label"
+						width="272"
+						height="40"
+						className="player-visualizer__canvas"
+					/>
+				)}
 			</S.PlayerVisualizerWrapper>
 		);
 	}

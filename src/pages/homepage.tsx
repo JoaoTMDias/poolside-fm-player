@@ -3,7 +3,7 @@ import * as React from "react";
 import { PoolsidePlaylists } from "data/constants/playlists.constants";
 import MediaPlayer from "components/player/media-player";
 import TopBar from "components/top-bar";
-import Select from "components/select/index.component";
+import Select from "components/select/select";
 import PlayerVisualizer from "components/player/visualizer";
 import PlayerController from "components/player/controller";
 import { PlayerControllerContext, IPlayerControllerContext } from "contexts/player-controller-context";

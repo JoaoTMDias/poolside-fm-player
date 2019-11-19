@@ -142,19 +142,6 @@ export const SelectOptionsList = styled.ul`
 			background-color: var(--color-gray8);
 			color: var(--color-white);
 
-			.select-input__option__label {
-				outline: none;
-
-				&:hover,
-				&:focus {
-					.ui-label {
-						outline-color: var(--color-white);
-						outline-style: dotted;
-						outline-width: 1px;
-					}
-				}
-			}
-
 			.ui-label {
 				outline-color: var(--color-white);
 				outline-style: dotted;
@@ -169,6 +156,19 @@ export const SelectOptionsList = styled.ul`
 					outline-color: var(--color-white);
 					outline-style: dotted;
 					outline-width: 1px;
+				}
+			}
+
+			.select-input__option__label {
+				outline: none;
+
+				&:hover,
+				&:focus {
+					.ui-label {
+						outline-color: var(--color-white);
+						outline-style: dotted;
+						outline-width: 1px;
+					}
 				}
 			}
 		}
@@ -186,14 +186,48 @@ export const SelectOptionsList = styled.ul`
 		align-items: center;
 		cursor: pointer;
 
+		.ui-label {
+			width: 100%;
+			height: 1.25rem;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.is-new {
+			width: auto;
+			background-color: var(--color-primary);
+			color: var(--color-black);
+			border-radius: 1rem;
+			padding: 0.125rem 0.5rem;
+			font-family: var(--heading-font-family);
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-size: 10px;
+			animation-duration: 1000ms;
+			animation-timing-function: step-start;
+			animation-delay: 0s;
+			animation-iteration-count: infinite;
+			animation-direction: normal;
+			animation-fill-mode: none;
+			animation-play-state: running;
+			animation-name: blink;
+		}
+
 		&:hover,
 		&:focus {
 			outline: none;
 
 			.ui-label {
+				width: 100%;
 				outline-color: var(--color-black);
 				outline-style: dotted;
 				outline-width: 1px;
+			}
+
+			.is-new {
+				background-color: var(--color-white);
 			}
 		}
 	}
