@@ -1,6 +1,12 @@
 {
 	"name": "poolside-fm-player",
-	"version": "0.1.0",
+	"version": "0.5.0",
+	"author": {
+		"name": "João Dias",
+		"email": "contacto+poolside@joaodias.me",
+		"url": "https://joaodias.me"
+	},
+	"description": "A Menu Bar player for Poolside.fm built with React and Electron",
 	"private": true,
 	"repository": {
 		"type": "git",
@@ -14,23 +20,27 @@
 	"scripts": {
 		"start": "cross-env BROWSER=none nf start -p 3000",
 		"build": "react-scripts build",
-		"test": "react-scripts test --coverage",
-		"test:watch": "react-scripts test --watch --coverage",
-		"format:fix": "prettier --write 'src/**/*.{ts,tsx}'",
-		"format:lint": "eslint --fix src/**/*.tsx",
+		"package": "rimraf release && npm run build && electron-builder build --publish never",
+		"package-all": "rimraf release && npm run build && electron-builder build -mwl",
+		"app:dev": "cross-env BROWSER=false ELECTRON=true react-scripts start",
+		"app:build": "cross-env ELECTRON=true react-scripts build",
+		"electron:compile": "tsc --project tsconfig.json",
+		"electron:dev": "cross-env NODE_ENV=development electron index.js",
 		"pre-commit": "npm run lint-staged",
 		"pre-push": "npm run format-check",
 		"eject": "react-scripts eject",
 		"electron": "electron .",
 		"electron-start": "node ./electron-wait-react",
-		"react-start": "react-scripts start"
+		"react-start": "react-scripts start",
+		"test": "react-scripts test --coverage",
+		"test:watch": "react-scripts test --watch --coverage",
+		"format:fix": "prettier --write 'src/**/*.{ts,tsx}'",
+		"format:lint": "eslint --fix src/**/*.tsx"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
 	},
 	"dependencies": {
-		"electron": "^7.0.0",
-		"electron-devtools-installer": "^2.2.4",
 		"immer": "^4.0.2",
 		"node-sass": "^4.12.0",
 		"polished": "^3.4.1",
@@ -62,6 +72,9 @@
 		"@typescript-eslint/parser": "^2.4.0",
 		"babel-jest": "^24.9.0",
 		"cross-env": "^6.0.3",
+		"electron": "^7.0.0",
+		"electron-devtools-installer": "^2.2.4",
+		"electron-builder": "^21.2.0",
 		"enzyme": "^3.10.0",
 		"enzyme-adapter-react-16": "^1.15.1",
 		"enzyme-to-json": "^3.4.2",
@@ -76,6 +89,7 @@
 		"husky": "^3.0.9",
 		"lint-staged": "^9.4.2",
 		"prettier": "^1.18.2",
+		"rimraf": "^3.0.0",
 		"ts-jest": "^24.1.0"
 	},
 	"husky": {
@@ -99,12 +113,12 @@
 			"buildResources": "public",
 			"output": "release"
 		},
-		"files": ["build/index.html", "build/**/*", "electron/*.js", "package.json"],
+		"files": ["build/index.html", "build/**/*", "*.js", "package.json"],
 		"extraFiles": ["credentials"],
 		"mac": {
 			"target": ["dmg", "pkg", "zip"],
 			"darkModeSupport": true,
-			"icon": "public/icon/icon.png",
+			"icon": "public/images/icons/iconTemplate.png",
 			"type": "distribution"
 		},
 		"dmg": {
@@ -126,10 +140,10 @@
 		},
 		"win": {
 			"target": ["nsis", "portable", "zip"],
-			"icon": "public/icon/icon.ico"
+			"icon": "public/images/icons/favicon.ico"
 		},
 		"nsis": {
-			"installerIcon": "public/icon/icon.ico",
+			"installerIcon": "public/images/icons/favicon.ico",
 			"license": "LICENSE",
 			"warningsAsErrors": false
 		},

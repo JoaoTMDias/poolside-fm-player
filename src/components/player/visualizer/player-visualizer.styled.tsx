@@ -32,15 +32,21 @@ export const PlayerVisualizerWrapper = styled.figure`
 
 	&.is-playing {
 		background-color: var(--color-black);
+
 		&::after {
 			transform: translateY(-2.5rem);
 		}
 	}
 
+	.player-visualizer__label,
+	.sr-only {
+		position: absolute;
+	}
+
 	.player-visualizer__label {
 		color: var(--color-white);
 		width: 100%;
-		font-size: 10px;
+		font-size: 0.5rem;
 		letter-spacing: 2px;
 		animation-duration: 1000ms;
 		animation-timing-function: step-start;
