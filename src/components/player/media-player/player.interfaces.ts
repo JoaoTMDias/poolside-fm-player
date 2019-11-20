@@ -55,12 +55,13 @@ interface ISoucloudPlayerMethodsPlay {
 }
 
 export interface ISoundcloudPlayer {
-	events: any;
+	events?: any;
+	_events?: any;
 	_baseUrl: string;
 	_clientId: string;
 	_playlist: ISoundcloudPlaylist;
-	_playlistIndex: 0;
-	_track: any;
+	_playlistIndex: number;
+	_track?: any;
 
 	/**
 	 * Instance of raw <audio> element. There are several useful properties like currentTime (in seconds) or events
@@ -85,7 +86,7 @@ export interface ISoundcloudPlayer {
 	 * you need track's metadata then this method is for you. Pass original track's or playlist's url as a first argument.
 	 * Once data will be resolved without errors, callback function will receive it as plain object as the only argument.
 	 */
-	resolve: (url: string, callback: (playlist: ISoundcloudPlaylist) => void) => void;
+	resolve?: (url: string, callback: (playlist: ISoundcloudPlaylist) => void) => void;
 
 	/**
 	 * Start playing track if it's not playing right now.
@@ -95,29 +96,29 @@ export interface ISoundcloudPlayer {
 	 * - options.playlistIndex - number that specifies the position of the track to play in resolved
 	 * SoundCloud playlist's tracks array.
 	 */
-	play: (options?: ISoucloudPlayerMethodsPlay) => Promise<any>;
+	play?: (options?: ISoucloudPlayerMethodsPlay) => Promise<any>;
 
 	/**
 	 * Pause playing audio.
 	 */
-	pause: () => void;
+	pause?: () => void;
 
 	/**
 	 * Stop playing audio and rewind it to start.
 	 */
-	stop: () => void;
+	stop?: () => void;
 
 	/**
 	 * Skip to the next track in playlist to play.
 	 * Returns a Promise and accepts options object:
 	 * - options.loop - boolean, if set to true will start at the beginning of a playlist after the last track.
 	 */
-	next: (options?: { loop: boolean }) => Promise<any>;
+	next?: (options?: { loop: boolean }) => Promise<any>;
 
 	/**
 	 * Return to the previous track in playlist (returns a Promise).
 	 */
-	previous: () => Promise<any>;
+	previous?: () => Promise<any>;
 
 	/**
 	 * Preload track data without playing it.
@@ -130,53 +131,54 @@ export interface ISoundcloudPlayer {
 	 *
 	 * see more at https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes
 	 */
-	preload: (streamUrl: string, preloadType: ESoundcloudPlayerPreloadType) => void;
-	seek: any;
-	on: (event: ESoundCloudPlayerEvents, handler: () => void) => void;
-	off: (event: ESoundCloudPlayerEvents, handler: () => void) => void;
-	unbindAll: () => void;
+	preload?: (streamUrl: string, preloadType: ESoundcloudPlayerPreloadType) => void;
+	seek?: any;
+	on?: (event: ESoundCloudPlayerEvents, handler: () => void) => void;
+	off?: (event: ESoundCloudPlayerEvents, handler: () => void) => void;
+	unbindAll?: () => void;
 }
 
 export interface ISoundcloudPlaylist {
 	duration: number;
-	release_day: null;
+	release_day: string | null;
 	permalink_url: string;
 	reposts_count: number;
-	genre: null;
+	genre: string | null;
 	permalink: string;
-	purchase_url: null;
-	release_month: null;
-	description: null;
+	purchase_url: string | null;
+	release_month: string | null;
+	description: string | null;
 	uri: string;
-	label_name: null;
+	label_name: string | null;
 	tag_list: string;
-	release_year: null;
+	release_year: string | null;
 	track_count: number;
 	user_id: number;
 	last_modified: string;
-	ISoundcloudLicense: ISoundcloudLicense;
+	license: ISoundcloudLicense;
 	tracks: ISoundcloudTrack[];
-	playlist_type: null;
+	playlist_type: string | null;
 	id: number;
-	downloadable: null;
+	downloadable: string | null;
 	sharing: ISoundcloudSharing;
 	created_at: string;
-	release: null;
+	release: string | null;
 	likes_count: number;
-	kind: string;
-	title: string;
-	type: null;
-	purchase_title: null;
-	artwork_url: null;
-	ean: null;
-	streamable: boolean;
+	kind: string | string;
+	title: string | string;
+	type: string | null;
+	purchase_title: string | null;
+	artwork_url: string | null;
+	ean: string | null;
+	streamable: boolean | null;
 	user: ISoundcloudUser;
 	embeddable_by: ISoundcloudEmbeddableBy;
-	label_id: null;
+	label_id: string | number | null;
 }
 
 export enum ISoundcloudEmbeddableBy {
 	All = "all",
+	None = "none",
 }
 
 export enum ISoundcloudLicense {
@@ -200,7 +202,7 @@ export interface ISoundcloudTrack {
 	title: string;
 	track_type: null | string;
 	duration: number;
-	video_url: null;
+	video_url: string | null;
 	original_format: ISoundcloudOriginalFormat;
 	artwork_url: null | string;
 	streamable: boolean;
@@ -222,6 +224,16 @@ export interface ISoundcloudTrack {
 	release_year: number | null;
 	key_signature: null | string;
 	isrc: null | string;
+	label?: {
+		id: number;
+		kind: ISoundcloudUserKind;
+		permalink: string;
+		username: string;
+		last_modified: string;
+		uri: string;
+		permalink_url: string;
+		avatar_url: string;
+	};
 	sharing: ISoundcloudSharing;
 	uri: string;
 	attachments_uri: string;
@@ -236,7 +248,7 @@ export interface ISoundcloudTrack {
 	permalink: string;
 	permalink_url: string;
 	user: ISoundcloudUser;
-	label_id: null;
+	label_id: number | null;
 	stream_url: string;
 	playback_count: number;
 	download_url?: string;
@@ -280,4 +292,5 @@ export interface ISoundcloudUser {
 
 export enum ISoundcloudUserKind {
 	User = "user",
+	Track = "track",
 }

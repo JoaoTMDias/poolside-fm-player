@@ -1,5 +1,6 @@
 module.exports = {
 	roots: ["<rootDir>/src"],
+	modulePaths: ["<rootDir>/src"],
 	transform: {
 		"^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
 	},
@@ -14,4 +15,13 @@ module.exports = {
 	collectCoverage: true,
 	coverageDirectory: "coverage",
 	testEnvironment: "node",
+	globals: {
+		window: {
+			HTMLMediaElement: {
+				prototype: {
+					pause: {},
+				},
+			},
+		},
+	},
 };

@@ -26,6 +26,19 @@
 			"windows": {
 				"program": "${workspaceFolder}/node_modules/jest/bin/jest"
 			}
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Jest Current File - ⚛️",
+			"program": "${workspaceFolder}/node_modules/.bin/jest",
+			"args": ["${fileBasenameNoExtension}", "--config", "jest.config.js", "--env=jsdom"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"disableOptimisticBPs": true,
+			"windows": {
+				"program": "${workspaceFolder}/node_modules/jest/bin/jest"
+			}
 		}
 	]
 }

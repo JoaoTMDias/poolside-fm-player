@@ -17,7 +17,7 @@ describe("<PlayerVisualizer />", () => {
 		it("should not render the playing classname by default", () => {
 			const component = shallow(<PlayerVisualizer />);
 
-			expect(component.hasClass("player-visualizer--is-playing")).toBe(false);
+			expect(component.hasClass("is-playing")).toBe(false);
 		});
 
 		it("should render the playing classname if is playing audio", () => {
@@ -26,7 +26,7 @@ describe("<PlayerVisualizer />", () => {
 
 			const visualizer = wrapper.find("[data-testid='player-visualizer-wrapper']");
 
-			expect(visualizer.first().hasClass("player-visualizer--is-playing")).toBe(true);
+			expect(visualizer.first().hasClass("is-playing")).toBe(true);
 		});
 	});
 });

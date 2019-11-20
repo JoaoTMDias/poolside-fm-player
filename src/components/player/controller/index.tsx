@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import * as React from "react";
 import produce from "immer";
 import SoundCloudAudio from "soundcloud-audio";
@@ -32,13 +31,16 @@ export function getRandomTrackIndex(allTracks: number) {
 }
 
 /**
- * Controls the player
+ * PlayerController
+ *
+ * Controls the player instance.
+ * Plays, pauses, changes tracks and then updates the state and sends it through the Context API.
  *
  * @class PlayerController
  * @extends {React.Component<{}, IPlayerControllerState>}
  */
 class PlayerController extends React.Component<{}, IPlayerControllerState> {
-	private player: ISoundcloudPlayer;
+	public player: ISoundcloudPlayer;
 
 	constructor(props: {}) {
 		super(props);
@@ -46,25 +48,31 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 		this.state = defaultPlayerControllerState;
 
 		// Binds
-		this.onClickOnPrevious = this.onClickOnPrevious.bind(this);
-		this.onTogglePlay = this.onTogglePlay.bind(this);
-		this.onClickOnNext = this.onClickOnNext.bind(this);
+		this.onPrevious = this.onPrevious.bind(this);
+		this.onPlay = this.onPlay.bind(this);
+		this.onNext = this.onNext.bind(this);
 
 		// Refs
 		this.player = new SoundCloudAudio("xkpqYPmDf6KG7aL1xM4qfWaJQrHBLSOh");
 	}
 
 	componentDidMount() {
-		this.initPlaylist();
+		const { currentPlaylistIndex } = this.state;
+
+		this.startPlaylist(currentPlaylistIndex);
 	}
 
 	/**
 	 * Handles the click on the previous button
 	 *
-	 * @memberof MediaPlayer
+	 * @param {IPlayerControllerTrack} track
+	 * @returns {boolean}
+	 * @memberof PlayerController
 	 */
-	onClickOnPrevious(track: IPlayerControllerTrack) {
-		if (this.player) {
+	onPrevious(track: IPlayerControllerTrack | null): boolean {
+		let hasChanged = false;
+
+		if (this.player && track) {
 			const { current, last } = track;
 			const previousIndex = current <= 0 ? last : current - 1;
 
@@ -73,21 +81,26 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 					draftState.track.current = previousIndex;
 				}),
 				() => {
-					if (this.player.playing) {
+					if (this.player.playing && this.player.previous) {
 						this.player.previous();
 					}
 				},
 			);
+
+			hasChanged = true;
 		}
+
+		return hasChanged;
 	}
 
 	/**
 	 * Handles the click on the next button
 	 *
+	 * @returns {void}
 	 * @memberof MediaPlayer
 	 */
-	onClickOnNext(track: IPlayerControllerTrack) {
-		if (this.player) {
+	onNext(track: IPlayerControllerTrack) {
+		if (this.player && track) {
 			const { current, last } = track;
 
 			const nextIndex = current === last ? 0 : current + 1;
@@ -97,7 +110,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 					draftState.track.current = nextIndex;
 				}),
 				() => {
-					if (this.player.playing) {
+					if (this.player && this.player.next && this.player.playing) {
 						this.player.next();
 					}
 				},
@@ -108,42 +121,25 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	/**
 	 * Callback for handling the clicking on the play button
 	 *
+	 * @returns {EPlayingStatus | null}
 	 * @memberof MediaPlayer
 	 */
-	onTogglePlay(status: EPlayingStatus) {
-		let nextStatus;
+	onPlay(status?: EPlayingStatus): EPlayingStatus | null {
+		if (status) {
+			let next = EPlayingStatus.paused;
 
-		switch (status) {
-			default:
-			case EPlayingStatus.paused:
-				nextStatus = EPlayingStatus.playing;
-				break;
+			if (status === EPlayingStatus.paused) {
+				next = EPlayingStatus.playing;
+			} else if (status === EPlayingStatus.playing) {
+				next = EPlayingStatus.paused;
+			}
 
-			case EPlayingStatus.playing:
-				nextStatus = EPlayingStatus.paused;
+			this.handlePlayingStatus(next);
+
+			return next;
 		}
 
-		this.handleMediaPlayer(nextStatus);
-	}
-
-	/**
-	 * When the user selects a new playlist, updates the current playlist index state
-	 *
-	 * @param {number} index
-	 * @memberof PlayerController
-	 */
-	onChangePlaylist(index: number) {
-		this.player.stop();
-
-		this.setState(
-			{
-				currentPlaylistIndex: index,
-				status: EPlayingStatus.paused,
-			},
-			() => {
-				this.initPlaylist();
-			},
-		);
+		return null;
 	}
 
 	/**
@@ -155,19 +151,46 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 * @memberof PlayerController
 	 */
 	getCurrentTrackAndArtist(index: number, player: ISoundcloudPlayer): IMediaPlayerTrackMetadata | null {
-		const { title } = player._playlist.tracks[index];
-		const { user } = player._playlist.tracks[index];
+		if (index && player) {
+			// eslint-disable-next-line no-underscore-dangle
+			const { title } = player._playlist.tracks[index];
+			// eslint-disable-next-line no-underscore-dangle
+			const { user } = player._playlist.tracks[index];
 
-		const artist = user && user.username;
+			const artist = user && user.username;
 
-		if (title && artist) {
-			return {
-				title,
-				artist,
-			};
+			if (title && artist) {
+				return {
+					title,
+					artist,
+				};
+			}
 		}
 
 		return null;
+	}
+
+	/**
+	 * When the user selects a new playlist, updates the current playlist index state
+	 *
+	 * @param {number} index
+	 * @returns {void}
+	 * @memberof PlayerController
+	 */
+	changePlaylist(index: number): void {
+		if (index && this.player && this.player.stop) {
+			this.player.stop();
+
+			this.setState(
+				{
+					currentPlaylistIndex: index,
+					status: EPlayingStatus.paused,
+				},
+				() => {
+					this.startPlaylist(index);
+				},
+			);
+		}
 	}
 
 	/**
@@ -175,9 +198,10 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 *
 	 * @param {string} title
 	 * @param {string} artist
+	 * @returns {void}
 	 * @memberof PlayerController
 	 */
-	updatePlayerMetadata(metadata: IMediaPlayerTrackMetadata) {
+	updateMetadata(metadata: IMediaPlayerTrackMetadata): void {
 		this.setState({
 			title: metadata.title,
 			artist: metadata.artist,
@@ -185,36 +209,45 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	}
 
 	/**
-	 * Initiates a new playlist
+	 * get the current playlist and starts a new playlist instance
 	 *
+	 * @returns {void}
 	 * @memberof PlayerController
 	 */
-	initPlaylist() {
-		const { currentPlaylistIndex } = this.state;
+	startPlaylist(currentPlaylistIndex: number): void {
 		const currentPlaylist = PoolsidePlaylists[currentPlaylistIndex].url;
 
-		this.player.resolve(currentPlaylist, (playlist: ISoundcloudPlaylist) => {
-			const { player } = this;
+		if (this.player && this.player.resolve) {
+			this.player.resolve(currentPlaylist, (playlist: ISoundcloudPlaylist) => this.initPlaylist(playlist));
+		}
+	}
 
+	/**
+	 * Initiates a new playlist
+	 *
+	 * @param {ISoundcloudPlaylist} playlist
+	 * @memberof PlayerController
+	 */
+	initPlaylist(playlist: ISoundcloudPlaylist) {
+		const { player } = this;
+		const current = getRandomTrackIndex(playlist.track_count);
+		const last = playlist.track_count - 1;
+
+		if (player && player.on) {
 			// once playlist is loaded it can be played
 			this.setState({
 				track: {
-					current: getRandomTrackIndex(playlist.track_count),
-					last: playlist.track_count - 1,
+					current,
+					last,
 				},
 			});
 
 			player.on(ESoundCloudPlayerEvents.canplay, () => {
 				const { _playlistIndex } = player;
-
-				let metadata = null;
-
-				if (_playlistIndex) {
-					metadata = this.getCurrentTrackAndArtist(_playlistIndex, player);
-				}
+				const metadata = _playlistIndex ? this.getCurrentTrackAndArtist(_playlistIndex, player) : null;
 
 				if (metadata) {
-					this.updatePlayerMetadata(metadata);
+					this.updateMetadata(metadata);
 				}
 			});
 
@@ -222,9 +255,9 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 			// e.g. we do it here when playing track is finished
 			player.on(ESoundCloudPlayerEvents.ended, () => {
 				const { track } = this.state;
-				this.onClickOnNext(track);
+				this.onNext(track);
 			});
-		});
+		}
 	}
 
 	/**
@@ -232,13 +265,14 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 * If playing, it becomes paused and reverse.
 	 *
 	 * @param {EPlayingStatus} status
+	 * @returns {void}
 	 * @memberof MediaPlayer
 	 */
-	handleMediaPlayer(status: EPlayingStatus) {
+	handlePlayingStatus(status: EPlayingStatus | null): void {
 		const { player } = this;
 		const { track } = this.state;
 
-		if (player) {
+		if (player && player.play && player.pause && track && status) {
 			switch (status) {
 				case EPlayingStatus.playing:
 					player.play({
@@ -254,7 +288,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 					break;
 			}
 
-			this.updatePlayingStatus(status);
+			this.updateStatus(status);
 		}
 	}
 
@@ -262,9 +296,10 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 * Updates the state with the playing states (paused or playing)
 	 *
 	 * @param {EPlayingStatus} status
+	 * @returns {void}
 	 * @memberof MediaPlayer
 	 */
-	updatePlayingStatus(status: EPlayingStatus) {
+	updateStatus(status: EPlayingStatus): void {
 		this.setState({
 			status,
 		});
@@ -277,11 +312,11 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 		const contextValue: IPlayerControllerContext = {
 			...this.state,
 			audio: this.player.audio,
-			previous: () => this.onClickOnPrevious(track),
-			next: () => this.onClickOnNext(track),
-			togglePlay: () => this.onTogglePlay(status),
+			previous: () => this.onPrevious(track),
+			next: () => this.onNext(track),
+			togglePlay: () => this.onPlay(status),
 			changeVolume: () => {},
-			changePlaylist: (index: number) => this.onChangePlaylist(index),
+			changePlaylist: (index: number) => this.changePlaylist(index),
 		};
 		return <PlayerControllerContext.Provider value={contextValue}>{children}</PlayerControllerContext.Provider>;
 	}

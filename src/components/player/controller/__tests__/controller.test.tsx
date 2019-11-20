@@ -3,7 +3,8 @@ import { shallow, mount, ReactWrapper } from "enzyme";
 import PlayerController, { getRandomTrackIndex } from "components/player/controller/index";
 import PlayerVisualizer from "components/player/visualizer";
 import { IPlayerControllerState } from "contexts/player-controller-context";
-import { EPlayingStatus } from "components/player/media-player/player.interfaces";
+import { EPlayingStatus, IMediaPlayerTrackMetadata } from "components/player/media-player/player.interfaces";
+import { playlist } from "../__mocks__/playlist";
 
 // Audio Prototype hacks
 window.HTMLMediaElement.prototype.pause = () => {
@@ -26,7 +27,19 @@ describe("<PlayerController />", () => {
 		});
 	});
 
-	describe("onClickOnPrevious", () => {
+	describe("onPrevious", () => {
+		it("should return false if no player exists", () => {
+			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
+				<PlayerController>
+					<PlayerVisualizer />
+				</PlayerController>,
+			);
+
+			const instance = wrapper.instance() as PlayerController;
+
+			expect(instance.onPrevious(null)).toBeFalsy();
+		});
+
 		it("should change the current track number", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
@@ -34,7 +47,7 @@ describe("<PlayerController />", () => {
 				</PlayerController>,
 			);
 
-			const PlayerControllerInstance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 			const track = {
 				current: 2,
 				last: 200,
@@ -44,7 +57,7 @@ describe("<PlayerController />", () => {
 				track,
 			});
 
-			PlayerControllerInstance.onClickOnPrevious(track);
+			instance.onPrevious(track);
 
 			expect(wrapper.state().track.current).toBe(1);
 		});
@@ -56,24 +69,24 @@ describe("<PlayerController />", () => {
 				</PlayerController>,
 			);
 
-			const PlayerControllerInstance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 
 			const track = {
 				current: 0,
-				last: 200,
+				last: 100,
 			};
 
 			wrapper.setState({
 				track,
 			});
 
-			PlayerControllerInstance.onClickOnPrevious(track);
+			instance.onPrevious(track);
 
-			expect(wrapper.state().track.current).toBe(200);
+			expect(wrapper.state().track.current).toBe(100);
 		});
 	});
 
-	describe("onClickOnNext", () => {
+	describe("onNext", () => {
 		it("should change the current track number", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
@@ -81,7 +94,7 @@ describe("<PlayerController />", () => {
 				</PlayerController>,
 			);
 
-			const PlayerControllerInstance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 			const track = {
 				current: 2,
 				last: 50,
@@ -91,7 +104,7 @@ describe("<PlayerController />", () => {
 				track,
 			});
 
-			PlayerControllerInstance.onClickOnNext(track);
+			instance.onNext(track);
 
 			expect(wrapper.state().track.current).toEqual(3);
 		});
@@ -103,7 +116,7 @@ describe("<PlayerController />", () => {
 				</PlayerController>,
 			);
 
-			const instance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 			const track = {
 				current: 200,
 				last: 200,
@@ -113,14 +126,14 @@ describe("<PlayerController />", () => {
 				track,
 			});
 
-			instance.onClickOnNext(track);
+			instance.onNext(track);
 
 			expect(wrapper.state().track.current).toEqual(0);
 		});
 	});
 
-	describe("onTogglePlay", () => {
-		it("should switch to play by default", () => {
+	describe("onPlay", () => {
+		it("should do nothing by default if no state is passed", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
@@ -128,12 +141,12 @@ describe("<PlayerController />", () => {
 			);
 			const mock = jest.fn();
 
-			const instance = wrapper.instance();
-			instance.handleMediaPlayer = mock;
+			const instance = wrapper.instance() as PlayerController;
+			instance.handlePlayingStatus = mock;
 
-			instance.onTogglePlay();
+			instance.onPlay();
 
-			expect(mock).toHaveBeenCalledWith(EPlayingStatus.playing);
+			expect(mock).toHaveReturnedTimes(0);
 		});
 
 		it("should switch to play if paused", () => {
@@ -144,10 +157,10 @@ describe("<PlayerController />", () => {
 			);
 			const mock = jest.fn();
 
-			const instance = wrapper.instance();
-			instance.handleMediaPlayer = mock;
+			const instance = wrapper.instance() as PlayerController;
+			instance.handlePlayingStatus = mock;
 
-			instance.onTogglePlay(EPlayingStatus.paused);
+			instance.onPlay(EPlayingStatus.paused);
 
 			expect(mock).toHaveBeenCalledWith(EPlayingStatus.playing);
 		});
@@ -160,16 +173,16 @@ describe("<PlayerController />", () => {
 			);
 			const mock = jest.fn();
 
-			const instance = wrapper.instance();
-			instance.handleMediaPlayer = mock;
+			const instance = wrapper.instance() as PlayerController;
+			instance.handlePlayingStatus = mock;
 
-			instance.onTogglePlay(EPlayingStatus.playing);
+			instance.onPlay(EPlayingStatus.playing);
 
 			expect(mock).toHaveBeenCalledWith(EPlayingStatus.paused);
 		});
 	});
 
-	describe("onChangePlaylist", () => {
+	describe("changePlaylist", () => {
 		it("should stop playing when called", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
@@ -177,16 +190,16 @@ describe("<PlayerController />", () => {
 				</PlayerController>,
 			);
 
-			const instance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 
-			instance.onChangePlaylist(1);
+			instance.changePlaylist(1);
 
 			expect(wrapper.state().currentPlaylistIndex).toBe(1);
-			expect(wrapper.instance().player.playing).toBe(false);
+			expect(instance.player.playing).toBe(false);
 		});
 	});
 
-	describe("updatePlayingStatus", () => {
+	describe("updateStatus", () => {
 		it("should update the state with the new playing status", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
@@ -194,27 +207,49 @@ describe("<PlayerController />", () => {
 				</PlayerController>,
 			);
 
-			const instance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 
-			instance.updatePlayingStatus(EPlayingStatus.playing);
+			instance.updateStatus(EPlayingStatus.playing);
 
 			expect(wrapper.state().status).toBe(EPlayingStatus.playing);
 		});
 	});
 
-	describe("handleMediaPlayer", () => {
-		it("should call updatePlayingStatus", () => {
+	describe("updateMetadata", () => {
+		it("should update the state with the new trackmetadata", () => {
+			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
+				<PlayerController>
+					<PlayerVisualizer />
+				</PlayerController>,
+			);
+
+			const instance = wrapper.instance() as PlayerController;
+
+			const state: IMediaPlayerTrackMetadata = {
+				title: "FMI",
+				artist: "JMBranco",
+			};
+
+			instance.updateMetadata(state);
+
+			expect(wrapper.state().title).toBe(state.title);
+			expect(wrapper.state().artist).toBe(state.artist);
+		});
+	});
+
+	describe("handlePlayingStatus", () => {
+		it("should call updateStatus", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
 					<PlayerVisualizer />
 				</PlayerController>,
 			);
 			const mock = jest.fn();
-			const instance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 
-			instance.updatePlayingStatus = mock;
+			instance.updateStatus = mock;
 
-			instance.handleMediaPlayer(EPlayingStatus.paused);
+			instance.handlePlayingStatus(EPlayingStatus.paused);
 
 			expect(mock).toHaveBeenCalledWith(EPlayingStatus.paused);
 		});
@@ -227,12 +262,12 @@ describe("<PlayerController />", () => {
 			);
 			const mockPlay = jest.fn();
 			const mockPause = jest.fn();
-			const instance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 
 			instance.player.play = mockPlay;
 			instance.player.pause = mockPause;
 
-			instance.handleMediaPlayer();
+			instance.handlePlayingStatus(null);
 
 			expect(mockPlay).not.toHaveBeenCalled();
 			expect(mockPause).not.toHaveBeenCalled();
@@ -245,11 +280,11 @@ describe("<PlayerController />", () => {
 				</PlayerController>,
 			);
 			const mock = jest.fn();
-			const instance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 
 			instance.player.play = mock;
 
-			instance.handleMediaPlayer(EPlayingStatus.playing);
+			instance.handlePlayingStatus(EPlayingStatus.playing);
 
 			expect(mock).toHaveBeenCalled();
 		});
@@ -261,13 +296,37 @@ describe("<PlayerController />", () => {
 				</PlayerController>,
 			);
 			const mock = jest.fn();
-			const instance = wrapper.instance();
+			const instance = wrapper.instance() as PlayerController;
 
 			instance.player.pause = mock;
 
-			instance.handleMediaPlayer(EPlayingStatus.paused);
+			instance.handlePlayingStatus(EPlayingStatus.paused);
 
 			expect(mock).toHaveBeenCalled();
+		});
+	});
+
+	describe("initPlaylist", () => {
+		it("should change the track state", () => {
+			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
+				<PlayerController>
+					<PlayerVisualizer />
+				</PlayerController>,
+			);
+
+			const instance = wrapper.instance() as PlayerController;
+			const track = {
+				current: 2,
+				last: 50,
+			};
+
+			wrapper.setState({
+				track,
+			});
+
+			instance.initPlaylist(playlist);
+
+			expect(typeof wrapper.state().track.current).toBe("number");
 		});
 	});
 });
