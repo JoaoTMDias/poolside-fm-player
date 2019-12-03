@@ -4,7 +4,7 @@ import TopBar from "components/top-bar";
 import { withRouter, useHistory } from "react-router";
 import { ROUTE_HOME } from "data/constants/routes";
 import { useEvent, KEY_CODES } from "helpers";
-import { Themes } from "data/constants/themes.constants";
+import { Themes } from "data/constants";
 import Select from "components/select/select";
 import ThemeContext from "contexts/theme-context";
 

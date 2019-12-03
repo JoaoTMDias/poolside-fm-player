@@ -1,13 +1,8 @@
-/* eslint-disable import/prefer-default-export */
-export interface IPoolsidePlaylist {
-	id: string;
-	value: string;
-	label: string;
-	url: string;
-	isNew?: boolean;
-}
+import { ISelectOption } from "./select.constants";
 
-export const PoolsidePlaylists: IPoolsidePlaylist[] = [
+/* eslint-disable import/prefer-default-export */
+
+export const PoolsidePlaylists: ISelectOption[] = [
 	{
 		id: "poolside-fm",
 		value: "poolside-fm",

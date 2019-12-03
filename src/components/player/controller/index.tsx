@@ -1,7 +1,7 @@
 import * as React from "react";
 import produce from "immer";
 import SoundCloudAudio from "soundcloud-audio";
-import { PoolsidePlaylists } from "data/constants/playlists.constants";
+import { PoolsidePlaylists } from "data/constants";
 import {
 	PlayerControllerContext,
 	IPlayerControllerState,
@@ -57,9 +57,9 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	}
 
 	componentDidMount() {
-		const { currentPlaylistIndex } = this.state;
+		const { currentIndex } = this.state;
 
-		this.startPlaylist(currentPlaylistIndex);
+		this.startPlaylist(currentIndex);
 	}
 
 	/**
@@ -143,6 +143,29 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	}
 
 	/**
+	 * When the user selects a new playlist, updates the current playlist index state
+	 *
+	 * @param {number} index
+	 * @returns {void}
+	 * @memberof PlayerController
+	 */
+	onChangeOption(index: number): void {
+		if (index && this.player && this.player.stop) {
+			this.player.stop();
+
+			this.setState(
+				{
+					currentIndex: index,
+					status: EPlayingStatus.paused,
+				},
+				() => {
+					this.startPlaylist(index);
+				},
+			);
+		}
+	}
+
+	/**
 	 * Returns the current tracks title and artist
 	 *
 	 * @param {number} index
@@ -171,29 +194,6 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	}
 
 	/**
-	 * When the user selects a new playlist, updates the current playlist index state
-	 *
-	 * @param {number} index
-	 * @returns {void}
-	 * @memberof PlayerController
-	 */
-	changePlaylist(index: number): void {
-		if (index && this.player && this.player.stop) {
-			this.player.stop();
-
-			this.setState(
-				{
-					currentPlaylistIndex: index,
-					status: EPlayingStatus.paused,
-				},
-				() => {
-					this.startPlaylist(index);
-				},
-			);
-		}
-	}
-
-	/**
 	 * Updates the Player metadata
 	 *
 	 * @param {string} title
@@ -214,10 +214,10 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 * @returns {void}
 	 * @memberof PlayerController
 	 */
-	startPlaylist(currentPlaylistIndex: number): void {
-		const currentPlaylist = PoolsidePlaylists[currentPlaylistIndex].url;
+	startPlaylist(currentIndex: number): void {
+		const currentPlaylist = PoolsidePlaylists[currentIndex].url;
 
-		if (this.player && this.player.resolve) {
+		if (this.player && this.player.resolve && currentPlaylist) {
 			this.player.resolve(currentPlaylist, (playlist: ISoundcloudPlaylist) => this.initPlaylist(playlist));
 		}
 	}
@@ -316,7 +316,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 			next: () => this.onNext(track),
 			togglePlay: () => this.onPlay(status),
 			changeVolume: () => {},
-			changePlaylist: (index: number) => this.changePlaylist(index),
+			onChangeOption: (index: number) => this.onChangeOption(index),
 		};
 		return <PlayerControllerContext.Provider value={contextValue}>{children}</PlayerControllerContext.Provider>;
 	}

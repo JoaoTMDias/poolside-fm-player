@@ -1,6 +1,6 @@
 // Libraries
 import * as React from "react";
-import { PoolsidePlaylists } from "data/constants/playlists.constants";
+import { PoolsidePlaylists } from "data/constants";
 import MediaPlayer from "components/player/media-player";
 import TopBar from "components/top-bar";
 import Select from "components/select/select";

@@ -1,13 +1,7 @@
 import { ETHEME } from "contexts/theme-context";
+import { ISelectOption } from "./select.constants";
 
-export interface IPoolsideThemes {
-	id: ETHEME;
-	value: ETHEME;
-	label: string;
-	isNew?: boolean;
-}
-
-export const Themes: IPoolsideThemes[] = [
+export const Themes: ISelectOption[] = [
 	{
 		id: ETHEME.poolside,
 		value: ETHEME.poolside,

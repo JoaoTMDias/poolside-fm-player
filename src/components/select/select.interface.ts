@@ -1,11 +1,12 @@
-import { IPoolsidePlaylist } from "data/constants/playlists.constants";
+import { ISelectOption } from "data/constants";
 
 export interface ISelectProps {
 	id: string;
 	label?: string;
-	options: IPoolsidePlaylist[];
+	currentIndex: number;
+	options: ISelectOption[];
 	placeholder?: string;
-	onSelectOption?: (option: IPoolsidePlaylist) => void;
+	onChange?: (index: number) => void;
 }
 
 export interface ISelectState {

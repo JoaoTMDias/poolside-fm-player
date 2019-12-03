@@ -1,15 +1,15 @@
 // Libraries
 import * as React from "react";
 import { KEY_CODES, holdOn } from "helpers";
-import { IPoolsidePlaylist } from "data/constants/playlists.constants";
+import { ISelectOption } from "data/constants";
 import * as S from "./select.styled";
 
 // Interface
 interface ISelectInputOptionsProps {
 	id: string;
-	activeElement: IPoolsidePlaylist;
+	activeElement: ISelectOption;
 	isOpen: boolean;
-	options: IPoolsidePlaylist[];
+	options: ISelectOption[];
 	onChangeOptionFromList(
 		index: number | null,
 		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
@@ -197,13 +197,13 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 	 * @description Constroi uma lista de opções
 	 * @author João Dias
 	 * @date 2019-06-28
-	 * @param {IPoolsidePlaylist[]} options
+	 * @param {ISelectOption[]} options
 	 * @returns
 	 * @memberof SelectInputOptions
 	 */
 	renderListOfOptions() {
 		const { id, options, onChangeOptionFromList, activeElement } = this.props;
-		const list = options.map((option: IPoolsidePlaylist, index: number) => {
+		const list = options.map((option: ISelectOption, index: number) => {
 			const key = `${option.id}-id-${index}`;
 			const isSelected = !!(activeElement.id === option.id);
 
