@@ -57,6 +57,7 @@
 		--small-font-size: var(--label-font-size),
 		--options-panel-width: rem-calc(375),
 		--default-outline: 1px dotted var(--color-gray8),
+		--window-top-bar-background: $body-background,
 	)
 );
 
@@ -128,7 +129,7 @@ section {
 .root__inner,
 body,
 #root {
-	background-color: var(--color-primary);
+	background-color: var(--body-background, $body-background);
 	height: 100%;
 	max-height: var(--viewport-height, 100vh);
 	width: 100%;
@@ -151,6 +152,8 @@ body {
 	background-color: var(--body-background, $body-background);
 	flex-grow: 1;
 }
+
+@import './theme';
 
 #window {
 	display: grid;

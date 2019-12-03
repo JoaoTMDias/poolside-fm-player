@@ -10,6 +10,7 @@ export const Wrapper = styled.header`
 	margin: 0;
 	border-top: 1px solid var(--color-white);
 	text-align: right;
+	background: var(--window-top-bar-background);
 
 	.top-bar {
 		&__button {

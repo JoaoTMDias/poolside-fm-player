@@ -1,0 +1,19 @@
+:root {
+	&[data-theme='poolside'] {
+		--body-background: $body-background;
+		--body-font-color: $body-font-color;
+	}
+
+	&[data-theme='palo-alto'] {
+		--body-background: hsl(34, 100%, 94%);
+		--color-primary: hsl(34, 100%, 94%);
+		--color-button: hsl(34, 100%, 94%);
+	}
+
+	&[data-theme='redmond'] {
+		--body-background: $color-white;
+		--color-primary: $color-white;
+		--color-button: $color-white;
+		--window-top-bar-background: hsl(243, 100%, 25%);
+	}
+}

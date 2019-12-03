@@ -53,7 +53,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 		this.onNext = this.onNext.bind(this);
 
 		// Refs
-		this.player = new SoundCloudAudio("xkpqYPmDf6KG7aL1xM4qfWaJQrHBLSOh");
+		this.player = new SoundCloudAudio("175c043157ffae2c6d5fed16c3d95a4c");
 	}
 
 	componentDidMount() {
