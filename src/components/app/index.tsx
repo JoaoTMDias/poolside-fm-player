@@ -4,6 +4,7 @@ import { HashRouter as Router, Switch } from "react-router-dom";
 import { ROUTE_HOME, ROUTE_SETTINGS } from "data/constants/routes";
 import Homepage from "pages/homepage";
 import Settings from "pages/settings";
+import Theme from "components/theme";
 import Window from "../window/index";
 
 /**
@@ -14,12 +15,14 @@ import Window from "../window/index";
  */
 const App: React.FunctionComponent = () => {
 	return (
-		<Router basename="/">
-			<Switch>
-				<Window exact path={ROUTE_HOME} component={Homepage} />
-				<Window exact path={ROUTE_SETTINGS} component={Settings} />
-			</Switch>
-		</Router>
+		<Theme>
+			<Router basename="/">
+				<Switch>
+					<Window exact path={ROUTE_HOME} component={Homepage} />
+					<Window exact path={ROUTE_SETTINGS} component={Settings} />
+				</Switch>
+			</Router>
+		</Theme>
 	);
 };
 
