@@ -60,6 +60,8 @@
 	)
 );
 
+@import './animations';
+
 html {
 	box-sizing: border-box;
 	font-family: var(--body-font-family, $body-font-family);
@@ -389,28 +391,4 @@ progress {
 	position: absolute !important;
 	width: 1px;
 	white-space: nowrap;
-}
-
-@keyframes open {
-	0% {
-		transform: translate3d(rem-calc(375), 0, 0);
-	}
-	100% {
-		transform: translate3d(0, 0, 0);
-	}
-}
-
-@keyframes close {
-	100% {
-		transform: translate3d(rem-calc(375), 0, 0);
-	}
-	0% {
-		transform: translate3d(0, 0, 0);
-	}
-}
-
-@keyframes blink {
-	50% {
-		opacity: 0;
-	}
 }
