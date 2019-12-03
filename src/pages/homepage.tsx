@@ -6,7 +6,7 @@ import TopBar from "components/top-bar";
 import Select from "components/select/select";
 import PlayerVisualizer from "components/player/visualizer";
 import PlayerController from "components/player/controller";
-import { PlayerControllerContext, IPlayerControllerContext } from "contexts/player-controller-context";
+import { PlayerControllerContext } from "contexts/player-controller-context";
 
 /**
  * @description Home page
@@ -15,6 +15,8 @@ import { PlayerControllerContext, IPlayerControllerContext } from "contexts/play
  * @returns {React.FunctionComponent}
  */
 const Homepage: React.FunctionComponent = () => {
+	const { currentIndex, onChangeOption, audio, status } = React.useContext(PlayerControllerContext);
+
 	/**
 	 * Renders the playlist visualizer component.
 	 * It is based on the context state.
@@ -22,14 +24,7 @@ const Homepage: React.FunctionComponent = () => {
 	 * @returns {JSX.Element}
 	 */
 	function renderPlayerVisualizer() {
-		return (
-			<PlayerControllerContext.Consumer>
-				{(context: IPlayerControllerContext) => {
-					const audio = context.audio && context.audio.src ? context.audio : null;
-					return <PlayerVisualizer status={context.status} audio={audio} />;
-				}}
-			</PlayerControllerContext.Consumer>
-		);
+		return <PlayerVisualizer status={status} audio={audio} />;
 	}
 
 	return (
@@ -38,7 +33,14 @@ const Homepage: React.FunctionComponent = () => {
 			<main id="main-content" className="window__main row">
 				<PlayerController>
 					{renderPlayerVisualizer()}
-					<Select id="channel" label="Channel:" placeholder="Choose a radio channel" options={PoolsidePlaylists} />
+					<Select
+						id="channel"
+						label="Channel:"
+						placeholder="Choose a radio channel"
+						options={PoolsidePlaylists}
+						currentIndex={currentIndex}
+						onChange={index => onChangeOption(index)}
+					/>
 					<MediaPlayer />
 				</PlayerController>
 			</main>
