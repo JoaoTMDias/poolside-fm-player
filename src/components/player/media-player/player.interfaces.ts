@@ -33,7 +33,7 @@ export enum ESoundcloudPlayerPreloadType {
 }
 
 export interface IMediaPlayerProps {
-	currentPlaylistIndex: number;
+	currentIndex: number;
 }
 
 export interface IMediaPlayerState {

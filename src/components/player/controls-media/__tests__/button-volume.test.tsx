@@ -14,16 +14,16 @@ describe("<ButtonVolume />", () => {
 
 	describe("onChangeRangeInput", () => {
 		it("should have been called on click on range input", () => {
+			const mock = jest.fn();
+
 			const root = (
 				<div id="wrapper">
 					<div id="app">
-						<ButtonVolume />
+						<ButtonVolume onChangeVolume={mock} />
 					</div>
 					<div id="app-portal" />
 				</div>
 			);
-
-			ButtonVolume.prototype.onChangeRangeInput = jest.fn();
 
 			const wrapper = mount(root);
 			const button = findByTestAttr(wrapper, "component-controls-media-button-volume").first();
@@ -38,7 +38,7 @@ describe("<ButtonVolume />", () => {
 				},
 			});
 
-			expect(ButtonVolume.prototype.onChangeRangeInput).toHaveBeenCalled();
+			expect(mock).toHaveBeenNthCalledWith(0.5);
 		});
 	});
 });

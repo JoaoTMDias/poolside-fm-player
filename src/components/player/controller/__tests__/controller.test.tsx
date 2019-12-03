@@ -182,7 +182,7 @@ describe("<PlayerController />", () => {
 		});
 	});
 
-	describe("changePlaylist", () => {
+	describe("onChangeOption", () => {
 		it("should stop playing when called", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
@@ -192,9 +192,9 @@ describe("<PlayerController />", () => {
 
 			const instance = wrapper.instance() as PlayerController;
 
-			instance.changePlaylist(1);
+			instance.onChangeOption(1);
 
-			expect(wrapper.state().currentPlaylistIndex).toBe(1);
+			expect(wrapper.state().currentIndex).toBe(1);
 			expect(instance.player.playing).toBe(false);
 		});
 	});

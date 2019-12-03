@@ -7,7 +7,7 @@ export interface IPlayerControllerTrack {
 }
 export interface IPlayerControllerState {
 	track: IPlayerControllerTrack;
-	currentPlaylistIndex: number;
+	currentIndex: number;
 	currentTime: number;
 	status: EPlayingStatus;
 	duration: number;
@@ -17,7 +17,7 @@ export interface IPlayerControllerState {
 	next: () => void;
 	togglePlay: () => void;
 	changeVolume: () => void;
-	changePlaylist: (index: number) => void;
+	onChangeOption: (index: number) => void;
 }
 
 export interface IPlayerControllerContext extends IPlayerControllerState {
@@ -29,7 +29,7 @@ export const defaultPlayerControllerState = {
 		current: 0,
 		last: 0,
 	},
-	currentPlaylistIndex: 0,
+	currentIndex: 0,
 	currentTime: 0,
 	status: EPlayingStatus.paused,
 	duration: 0,
@@ -39,7 +39,7 @@ export const defaultPlayerControllerState = {
 	next: () => {},
 	togglePlay: () => {},
 	changeVolume: () => {},
-	changePlaylist: () => {},
+	onChangeOption: () => {},
 };
 
 export const defaultPlayerControllerContext = {

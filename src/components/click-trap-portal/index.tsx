@@ -1,5 +1,5 @@
 import * as React from "react";
-import { KEY_CODES } from "helpers";
+import { KEY_CODES, useEvent } from "helpers";
 import * as S from "./click-trap-portal.styled";
 import Portal from "../portal/index";
 
@@ -10,33 +10,17 @@ interface IClickTrapPortalProps {
 
 /**
  *
- *
- * @class ClickTrapPortal
  * @extends {React.PureComponent<IClickTrapPortalProps>}
  */
-class ClickTrapPortal extends React.PureComponent<IClickTrapPortalProps> {
-	static defaultProps = {
-		title: "default title",
-	};
-
-	async componentDidMount() {
-		window.addEventListener("keyup", event => this.handleOnKeyPress(event));
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener("keyup", event => this.handleOnKeyPress(event));
-	}
-
+const ClickTrapPortal: React.FunctionComponent<IClickTrapPortalProps> = ({ title, onClickToClose, children }) => {
 	/**
 	 * @description Handles the key up press event
 	 * @author João Dias
-	 * @date 2019-07-11
 	 * @param {KeyboardEvent} event
 	 * @returns {boolean}
 	 * @memberof SidebarPortal
 	 */
-	handleOnKeyPress(event: KeyboardEvent): boolean {
-		const { onClickToClose } = this.props;
+	function handleOnKeyPress(event: KeyboardEvent): boolean {
 		if (event.keyCode === KEY_CODES.ESC) {
 			onClickToClose();
 
@@ -46,22 +30,28 @@ class ClickTrapPortal extends React.PureComponent<IClickTrapPortalProps> {
 		return false;
 	}
 
-	render() {
-		const { title, onClickToClose, children } = this.props;
+	useEvent("keyup", event => {
+		if (event.keyCode === KEY_CODES.ESC || event.keyCode === KEY_CODES.BACKSPACE) {
+			handleOnKeyPress(event);
+		}
+	});
 
-		return (
-			<Portal className="aside-portal opened" isFixed>
-				{children}
-				<S.Trap
-					id="portal-close-button"
-					data-testid="component-portal-click-trap"
-					type="button"
-					onClick={() => onClickToClose()}
-					aria-label={title}
-				/>
-			</Portal>
-		);
-	}
-}
+	return (
+		<Portal className="aside-portal opened" isFixed>
+			{children}
+			<S.Trap
+				id="portal-close-button"
+				data-testid="component-portal-click-trap"
+				type="button"
+				onClick={() => onClickToClose()}
+				aria-label={title}
+			/>
+		</Portal>
+	);
+};
+
+ClickTrapPortal.defaultProps = {
+	title: "default title",
+};
 
 export default ClickTrapPortal;
