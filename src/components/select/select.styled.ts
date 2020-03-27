@@ -2,6 +2,24 @@ import { rem } from "polished";
 import styled from "styled-components";
 
 export const SelectWrapper = styled.div`
+	--color-select-button: var(--color-primary);
+	--color-select-button-text: var(--body-font-color);
+	--color-select-button-arrow: var(--body-font-color);
+	--color-select-button-border: var(--color-primary);
+	--color-select-button-hover: var(--color-primary-dark);
+	--color-select-button-text-hover: var(--body-font-color);
+	--color-select-button-focus: var(--color-primary-dark);
+
+	html[data-theme="terminal"] && {
+		--color-select-button: var(--body-background);
+		--color-select-button-text: var(--color-primary);
+		--color-select-button-arrow: var(--color-select-button-text);
+		--color-select-button-border: var(--color-primary);
+		--color-select-button-hover: var(--color-button-hover);
+		--color-select-button-text-hover: var(--body-background);
+		--color-select-button-focus: var(--color-button-hover);
+	}
+
 	width: 100%;
 	height: auto;
 	display: flex;
@@ -23,7 +41,7 @@ export const SelectWrapper = styled.div`
 		height: 100%;
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-start;
+		justify-content: space-between;
 		align-items: center;
 
 		font-family: var(--body-font-family);
@@ -37,8 +55,8 @@ export const SelectWrapper = styled.div`
 		-moz-appearance: none;
 		appearance: none;
 
-		border: none;
-		background-color: var(--color-primary);
+		border: 1px solid var(--color-select-button-border);
+		background-color: var(--color-select-button);
 
 		cursor: context-menu;
 
@@ -47,46 +65,64 @@ export const SelectWrapper = styled.div`
 		&:hover,
 		&:focus,
 		&:active {
-			background-color: var(--color-primary-dark);
-		}
+			background-color: var(--color-select-button-hover);
 
-		&:after {
-			position: absolute;
-			right: calc(var(--global-margin) * 0.25);
-			transform: rotate(0deg);
-			transition: all 64ms;
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='13' fill='none' viewBox='0 0 12 13'%3E%3Cpath fill='%23000' d='M6 10.35l-4.157-5.4h8.314L6 10.35z'/%3E%3C/svg%3E");
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-color: transparent;
-			background-size: ${rem("10px")} ${rem("10px")};
-
-			display: flex;
-
-			height: calc(var(--global-margin) * 1);
-			width: calc(var(--global-margin) * 1);
-			content: "";
+			.select-input {
+				&__label,
+				&__value {
+					color: var(--color-select-button-text-hover);
+				}
+			}
 		}
 
 		&:focus {
-			outline-color: var(--color-black);
+			outline-color: var(--color-select-button-border);
 			outline-style: dotted;
 			outline-width: 1px;
 		}
 	}
 
-	.select-input__label {
-		font-family: var(--heading-font-family);
-	}
+	.select-input {
+		&__left {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			align-items: center;
+			width: 100%;
+		}
 
-	.select-input__value {
-		margin-left: 0.5rem;
-		margin-bottom: 0;
-		transform: translateY(1px);
+		&__arrow {
+			display: flex;
+			flex-direction: row;
+			align-self: flex-end;
+			transform: rotate(0deg);
+			transition: all 64ms;
+			width: ${rem("12px")};
+			height: ${rem("18px")};
+
+			path {
+				fill: var(--color-select-button-arrow);
+			}
+		}
+
+		&__label,
+		&__value {
+			color: var(--color-select-button-text);
+		}
+
+		&__label {
+			font-family: var(--heading-font-family);
+		}
+
+		&__value {
+			margin-left: 0.5rem;
+			margin-bottom: 0;
+			transform: translateY(1px);
+		}
 	}
 
 	&.is-open {
-		.select-input__button:after {
+		.select-input__arrow {
 			transform: rotate(180deg);
 			transition: all 64ms;
 		}
@@ -94,11 +130,36 @@ export const SelectWrapper = styled.div`
 `;
 
 export const SelectOptionsList = styled.ul`
+	--color-select-option: var(--color-white);
+	--color-select-option-selected: var(--color-gray8);
+	--color-select-option-selected-text: var(--color-white);
+	--color-select-option-border: var(--color-black);
+	--color-select-option-hover: var(--color-primary-dark);
+	--color-select-option-focus: var(--color-primary-dark);
+	--color-select-option-text: var(--body-font-color);
+	--color-select-option-text-hover: var(--body-font-color);
+	--color-select-option-new-text: var(--color-black);
+	--color-select-option-new-text-background: var(--color-primary);
+	--color-select-option-new-text-hover: var(--color-white);
+
+	html[data-theme="terminal"] && {
+		--color-select-option: var(--body-background);
+		--color-select-option-border: var(--body-background);
+		--color-select-option-hover: var(--color-primary);
+		--color-select-option-text: var(--color-primary);
+		--color-select-option-text-hover: var(--body-background);
+		--color-select-option-selected: var(--color-primary);
+		--color-select-option-selected-text: var(--body-background);
+		--color-select-option-new-text: var(--color-primary);
+		--color-select-option-new-text-background: var(--body-background);
+		--color-select-option-new-text-hover: var(--body-background);
+	}
+
 	display: none;
 	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
 
-	border: 1px solid var(--color-black);
-	background-color: var(--color-white);
+	border: 1px solid var(--color-select-option-border);
+	background-color: var(--color-select-option);
 
 	padding: 0;
 	margin: 0;
@@ -127,7 +188,7 @@ export const SelectOptionsList = styled.ul`
 		box-sizing: border-box;
 		padding: ${rem("8px")};
 		cursor: pointer;
-		box-shadow: 0px 1px 0px var(--color-black);
+		box-shadow: 0px 1px 0px var(--color-select-option-border);
 
 		&:last-child {
 			box-shadow: none;
@@ -135,25 +196,26 @@ export const SelectOptionsList = styled.ul`
 
 		&:hover,
 		&:focus {
-			background-color: var(--color-primary-dark);
+			background-color: var(--color-select-option-hover);
 		}
 
 		&.is-selected {
-			background-color: var(--color-gray8);
-			color: var(--color-white);
+			background-color: var(--color-select-option-selected);
+			color: var(--color-select-option-selected-text);
 
 			.ui-label {
-				outline-color: var(--color-white);
+				outline-color: var(--color-select-option-selected-text);
 				outline-style: dotted;
 				outline-width: 1px;
 			}
 
 			&:hover,
 			&:focus {
-				background-color: var(--color-black);
+				background-color: var(--color-select-option-selected);
 
 				.ui-label {
-					outline-color: var(--color-white);
+					color: var(--color-select-option-text-hover);
+					outline-color: var(--color-select-option-selected-text);
 					outline-style: dotted;
 					outline-width: 1px;
 				}
@@ -165,7 +227,8 @@ export const SelectOptionsList = styled.ul`
 				&:hover,
 				&:focus {
 					.ui-label {
-						outline-color: var(--color-white);
+						color: var(--color-select-option-text-hover);
+						outline-color: var(--color-select-option-selected-text);
 						outline-style: dotted;
 						outline-width: 1px;
 					}
@@ -197,8 +260,8 @@ export const SelectOptionsList = styled.ul`
 
 		.is-new {
 			width: auto;
-			background-color: var(--color-primary);
-			color: var(--color-black);
+			background-color: var(--color-select-option-new-text-background);
+			color: var(--color-select-option-new-text);
 			border-radius: 1rem;
 			padding: 0.125rem 0.5rem;
 			font-family: var(--heading-font-family);
@@ -227,7 +290,7 @@ export const SelectOptionsList = styled.ul`
 			}
 
 			.is-new {
-				background-color: var(--color-white);
+				background-color: var(--color-select-option-new-text-hover);
 			}
 		}
 	}

@@ -9,7 +9,7 @@ export const PlayerVisualizerWrapper = styled.figure`
 	justify-content: center;
 	align-items: center;
 	background-color: var(--color-black);
-	margin: 0;
+	margin: ${rem("4px")} 0;
 	padding: 0;
 	position: relative;
 	overflow: hidden;

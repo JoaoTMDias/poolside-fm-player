@@ -113,12 +113,24 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 					className={`row select-input__button ${isOpen ? "select-input__button--is-open" : ""}`}
 					onClick={this.onClickOnSelect}
 				>
-					<span id={`${id}-label`} className="select-input__label">
-						{label}
-					</span>
-					<span id={`${id}-title`} className="select-input__value as-paragraph">
-						{selected.label}
-					</span>
+					<div className="select-input__left">
+						<span id={`${id}-label`} className="select-input__label">
+							{label}
+						</span>
+						<span id={`${id}-title`} className="select-input__value as-paragraph">
+							{selected.label}
+						</span>
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="12"
+						height="13"
+						fill="none"
+						viewBox="0 0 12 13"
+						className="select-input__arrow"
+					>
+						<path fill="var(--color-select-button-arrow)" d="M6 10.35l-4.157-5.4h8.314L6 10.35z" />
+					</svg>
 				</button>
 				{isOpen && options && (
 					<SelectInputOptions

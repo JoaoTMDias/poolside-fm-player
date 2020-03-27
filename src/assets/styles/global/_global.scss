@@ -61,7 +61,7 @@
 	)
 );
 
-@import './animations';
+@import "./animations";
 
 html {
 	box-sizing: border-box;
@@ -74,6 +74,7 @@ html {
 	-ms-overflow-style: scrollbar;
 	-webkit-tap-highlight-color: hsla(0, 0%, 0%, 0);
 	-webkit-font-smoothing: none;
+	background-color: $body-background;
 }
 
 * {
@@ -90,7 +91,7 @@ html {
 	&::-moz-selection,
 	&::selection {
 		color: var(--color-primary, $color-primary);
-		background: var(--color-black, $color-black);
+		background: var(--body-font-color, $body-font-color);
 	}
 }
 
@@ -148,12 +149,12 @@ body {
 	font-size: var(--global-font-size, $global-font-size);
 	font-weight: var(--global-weight-normal, $global-weight-normal);
 	line-height: var(--global-lineheight, $ratio);
-	color: var(--color-black, $color-black);
+	color: var(--body-font-color, $body-font-color);
 	background-color: var(--body-background, $body-background);
 	flex-grow: 1;
 }
 
-@import './theme';
+@import "./theme";
 
 #window {
 	display: grid;
@@ -161,7 +162,7 @@ body {
 	grid-gap: 0;
 }
 
-[tabindex='-1']:focus {
+[tabindex="-1"]:focus {
 	outline: none !important;
 }
 
@@ -264,7 +265,7 @@ video {
 
 a,
 button,
-[role='button'],
+[role="button"],
 select {
 	cursor: pointer; // default for showing interactivity
 }
@@ -272,7 +273,7 @@ select {
 a,
 area,
 button,
-[role='button'],
+[role="button"],
 input,
 label,
 select,
@@ -318,27 +319,27 @@ select {
 }
 
 button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
+[type="button"],
+[type="reset"],
+[type="submit"] {
 	-webkit-appearance: button;
 }
 
 button::-moz-focus-inner,
-[type='button']::-moz-focus-inner,
-[type='reset']::-moz-focus-inner,
-[type='submit']::-moz-focus-inner {
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
 	border-style: none;
 	padding: 0;
 }
 
-[type='reset']:-moz-focusring,
-[type='submit']:-moz-focusring {
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
 	outline: 1px solid ButtonText;
 }
 
-[type='checkbox'],
-[type='radio'] {
+[type="checkbox"],
+[type="radio"] {
 	box-sizing: border-box;
 	/* 1 */
 	padding: 0;
@@ -356,8 +357,8 @@ progress {
 	vertical-align: baseline; // Add the correct vertical alignment in Chrome, Firefox, and Opera.
 }
 
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
 	height: auto;
 }
 

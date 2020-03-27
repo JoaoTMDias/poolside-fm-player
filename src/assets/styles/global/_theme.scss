@@ -1,19 +1,35 @@
-:root {
-	&[data-theme='poolside'] {
+html {
+	&[data-theme="poolside"] {
 		--body-background: $body-background;
 		--body-font-color: $body-font-color;
 	}
 
-	&[data-theme='palo-alto'] {
+	&[data-theme="palo-alto"] {
 		--body-background: hsl(34, 100%, 94%);
-		--color-primary: hsl(34, 100%, 94%);
-		--color-button: hsl(34, 100%, 94%);
+		--color-primary: var(--body-background);
+		--color-primary-dark: #{darken(#fff2e0, 10%)};
+		--color-button: var(--body-background);
+		--window-top-bar-background: var(--body-background);
 	}
 
-	&[data-theme='redmond'] {
-		--body-background: $color-white;
-		--color-primary: $color-white;
-		--color-button: $color-white;
+	&[data-theme="redmond"] {
+		--body-background: var(--color-white);
+		--color-primary: var(--color-white);
+		--color-primary-dark: $color-gray0;
+		--color-button: var(--color-white);
 		--window-top-bar-background: hsl(243, 100%, 25%);
+	}
+
+	&[data-theme="terminal"] {
+		--body-background: var(--color-black);
+		--window-top-bar-background: var(--body-background);
+		--color-primary: var(--color-success);
+		--color-primary-dark: $color-gray0;
+		--body-font-color: var(--color-success);
+
+		--color-button: var(--body-background);
+		--color-button-hover: var(--color-primary);
+		--color-button-icon: var(--color-primary);
+		--color-button-icon-hover: var(--body-background);
 	}
 }

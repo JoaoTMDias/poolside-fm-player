@@ -47,7 +47,7 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 		status: EPlayingStatus.paused,
 	};
 
-	constructor(props: IPlayerVisualizerProps) {
+	constructor (props: IPlayerVisualizerProps) {
 		super(props);
 
 		this.canvas = React.createRef<HTMLCanvasElement>();
@@ -271,9 +271,8 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 
 	render() {
 		const { status } = this.props;
-
 		const isPlaying = status === EPlayingStatus.playing;
-		const wrapperClassname = isPlaying ? "is-playing" : "";
+		const isPlayingClassname = isPlaying ? "is-playing" : "";
 		const caption = isPlaying ? "This is an audio visualizer for the music that is playing" : "Press play to start";
 		const captionClassname = isPlaying ? "sr-only" : "player-visualizer__label";
 
@@ -282,7 +281,7 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 				role="presentation"
 				data-testid="player-visualizer-wrapper"
 				id="player-visualizer"
-				className={`player-visualizer ${wrapperClassname}`}
+				className={`player-visualizer ${isPlayingClassname}`}
 			>
 				<figcaption id="player-visualizer-label" className={captionClassname}>
 					{caption}
