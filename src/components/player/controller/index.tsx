@@ -318,6 +318,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 			changeVolume: () => {},
 			onChangeOption: (index: number) => this.onChangeOption(index),
 		};
+
 		return <PlayerControllerContext.Provider value={contextValue}>{children}</PlayerControllerContext.Provider>;
 	}
 }

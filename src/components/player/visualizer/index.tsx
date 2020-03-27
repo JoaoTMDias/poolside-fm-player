@@ -26,13 +26,19 @@ interface IPlayerVisualizerState {
  * @returns {React.FunctionComponent}
  */
 class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVisualizerState> {
+	static contextType = PlayerControllerContext;
+
 	private canvas: React.RefObject<HTMLCanvasElement>;
 
 	private canvasElement: HTMLCanvasElement | null;
 
 	private canvasContext: CanvasRenderingContext2D | null;
 
+	private audioContext: AudioContext | null;
+
 	private audioAnalyser: AnalyserNode | null;
+
+	private mediaElementSource: MediaElementAudioSourceNode | null;
 
 	private playerBarWidth: number;
 
@@ -47,13 +53,15 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 		status: EPlayingStatus.paused,
 	};
 
-	constructor (props: IPlayerVisualizerProps) {
+	constructor(props: IPlayerVisualizerProps) {
 		super(props);
 
 		this.canvas = React.createRef<HTMLCanvasElement>();
 		this.canvasElement = null;
 		this.canvasContext = null;
+		this.audioContext = null;
 		this.audioAnalyser = null;
+		this.mediaElementSource = null;
 		this.playerBarWidth = 0;
 		this.dataArray = null;
 		this.bufferLength = 0;
@@ -120,9 +128,13 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	componentDidUpdate(prevProps: IPlayerVisualizerProps) {
 		const { audio } = this.props;
 
-		if (prevProps.audio !== audio && audio && audio.src.length > 0) {
+		if (audio && audio.src) {
 			this.initCanvas(audio);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	/**
@@ -159,12 +171,8 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	 * @memberof PlayerVisualizer
 	 */
 	getColorsFromRoot() {
-		const background = getComputedStyle(document.documentElement)
-			.getPropertyValue("--color-black")
-			.trim();
-		const color = getComputedStyle(document.documentElement)
-			.getPropertyValue("--color-white")
-			.trim();
+		const background = getComputedStyle(document.documentElement).getPropertyValue("--color-black").trim();
+		const color = getComputedStyle(document.documentElement).getPropertyValue("--color-white").trim();
 
 		this.setState(
 			produce((draftState: IPlayerVisualizerState) => {
@@ -173,29 +181,6 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 			}),
 		);
 	}
-
-	/**
-	 * Initializes the Canvas creation.
-	 * 1- Creates the player context
-	 * 2- Creates an analyser based on the current audio
-	 * 3- Renders the frames onto the canvas
-	 *
-	 * @param {HTMLCanvasElement} player
-	 * @memberof PlayerVisualizer
-	 */
-	initCanvas(audio: HTMLAudioElement) {
-		if (this.canvasElement) {
-			this.createCanvasContext(this.canvasElement);
-
-			this.createAudioAnalyser(audio);
-
-			this.playerBarWidth = 1;
-
-			this.renderFrame();
-		}
-	}
-
-	static contextType = PlayerControllerContext;
 
 	/**
 	 * Creates an object that provides methods and properties
@@ -223,19 +208,24 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	 * @memberof PlayerVisualizer
 	 */
 	createAudioAnalyser(audio: HTMLAudioElement) {
-		const context = new AudioContext();
-		const mediaElementSource = context.createMediaElementSource(audio);
+		if (!this.audioContext) {
+			this.audioContext = new AudioContext();
+			this.audioAnalyser = this.audioContext.createAnalyser();
+			this.audioAnalyser.connect(this.audioContext.destination);
+			this.audioAnalyser.fftSize = 256;
+			this.bufferLength = this.audioAnalyser.frequencyBinCount;
+			this.dataArray = new Uint8Array(this.bufferLength);
+		}
+
+		if (!this.mediaElementSource) {
+			this.mediaElementSource = this.audioContext.createMediaElementSource(audio);
+		}
+
 		audio.crossOrigin = "anonymous";
 
-		this.audioAnalyser = context.createAnalyser();
-		this.audioAnalyser.connect(context.destination);
-		this.audioAnalyser.fftSize = 256;
-
-		mediaElementSource.connect(this.audioAnalyser);
-
-		this.bufferLength = this.audioAnalyser.frequencyBinCount;
-
-		this.dataArray = new Uint8Array(this.bufferLength);
+		if (this.mediaElementSource && this.audioAnalyser) {
+			this.mediaElementSource.connect(this.audioAnalyser);
+		}
 	}
 
 	/**
@@ -269,11 +259,32 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 		}
 	};
 
+	/**
+	 * Initializes the Canvas creation.
+	 * 1- Creates the player context
+	 * 2- Creates an analyser based on the current audio
+	 * 3- Renders the frames onto the canvas
+	 *
+	 * @param {HTMLCanvasElement} player
+	 * @memberof PlayerVisualizer
+	 */
+	initCanvas(audio: HTMLAudioElement) {
+		if (this.canvasElement) {
+			this.createCanvasContext(this.canvasElement);
+
+			this.createAudioAnalyser(audio);
+
+			this.playerBarWidth = 1;
+
+			this.renderFrame();
+		}
+	}
+
 	render() {
 		const { status } = this.props;
 		const isPlaying = status === EPlayingStatus.playing;
 		const isPlayingClassname = isPlaying ? "is-playing" : "";
-		const caption = isPlaying ? "This is an audio visualizer for the music that is playing" : "Press play to start";
+		const caption = isPlaying ? "Music is playing" : "Press play to start";
 		const captionClassname = isPlaying ? "sr-only" : "player-visualizer__label";
 
 		return (
