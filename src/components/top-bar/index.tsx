@@ -39,13 +39,13 @@ const TopBar: React.FunctionComponent<ITopBarProps> = ({ title, onClick }) => {
 			>
 				<span className="sr-only">Close this window</span>
 			</button>
-			<div role="presentation" className="top-bar__handle" tabIndex={-1}>
-				<span className="top-bar__handle__item" tabIndex={-1} />
-				<span className="top-bar__handle__item" tabIndex={-1} />
-				<span className="top-bar__handle__item" tabIndex={-1} />
-				<span className="top-bar__handle__item" tabIndex={-1} />
-				<span className="top-bar__handle__item" tabIndex={-1} />
-				<span className="top-bar__handle__item" tabIndex={-1} />
+			<div role="presentation" className="top-bar__handle">
+				<span className="top-bar__handle__item" />
+				<span className="top-bar__handle__item" />
+				<span className="top-bar__handle__item" />
+				<span className="top-bar__handle__item" />
+				<span className="top-bar__handle__item" />
+				<span className="top-bar__handle__item" />
 			</div>
 			<h2 className="top-bar__title">{title}</h2>
 		</S.Wrapper>
