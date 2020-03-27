@@ -15,32 +15,28 @@ import { PlayerControllerContext } from "contexts/player-controller-context";
  * @returns {React.FunctionComponent}
  */
 const Homepage: React.FunctionComponent = () => {
-	const { currentIndex, onChangeOption, audio, status } = React.useContext(PlayerControllerContext);
-
-	/**
-	 * Renders the playlist visualizer component.
-	 * It is based on the context state.
-	 *
-	 * @returns {JSX.Element}
-	 */
-	function renderPlayerVisualizer() {
-		return <PlayerVisualizer status={status} audio={audio} />;
-	}
-
 	return (
 		<>
 			<TopBar />
 			<main id="main-content" className="window__main row">
 				<PlayerController>
-					{renderPlayerVisualizer()}
-					<Select
-						id="channel"
-						label="Channel:"
-						placeholder="Choose a radio channel"
-						options={PoolsidePlaylists}
-						currentIndex={currentIndex}
-						onChange={index => onChangeOption(index)}
-					/>
+					<PlayerControllerContext.Consumer>
+						{({ currentIndex, onChangeOption, audio, status }) => {
+							return (
+								<>
+									<PlayerVisualizer status={status} audio={audio} />
+									<Select
+										id="channel"
+										label="Channel:"
+										placeholder="Choose a radio channel"
+										options={PoolsidePlaylists}
+										currentIndex={currentIndex}
+										onChange={(index) => onChangeOption(index)}
+									/>
+								</>
+							);
+						}}
+					</PlayerControllerContext.Consumer>
 					<MediaPlayer />
 				</PlayerController>
 			</main>
@@ -48,4 +44,4 @@ const Homepage: React.FunctionComponent = () => {
 	);
 };
 
-export default React.memo(Homepage);
+export default Homepage;

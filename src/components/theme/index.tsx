@@ -43,7 +43,7 @@ const ThemeManager: FunctionComponent = ({ children }) => {
 	const context: IThemeContext = {
 		currentIndex,
 		theme,
-		onChangeOption: index => handleChangeTheme(index),
+		onChangeOption: (index) => handleChangeTheme(index),
 	};
 
 	return <ThemeContext.Provider value={context}>{children}</ThemeContext.Provider>;

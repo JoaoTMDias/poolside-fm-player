@@ -19,7 +19,7 @@ const Settings: React.FunctionComponent = () => {
 	const history = useHistory();
 	const { currentIndex, onChangeOption } = React.useContext(ThemeContext);
 
-	useEvent("keyup", event => {
+	useEvent("keyup", (event) => {
 		if (event.keyCode === KEY_CODES.ESC || event.keyCode === KEY_CODES.BACKSPACE) {
 			redirectToHome();
 		}
@@ -40,11 +40,10 @@ const Settings: React.FunctionComponent = () => {
 				<Select
 					id="theme"
 					label="Theme:"
-					type="theme"
 					placeholder="Choose a Theme"
 					options={Themes}
 					currentIndex={currentIndex}
-					onChange={index => onChangeOption(index)}
+					onChange={(index) => onChangeOption(index)}
 				/>
 			</main>
 		</>
