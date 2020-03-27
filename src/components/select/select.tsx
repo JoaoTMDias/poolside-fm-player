@@ -1,7 +1,6 @@
-import * as React from "react";
-import { ISelectOption } from "data/constants";
+import React from "react";
 import SelectInputOptions from "./select-option";
-import { ISelectProps, ISelectState } from "./select.interface";
+import { ISelectProps } from "./select.interface";
 import * as S from "./select.styled";
 
 export const defaultProps = {
@@ -12,39 +11,22 @@ export const defaultProps = {
 };
 
 /**
- * @class Select
- * @extends {React.Component<ISelectProps, ISelectState>}
+ * Select component
+ *
+ * @param {ISelectProps} { id, label, options, currentIndex, onChange }
+ * @returns {React.FunctionComponent<ISelectProps>}
  */
-class Select extends React.Component<ISelectProps, ISelectState> {
-	private selectInputButton: React.RefObject<HTMLButtonElement>;
-
-	static defaultProps = defaultProps;
-
-	constructor(props: ISelectProps) {
-		super(props);
-
-		this.state = {
-			isOpen: false,
-		};
-
-		// Bindings
-		this.onClickOnSelect = this.onClickOnSelect.bind(this);
-
-		// Refs
-		this.selectInputButton = React.createRef<HTMLButtonElement>();
-	}
+const Select: React.FunctionComponent<ISelectProps> = ({ id, label, options, currentIndex, onChange }) => {
+	const selectInputButton: React.RefObject<HTMLButtonElement> = React.useRef(null);
+	const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
 	/**
 	 * Changes the isOpen state to the inverse of what it was
 	 *
 	 * @returns {void}
 	 */
-	onClickOnSelect() {
-		const { isOpen } = this.state;
-
-		this.setState({
-			isOpen: !isOpen,
-		});
+	function onClickOnSelect() {
+		setIsOpen(!isOpen);
 	}
 
 	/**
@@ -54,12 +36,11 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 	 * @param {(React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>)} event
 	 * @memberof Select
 	 */
-	onChangeOptionFromList(
+	function onChangeOptionFromList(
 		index: number | null,
 		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
 	) {
 		event.preventDefault();
-		const { onChange } = this.props;
 		const hasIndex = index && index >= 0;
 
 		if (onChange && index && hasIndex) {
@@ -68,41 +49,25 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 			event.stopPropagation();
 		}
 
-		this.setState(
-			{
-				isOpen: false,
-			},
-			() => {
-				if (this.selectInputButton.current) {
-					this.selectInputButton.current.focus();
-				}
-			},
-		);
+		setIsOpen(false);
+
+		if (selectInputButton.current) {
+			selectInputButton.current.focus();
+		}
 	}
 
 	/**
 	 * Renders the select component
 	 *
-	 * @param {(ISelectOption[])} options
-	 * @param {number} currentIndex
-	 * @param {string} id
-	 * @param {boolean} isOpen
-	 * @param {(string | undefined)} label
 	 * @returns
 	 * @memberof Select
 	 */
-	renderSelectComponent(
-		options: ISelectOption[],
-		currentIndex: number,
-		id: string,
-		isOpen: boolean,
-		label: string | undefined,
-	) {
+	function renderSelectComponent() {
 		const selected = options[currentIndex];
 		return (
 			<div className="select-input__container">
 				<button
-					ref={this.selectInputButton}
+					ref={selectInputButton}
 					key={selected.id}
 					type="button"
 					data-testid="component-select-button"
@@ -111,7 +76,7 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 					aria-labelledby={`${id}-label ${id}-title`}
 					aria-expanded={isOpen ? "true" : "false"}
 					className={`row select-input__button ${isOpen ? "select-input__button--is-open" : ""}`}
-					onClick={this.onClickOnSelect}
+					onClick={onClickOnSelect}
 				>
 					<div className="select-input__left">
 						<span id={`${id}-label`} className="select-input__label">
@@ -141,23 +106,20 @@ class Select extends React.Component<ISelectProps, ISelectState> {
 						onChangeOptionFromList={(
 							index: number | null,
 							event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
-						) => this.onChangeOptionFromList(index, event)}
+						) => onChangeOptionFromList(index, event)}
 					/>
 				)}
 			</div>
 		);
 	}
 
-	public render() {
-		const { id, label, options, currentIndex } = this.props;
-		const { isOpen } = this.state;
+	return (
+		<S.SelectWrapper id={id} data-testid="component-select" className={`select-input ${isOpen ? "is-open" : ""}`}>
+			{renderSelectComponent()}
+		</S.SelectWrapper>
+	);
+};
 
-		return (
-			<S.SelectWrapper id={id} data-testid="component-select" className={`select-input ${isOpen ? "is-open" : ""}`}>
-				{this.renderSelectComponent(options, currentIndex, id, isOpen, label)}
-			</S.SelectWrapper>
-		);
-	}
-}
+Select.defaultProps = defaultProps;
 
 export default Select;

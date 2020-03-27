@@ -8,7 +8,3 @@ export interface ISelectProps {
 	placeholder?: string;
 	onChange?: (index: number) => void;
 }
-
-export interface ISelectState {
-	isOpen: boolean;
-}
