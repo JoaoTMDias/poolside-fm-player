@@ -1,12 +1,12 @@
 // Libraries
 import * as React from "react";
-import TopBar from "components/top-bar";
-import { withRouter, useHistory } from "react-router";
-import { ROUTE_HOME } from "data/constants/routes";
-import { useEvent, KEY_CODES } from "helpers";
-import { Themes } from "data/constants";
-import Select from "components/select/select";
-import ThemeContext from "contexts/theme-context";
+import { withRouter, useHistory } from "react-router-dom";
+import { ROUTE_HOME } from "../data/constants/routes";
+import { useEvent, KEY_CODES } from "../helpers/index";
+import { Themes } from "../data/constants";
+import Select from "../components/select/select";
+import ThemeContext from "../contexts/theme-context";
+import TopBar from "../components/top-bar/index";
 
 /**
  * Settings page
@@ -19,18 +19,18 @@ const Settings: React.FunctionComponent = () => {
 	const history = useHistory();
 	const { currentIndex, onChangeOption } = React.useContext(ThemeContext);
 
-	useEvent("keyup", (event) => {
-		if (event.keyCode === KEY_CODES.ESC || event.keyCode === KEY_CODES.BACKSPACE) {
-			redirectToHome();
-		}
-	});
-
 	/**
 	 * Handles the click on the top bar close button
 	 */
 	function redirectToHome() {
 		history.push(ROUTE_HOME);
 	}
+
+	useEvent("keyup", (event) => {
+		if (event.keyCode === KEY_CODES.ESC || event.keyCode === KEY_CODES.BACKSPACE) {
+			redirectToHome();
+		}
+	});
 
 	return (
 		<>

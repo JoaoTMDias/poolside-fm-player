@@ -12,11 +12,18 @@ import ControlsMedia from "../controls-media/index";
  * @returns {React.FunctionComponent<IMediaPlayerProps>}
  */
 const MediaPlayer = () => {
-	const { title, artist, currentTime, next, previous, togglePlay, status } = React.useContext(PlayerControllerContext);
+	const { title, artist, currentTime, next, previous, togglePlay, status } = React.useContext(
+		PlayerControllerContext
+	);
 	return (
 		<div id="media-player" className="media-player row">
 			<CurrentSong title={title} artist={artist} currentTime={`${currentTime}`} />
-			<ControlsMedia status={status} onClickOnPrevious={previous} onTogglePlay={togglePlay} onClickOnNext={next} />
+			<ControlsMedia
+				status={status}
+				onClickOnPrevious={previous}
+				onTogglePlay={togglePlay}
+				onClickOnNext={next}
+			/>
 		</div>
 	);
 };

@@ -6,7 +6,7 @@ import { KEY_CODES } from "./key-codes";
  * @param {number} keyCode
  * @returns {boolean}
  */
-function hasPressedSpaceOrEnter(keyCode: number) {
+function hasPressedSpaceOrEnter(keyCode: number): boolean {
 	if (keyCode === KEY_CODES.ENTER || keyCode === KEY_CODES.SPACE) {
 		return true;
 	}

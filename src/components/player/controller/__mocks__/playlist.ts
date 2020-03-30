@@ -408,7 +408,8 @@ export const playlist: ISoundcloudPlaylist = {
 			downloadable: false,
 			release: "",
 			created_at: "2013/12/18 18:25:50 +0000",
-			description: "another original composition with 'the message' sample\r\nmore @ http://espritfantasy.bandcamp.com",
+			description:
+				"another original composition with 'the message' sample\r\nmore @ http://espritfantasy.bandcamp.com",
 			original_content_size: 1812188,
 			title: "ESPRIT 空想 - esprit",
 			track_type: "",
@@ -467,7 +468,8 @@ export const playlist: ISoundcloudPlaylist = {
 			downloadable: false,
 			release: "",
 			created_at: "2014/08/21 00:46:44 +0000",
-			description: "free download here: https://www.facebook.com/WeAreSoftTouch/app_220150904689418",
+			description:
+				"free download here: https://www.facebook.com/WeAreSoftTouch/app_220150904689418",
 			original_content_size: 9878547,
 			title: "Get on Up - feat. Kianah [FREE DOWNLOAD]",
 			track_type: "",
@@ -566,7 +568,8 @@ export const playlist: ISoundcloudPlaylist = {
 			monetization_model: ISoundcloudMonetizationModel.NotApplicable,
 			waveform_url: "https://w1.sndcdn.com/5BURlGs5uKbW_m.png",
 			permalink: "glass-let-me-feel-your-heartbeat-instrumental-1982",
-			permalink_url: "https://soundcloud.com/boogie80-com/glass-let-me-feel-your-heartbeat-instrumental-1982",
+			permalink_url:
+				"https://soundcloud.com/boogie80-com/glass-let-me-feel-your-heartbeat-instrumental-1982",
 			user: {
 				id: 59743564,
 				kind: ISoundcloudUserKind.User,
@@ -625,7 +628,8 @@ export const playlist: ISoundcloudPlaylist = {
 			monetization_model: ISoundcloudMonetizationModel.NotApplicable,
 			waveform_url: "https://w1.sndcdn.com/HPjXfUZsC9gE_m.png",
 			permalink: "brenton-wood-youre-the-girl-of-my-dreams-1986",
-			permalink_url: "https://soundcloud.com/boogie80-com/brenton-wood-youre-the-girl-of-my-dreams-1986",
+			permalink_url:
+				"https://soundcloud.com/boogie80-com/brenton-wood-youre-the-girl-of-my-dreams-1986",
 			user: {
 				id: 59743564,
 				kind: ISoundcloudUserKind.User,
@@ -733,7 +737,8 @@ export const player: ISoundcloudPlayer = {
 	_events: {},
 	_clientId: "xkpqYPmDf6KG7aL1xM4qfWaJQrHBLSOh",
 	_baseUrl: "https://api.soundcloud.com",
-	playing: "https://api.soundcloud.com/tracks/405609924/stream?client_id=xkpqYPmDf6KG7aL1xM4qfWaJQrHBLSOh",
+	playing:
+		"https://api.soundcloud.com/tracks/405609924/stream?client_id=xkpqYPmDf6KG7aL1xM4qfWaJQrHBLSOh",
 	duration: 61858.733,
 	audio,
 	_playlist: playlist,

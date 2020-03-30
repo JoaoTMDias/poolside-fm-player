@@ -37,7 +37,15 @@ class Portal extends React.Component<IPortalProps, IPortalState> {
 	}
 
 	componentDidMount() {
-		const { backgroundColor, className, hasOverflowX, idAttribute, isRelative, isFixed, portalId } = this.props;
+		const {
+			backgroundColor,
+			className,
+			hasOverflowX,
+			idAttribute,
+			isRelative,
+			isFixed,
+			portalId,
+		} = this.props;
 
 		const id = portalId || "app-portal";
 		const portalRoot = document.getElementById(`${id}`);
@@ -69,7 +77,7 @@ class Portal extends React.Component<IPortalProps, IPortalState> {
 					if (root) {
 						root.appendChild(this.element);
 					}
-				},
+				}
 			);
 		}
 	}

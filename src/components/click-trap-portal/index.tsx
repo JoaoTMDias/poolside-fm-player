@@ -12,7 +12,11 @@ interface IClickTrapPortalProps {
  *
  * @extends {React.PureComponent<IClickTrapPortalProps>}
  */
-const ClickTrapPortal: React.FunctionComponent<IClickTrapPortalProps> = ({ title, onClickToClose, children }) => {
+const ClickTrapPortal: React.FunctionComponent<IClickTrapPortalProps> = ({
+	title,
+	onClickToClose,
+	children,
+}) => {
 	/**
 	 * @description Handles the key up press event
 	 * @author João Dias
@@ -30,7 +34,7 @@ const ClickTrapPortal: React.FunctionComponent<IClickTrapPortalProps> = ({ title
 		return false;
 	}
 
-	useEvent("keyup", event => {
+	useEvent("keyup", (event) => {
 		if (event.keyCode === KEY_CODES.ESC || event.keyCode === KEY_CODES.BACKSPACE) {
 			handleOnKeyPress(event);
 		}

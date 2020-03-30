@@ -16,7 +16,7 @@ import { useEffect } from "react";
 export default function useEvent<T extends keyof WindowEventMap>(
 	event: T,
 	listener: (this: Window, ev: WindowEventMap[T]) => any,
-	passive = false,
+	passive = false
 ) {
 	useEffect(() => {
 		// initiate the event handler

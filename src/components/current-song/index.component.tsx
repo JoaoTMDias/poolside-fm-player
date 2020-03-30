@@ -15,7 +15,11 @@ interface ICurrentSongProps {
  * @date 2019-02-16
  * @returns {React.FunctionComponent<ICurrentSongProps>}
  */
-const CurrentSong: React.FunctionComponent<ICurrentSongProps> = ({ artist, title, currentTime }) => {
+const CurrentSong: React.FunctionComponent<ICurrentSongProps> = ({
+	artist,
+	title,
+	currentTime,
+}) => {
 	return (
 		<S.Wrapper id="current-song" data-testid="component-current-song" className="current-song">
 			<h5 className="current-song__time ui-label">

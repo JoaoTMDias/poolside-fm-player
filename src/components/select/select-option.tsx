@@ -12,7 +12,7 @@ interface ISelectInputOptionsProps {
 	options: ISelectOption[];
 	onChangeOptionFromList(
 		index: number | null,
-		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
+		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>
 	): void;
 }
 
@@ -34,7 +34,10 @@ interface ISelectInputOptionLabel {
  * @param {ISelectInputOptionLabel} props
  * @returns {JSX.Element}
  */
-const SelectInputOptionLabel: React.FunctionComponent<ISelectInputOptionLabel> = ({ isNew, label }): JSX.Element => {
+const SelectInputOptionLabel: React.FunctionComponent<ISelectInputOptionLabel> = ({
+	isNew,
+	label,
+}): JSX.Element => {
 	return (
 		<span className="ui-label">
 			{label}
@@ -43,7 +46,10 @@ const SelectInputOptionLabel: React.FunctionComponent<ISelectInputOptionLabel> =
 	);
 };
 
-class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, ISelectInputOptionsState> {
+class SelectInputOptions extends React.PureComponent<
+	ISelectInputOptionsProps,
+	ISelectInputOptionsState
+> {
 	constructor(props: ISelectInputOptionsProps) {
 		super(props);
 
@@ -72,14 +78,18 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 		if (options && options.length > firstIndex) {
 			await holdOn(120);
 
-			const allOptions: HTMLElement[] = Array.from(document.querySelectorAll(".select-input__option"));
+			const allOptions: HTMLElement[] = Array.from(
+				document.querySelectorAll(".select-input__option")
+			);
 
 			if (allOptions && allOptions.length > 0) {
 				const first = allOptions[firstIndex];
 				const lastIndex = allOptions.length - 1;
 				const currentActiveElementIndex =
-					allOptions && allOptions.findIndex(option => option.classList.contains("is-selected"));
-				const hasCurrentActiveElementIndex = !!(currentActiveElementIndex && currentActiveElementIndex !== -1);
+					allOptions && allOptions.findIndex((option) => option.classList.contains("is-selected"));
+				const hasCurrentActiveElementIndex = !!(
+					currentActiveElementIndex && currentActiveElementIndex !== -1
+				);
 				let currentIndex = firstIndex;
 				let focusableElement: HTMLElement | null = null;
 
@@ -100,7 +110,7 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 						if (focusableElement) {
 							this.setFocusOnOption(focusableElement);
 						}
-					},
+					}
 				);
 			}
 		}
@@ -115,7 +125,9 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 	 * @memberof SelectInputOptions
 	 */
 	setFocusOnOption(element: HTMLElement) {
-		const focusableLabel: HTMLElement | null = element.querySelector(".select-input__option__label");
+		const focusableLabel: HTMLElement | null = element.querySelector(
+			".select-input__option__label"
+		);
 
 		if (focusableLabel) {
 			focusableLabel.focus();
@@ -230,7 +242,9 @@ class SelectInputOptions extends React.PureComponent<ISelectInputOptionsProps, I
 							type="radio"
 							className="sr-only"
 							checked={isSelected}
-							onChange={(event: React.ChangeEvent<HTMLInputElement>) => onChangeOptionFromList(index, event)}
+							onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+								onChangeOptionFromList(index, event)
+							}
 							tabIndex={-1}
 						/>
 						<SelectInputOptionLabel isNew={option.isNew} label={`${option.label}`} />

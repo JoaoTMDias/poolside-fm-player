@@ -16,7 +16,13 @@ export const defaultProps = {
  * @param {ISelectProps} { id, label, options, currentIndex, onChange }
  * @returns {React.FunctionComponent<ISelectProps>}
  */
-const Select: React.FunctionComponent<ISelectProps> = ({ id, label, options, currentIndex, onChange }) => {
+const Select: React.FunctionComponent<ISelectProps> = ({
+	id,
+	label,
+	options,
+	currentIndex,
+	onChange,
+}) => {
 	const selectInputButton: React.RefObject<HTMLButtonElement> = React.useRef(null);
 	const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -38,7 +44,7 @@ const Select: React.FunctionComponent<ISelectProps> = ({ id, label, options, cur
 	 */
 	function onChangeOptionFromList(
 		index: number | null,
-		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
+		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>
 	) {
 		event.preventDefault();
 		const hasIndex = index && index >= 0;
@@ -105,7 +111,7 @@ const Select: React.FunctionComponent<ISelectProps> = ({ id, label, options, cur
 						options={options}
 						onChangeOptionFromList={(
 							index: number | null,
-							event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>,
+							event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>
 						) => onChangeOptionFromList(index, event)}
 					/>
 				)}
@@ -114,7 +120,11 @@ const Select: React.FunctionComponent<ISelectProps> = ({ id, label, options, cur
 	}
 
 	return (
-		<S.SelectWrapper id={id} data-testid="component-select" className={`select-input ${isOpen ? "is-open" : ""}`}>
+		<S.SelectWrapper
+			id={id}
+			data-testid="component-select"
+			className={`select-input ${isOpen ? "is-open" : ""}`}
+		>
 			{renderSelectComponent()}
 		</S.SelectWrapper>
 	);

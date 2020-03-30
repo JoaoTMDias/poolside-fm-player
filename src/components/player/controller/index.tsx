@@ -53,13 +53,15 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 		this.onNext = this.onNext.bind(this);
 
 		// Refs
-		this.player = new SoundCloudAudio("175c043157ffae2c6d5fed16c3d95a4c");
+		this.player = new SoundCloudAudio("1df3275a3b94dfba2d1d4fac65562601");
 	}
 
 	componentDidMount() {
 		const { currentIndex } = this.state;
 
-		this.startPlaylist(currentIndex);
+		if (this.player) {
+			this.startPlaylist(currentIndex);
+		}
 	}
 
 	/**
@@ -84,7 +86,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 					if (this.player.playing && this.player.previous) {
 						this.player.previous();
 					}
-				},
+				}
 			);
 
 			hasChanged = true;
@@ -113,7 +115,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 					if (this.player && this.player.next && this.player.playing) {
 						this.player.next();
 					}
-				},
+				}
 			);
 		}
 	}
@@ -160,7 +162,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 				},
 				() => {
 					this.startPlaylist(index);
-				},
+				}
 			);
 		}
 	}
@@ -169,12 +171,13 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 	 * Returns the current tracks title and artist
 	 *
 	 * @param {number} index
-	 * @param {ISoundcloudPlayer} player
 	 * @returns {(IMediaPlayerTrackMetadata | null)}
 	 * @memberof PlayerController
 	 */
-	getCurrentTrackAndArtist(index: number, player: ISoundcloudPlayer): IMediaPlayerTrackMetadata | null {
-		if (index && player) {
+	getCurrentTrackAndArtist(index: number): IMediaPlayerTrackMetadata | null {
+		const { player } = this;
+
+		if (index && player && player._playlist) {
 			// eslint-disable-next-line no-underscore-dangle
 			const { title } = player._playlist.tracks[index];
 			// eslint-disable-next-line no-underscore-dangle
@@ -218,7 +221,9 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 		const currentPlaylist = PoolsidePlaylists[currentIndex].url;
 
 		if (this.player && this.player.resolve && currentPlaylist) {
-			this.player.resolve(currentPlaylist, (playlist: ISoundcloudPlaylist) => this.initPlaylist(playlist));
+			this.player.resolve(currentPlaylist, (playlist: ISoundcloudPlaylist) => {
+				this.initPlaylist(playlist);
+			});
 		}
 	}
 
@@ -244,7 +249,7 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 
 			player.on(ESoundCloudPlayerEvents.canplay, () => {
 				const { _playlistIndex } = player;
-				const metadata = _playlistIndex ? this.getCurrentTrackAndArtist(_playlistIndex, player) : null;
+				const metadata = _playlistIndex ? this.getCurrentTrackAndArtist(_playlistIndex) : null;
 
 				if (metadata) {
 					this.updateMetadata(metadata);
@@ -319,7 +324,11 @@ class PlayerController extends React.Component<{}, IPlayerControllerState> {
 			onChangeOption: (index: number) => this.onChangeOption(index),
 		};
 
-		return <PlayerControllerContext.Provider value={contextValue}>{children}</PlayerControllerContext.Provider>;
+		return (
+			<PlayerControllerContext.Provider value={contextValue}>
+				{children}
+			</PlayerControllerContext.Provider>
+		);
 	}
 }
 

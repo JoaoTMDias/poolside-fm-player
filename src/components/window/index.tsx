@@ -13,7 +13,13 @@ interface IWindowProps extends RouteProps {
  * @date 2019-02-16
  * @returns {React.FunctionComponent<IWindowProps>}
  */
-const Window: React.FunctionComponent<IWindowProps> = ({ id, children, exact, component, path }) => {
+const Window: React.FunctionComponent<IWindowProps> = ({
+	id,
+	children,
+	exact,
+	component,
+	path,
+}) => {
 	return (
 		<div id={id} className="window">
 			<Route exact={exact} path={path} component={component} />

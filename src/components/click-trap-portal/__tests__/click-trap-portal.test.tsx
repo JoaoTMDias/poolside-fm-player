@@ -10,7 +10,7 @@ describe("<ClickTrapPortal />", () => {
 				<ClickTrapPortal onClickToClose={() => {}}>
 					<p>Test</p>
 				</ClickTrapPortal>
-			</div>,
+			</div>
 		);
 
 		expect(wrapper).toMatchSnapshot();
@@ -25,7 +25,7 @@ describe("<ClickTrapPortal />", () => {
 					<ClickTrapPortal onClickToClose={onClickToCloseMock}>
 						<p>I am trapped inside the portal</p>
 					</ClickTrapPortal>
-				</div>,
+				</div>
 			);
 
 			const button = findByTestAttr(wrapper, "component-portal-click-trap").first();
@@ -50,7 +50,7 @@ describe("<ClickTrapPortal />", () => {
 					<ClickTrapPortal onClickToClose={onClickToCloseMock}>
 						<p>I am trapped inside the portal</p>
 					</ClickTrapPortal>
-				</div>,
+				</div>
 			);
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -77,7 +77,7 @@ describe("<ClickTrapPortal />", () => {
 				<ClickTrapPortal onClickToClose={onClickToCloseMock}>
 					<p>I am trapped inside the portal</p>
 				</ClickTrapPortal>
-			</div>,
+			</div>
 		);
 
 		// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -97,7 +97,7 @@ describe("<ClickTrapPortal />", () => {
 				<ClickTrapPortal onClickToClose={onClickToCloseMock}>
 					<p>I am trapped inside the portal</p>
 				</ClickTrapPortal>
-			</div>,
+			</div>
 		);
 
 		wrapper.unmount();

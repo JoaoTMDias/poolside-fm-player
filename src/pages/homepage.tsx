@@ -14,34 +14,30 @@ import { PlayerControllerContext } from "contexts/player-controller-context";
  * @date 2019-02-16
  * @returns {React.FunctionComponent}
  */
-const Homepage: React.FunctionComponent = () => {
-	return (
-		<>
-			<TopBar />
-			<main id="main-content" className="window__main row">
-				<PlayerController>
-					<PlayerControllerContext.Consumer>
-						{({ currentIndex, onChangeOption, audio, status }) => {
-							return (
-								<>
-									<PlayerVisualizer status={status} audio={audio} />
-									<Select
-										id="channel"
-										label="Channel:"
-										placeholder="Choose a radio channel"
-										options={PoolsidePlaylists}
-										currentIndex={currentIndex}
-										onChange={(index) => onChangeOption(index)}
-									/>
-								</>
-							);
-						}}
-					</PlayerControllerContext.Consumer>
-					<MediaPlayer />
-				</PlayerController>
-			</main>
-		</>
-	);
-};
+const Homepage: React.FunctionComponent = () => (
+	<>
+		<TopBar />
+		<main id="main-content" className="window__main row">
+			<PlayerController>
+				<PlayerControllerContext.Consumer>
+					{({ currentIndex, onChangeOption, audio, status }) => (
+						<>
+							<PlayerVisualizer status={status} audio={audio} />
+							<Select
+								id="channel"
+								label="Channel:"
+								placeholder="Choose a radio channel"
+								options={PoolsidePlaylists}
+								currentIndex={currentIndex}
+								onChange={(index) => onChangeOption(index)}
+							/>
+						</>
+					)}
+				</PlayerControllerContext.Consumer>
+				<MediaPlayer />
+			</PlayerController>
+		</main>
+	</>
+);
 
 export default Homepage;

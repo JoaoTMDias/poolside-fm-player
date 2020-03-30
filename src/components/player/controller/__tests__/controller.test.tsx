@@ -3,7 +3,10 @@ import { shallow, mount, ReactWrapper } from "enzyme";
 import PlayerController, { getRandomTrackIndex } from "components/player/controller/index";
 import PlayerVisualizer from "components/player/visualizer";
 import { IPlayerControllerState } from "contexts/player-controller-context";
-import { EPlayingStatus, IMediaPlayerTrackMetadata } from "components/player/media-player/player.interfaces";
+import {
+	EPlayingStatus,
+	IMediaPlayerTrackMetadata,
+} from "components/player/media-player/player.interfaces";
 import { playlist } from "../__mocks__/playlist";
 
 // Audio Prototype hacks
@@ -32,7 +35,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 
 			const instance = wrapper.instance() as PlayerController;
@@ -44,7 +47,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 
 			const instance = wrapper.instance() as PlayerController;
@@ -66,7 +69,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 
 			const instance = wrapper.instance() as PlayerController;
@@ -91,7 +94,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 
 			const instance = wrapper.instance() as PlayerController;
@@ -113,7 +116,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 
 			const instance = wrapper.instance() as PlayerController;
@@ -137,7 +140,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 			const mock = jest.fn();
 
@@ -153,7 +156,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 			const mock = jest.fn();
 
@@ -169,7 +172,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 			const mock = jest.fn();
 
@@ -187,7 +190,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 
 			const instance = wrapper.instance() as PlayerController;
@@ -204,7 +207,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 
 			const instance = wrapper.instance() as PlayerController;
@@ -220,7 +223,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 
 			const instance = wrapper.instance() as PlayerController;
@@ -242,7 +245,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 			const mock = jest.fn();
 			const instance = wrapper.instance() as PlayerController;
@@ -258,7 +261,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 			const mockPlay = jest.fn();
 			const mockPause = jest.fn();
@@ -277,7 +280,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 			const mock = jest.fn();
 			const instance = wrapper.instance() as PlayerController;
@@ -293,7 +296,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount<PlayerController>(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 			const mock = jest.fn();
 			const instance = wrapper.instance() as PlayerController;
@@ -311,7 +314,7 @@ describe("<PlayerController />", () => {
 			const wrapper: ReactWrapper<{}, IPlayerControllerState> = mount(
 				<PlayerController>
 					<PlayerVisualizer />
-				</PlayerController>,
+				</PlayerController>
 			);
 
 			const instance = wrapper.instance() as PlayerController;

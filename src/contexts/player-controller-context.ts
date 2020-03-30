@@ -54,6 +54,8 @@ export const defaultPlayerControllerContext = {
  * @returns
  * @memberof SidebarPortal
  */
-export const PlayerControllerContext = React.createContext<IPlayerControllerContext>(defaultPlayerControllerContext);
+export const PlayerControllerContext = React.createContext<IPlayerControllerContext>(
+	defaultPlayerControllerContext
+);
 
 export default PlayerControllerContext;

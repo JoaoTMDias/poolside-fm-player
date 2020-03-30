@@ -171,14 +171,18 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	 * @memberof PlayerVisualizer
 	 */
 	getColorsFromRoot() {
-		const background = getComputedStyle(document.documentElement).getPropertyValue("--color-black").trim();
-		const color = getComputedStyle(document.documentElement).getPropertyValue("--color-white").trim();
+		const background = getComputedStyle(document.documentElement)
+			.getPropertyValue("--color-black")
+			.trim();
+		const color = getComputedStyle(document.documentElement)
+			.getPropertyValue("--color-white")
+			.trim();
 
 		this.setState(
 			produce((draftState: IPlayerVisualizerState) => {
 				draftState.bars.background = background;
 				draftState.bars.color = color.length > 0 ? color : "#faf9f9";
-			}),
+			})
 		);
 	}
 
@@ -252,7 +256,12 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 				barHeight = this.dataArray[i] * 0.1;
 
 				this.canvasContext.fillStyle = bars.color;
-				this.canvasContext.fillRect(xAxis, this.canvasElement.height - barHeight, this.playerBarWidth, barHeight);
+				this.canvasContext.fillRect(
+					xAxis,
+					this.canvasElement.height - barHeight,
+					this.playerBarWidth,
+					barHeight
+				);
 
 				xAxis += this.playerBarWidth + 2;
 			}

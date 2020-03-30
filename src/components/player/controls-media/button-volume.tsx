@@ -61,7 +61,14 @@ const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume })
 					}
 				}}
 			>
-				<svg className="icon" xmlns="http://www.w3.org/2000/svg" width="9" height="9" fill="none" viewBox="0 0 9 9">
+				<svg
+					className="icon"
+					xmlns="http://www.w3.org/2000/svg"
+					width="9"
+					height="9"
+					fill="none"
+					viewBox="0 0 9 9"
+				>
 					<path
 						fill="var(--color-icon, #000)"
 						d="M6.652.587V0H5.478v.587h-.587v.587h-.587v.587h-.587v.587h-1.37v.587h-.586v3.13h.587v.587h1.37v.587h.586v.587h.587v.587h.587V9h1.174v-.587h.587V.587h-.587z"
@@ -69,7 +76,10 @@ const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume })
 				</svg>
 			</button>
 			{showControls && (
-				<ClickTrapPortal title="Click to close the volume controls" onClickToClose={() => handleOnClick()}>
+				<ClickTrapPortal
+					title="Click to close the volume controls"
+					onClickToClose={() => handleOnClick()}
+				>
 					<S.Wrapper id="volume-input-wrapper" tabIndex={-1}>
 						<S.Input
 							type="range"
@@ -81,7 +91,9 @@ const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume })
 							step="0.1"
 							value={value}
 							tabIndex={0}
-							onChange={(event: ChangeEvent<HTMLInputElement>) => onChangeRangeInput(event.target.value)}
+							onChange={(event: ChangeEvent<HTMLInputElement>) =>
+								onChangeRangeInput(event.target.value)
+							}
 						/>
 					</S.Wrapper>
 				</ClickTrapPortal>

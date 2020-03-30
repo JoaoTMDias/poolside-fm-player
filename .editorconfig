@@ -16,6 +16,7 @@ curly_bracket_next_line = "true"
 indent_style = tab
 indent_size = 2
 insert_final_newline = true
+quote_type = "double"
 
 charset = utf-8
-max_line_length = 80
+max_line_length = 100

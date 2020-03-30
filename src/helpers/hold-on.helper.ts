@@ -6,7 +6,7 @@
  * @returns
  */
 export function holdOn(amount = 0): Promise<NodeJS.Timeout> {
-	return new Promise(resolve => setTimeout(resolve, amount));
+	return new Promise((resolve) => setTimeout(resolve, amount));
 }
 
 export default holdOn;

@@ -1,6 +1,11 @@
 // Libraries
 import React, { useEffect, useState, FunctionComponent, useContext } from "react";
-import ThemeContext, { ETHEME, IThemeContext, POOLSIDE_THEMES, defaultThemeContext } from "contexts/theme-context";
+import ThemeContext, {
+	ETHEME,
+	IThemeContext,
+	POOLSIDE_THEMES,
+	defaultThemeContext,
+} from "contexts/theme-context";
 import { get, set } from "helpers";
 
 export const useTheme = () => useContext(ThemeContext);

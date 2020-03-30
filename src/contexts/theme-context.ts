@@ -7,7 +7,7 @@ export enum ETHEME {
 	terminal = "terminal",
 }
 
-export const POOLSIDE_THEMES = Object.entries(ETHEME).map(item => item[1]);
+export const POOLSIDE_THEMES = Object.entries(ETHEME).map((item) => item[1]);
 
 export interface IThemeContext {
 	currentIndex: number;

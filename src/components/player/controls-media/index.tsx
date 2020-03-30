@@ -86,7 +86,10 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 								fill="none"
 								viewBox="0 0 9 9"
 							>
-								<path fill="var(--color-icon, #000)" d="M3 9V0h1v1h1v1h1v1h1v1h1v1H7v1H6v1H5v1H4v1H3z" />
+								<path
+									fill="var(--color-icon, #000)"
+									d="M3 9V0h1v1h1v1h1v1h1v1h1v1H7v1H6v1H5v1H4v1H3z"
+								/>
 							</svg>
 						) : (
 							<svg
@@ -157,7 +160,14 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 					aria-label="Click to navigate to the app's settings page"
 					className="controls-media__button button button--large"
 				>
-					<svg className="icon" xmlns="http://www.w3.org/2000/svg" width="9" height="9" fill="none" viewBox="0 0 9 9">
+					<svg
+						className="icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="9"
+						height="9"
+						fill="none"
+						viewBox="0 0 9 9"
+					>
 						<path
 							fill="var(--color-icon, #000)"
 							d="M8.413 3.913v-.587h-.587V2.152h.587v-.978h-.587V.587h-.978v.587H5.674V.587h-.587V0H3.913v.587h-.587v.587H2.152V.587h-.978v.587H.587v.978h.587v1.174H.587v.587H0v1.174h.587v.587h.587v1.174H.587v.978h.587v.587h.978v-.587h1.174v.587h.587V9h1.174v-.587h.587v-.587h1.174v.587h.978v-.587h.587v-.978h-.587V5.674h.587v-.587H9V3.913h-.587zM6.065 5.478h-.587v.587H3.522v-.587h-.587V3.522h.587v-.587h1.956v.587h.587v1.956z"
