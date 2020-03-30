@@ -1,5 +1,5 @@
 import * as React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from "@testing-library/react"
 
 import { withMemo } from "../index";
 
@@ -7,6 +7,8 @@ interface IDemoComponentProps {
 	title: string;
 	value?: string;
 }
+
+afterEach(cleanup);
 
 const DemoComponent: React.FunctionComponent<IDemoComponentProps> = ({ title, value }) => {
 	return (
@@ -35,7 +37,7 @@ const MemoDemo = withMemo<IDemoComponentProps>(DemoComponent, ["title"]);
 
 describe("withMemo", () => {
 	it("should return a MemoExoticComponent", () => {
-		const component = shallow(<MemoDemo title="A new title" />);
+		const component = render(<MemoDemo title="A new title" />);
 		expect(component).toMatchSnapshot();
 	});
 });

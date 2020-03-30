@@ -1,11 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from "@testing-library/react"
 
 import Homepage from "pages/homepage";
 
+afterEach(cleanup);
+
 describe("<Homepage />", () => {
 	it("should render the homepage", () => {
-		const component = shallow(<Homepage />);
+		const component = render(<Homepage />);
 
 		expect(component).toMatchSnapshot();
 	});

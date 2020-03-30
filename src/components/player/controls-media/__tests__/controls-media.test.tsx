@@ -1,50 +1,54 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
+import { render, cleanup, fireEvent } from "@testing-library/react"
+
 import ControlsMedia from "components/player/controls-media";
 import { EPlayingStatus } from "components/player/media-player/player.interfaces";
-import { KEY_CODES, hasPressedSpaceOrEnter, findByTestAttr, findById } from "helpers";
+import { KEY_CODES, hasPressedSpaceOrEnter, findByTestAttr, getAllById } from "helpers";
 import { HashRouter as Router } from "react-router-dom";
 import ButtonVolume from "../button-volume";
 
+afterEach(cleanup);
+
 describe("<ControlsMedia />", () => {
 	it("should render the component without errors", () => {
-		const component = shallow(<ControlsMedia status={EPlayingStatus.paused} />);
+		const component = render(<ControlsMedia status={EPlayingStatus.paused} />);
 
 		expect(component).toMatchSnapshot();
 	});
 
 	describe("Play button", () => {
-		it("should be paused by default", () => {
-			const component = shallow(<ControlsMedia status={EPlayingStatus.paused} />);
-			const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
+		it("should be paused by default", async () => {
+			const { getByTestId } = render(<ControlsMedia status={EPlayingStatus.paused} />);
+			const playButton = await getByTestId("component-controls-media-button-play");
 
-			const iconPlay = findById(playButton, "icon-play");
-			const iconPause = findById(playButton, "icon-pause");
+			const iconPlay = await getAllById(playButton, "#icon-play");
+			const iconPause = await getAllById(playButton, "#icon-pause");
 
-			expect(iconPlay.length).toBe(0);
-			expect(iconPause.length).toBe(1);
+			expect(iconPlay?.length).toBe(0);
+			expect(iconPause?.length).toBe(1);
 		});
 
-		it("should be play when a song is playing", () => {
-			const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-			const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
-			const iconPlay = findById(playButton, "icon-play");
-			const iconPause = findById(playButton, "icon-pause");
+		it("should be play when a song is playing", async () => {
+			const { getByTestId } = render(<ControlsMedia status={EPlayingStatus.playing} />);
+			const playButton = await getByTestId("component-controls-media-button-play");
+			const iconPlay = getAllById(playButton, "#icon-play");
+			const iconPause = getAllById(playButton, "#icon-pause");
 
-			expect(iconPlay.length).toBe(1);
-			expect(iconPause.length).toBe(0);
+			expect(iconPlay?.length).toBe(1);
+			expect(iconPause?.length).toBe(0);
 		});
 	});
 
 	describe("onTogglePlay", () => {
-		it("should call on click", () => {
+		it("should call on click", async () => {
 			const onTogglePlayMock = jest.fn();
-			const component = shallow(
+			const { getByTestId } = render(
 				<ControlsMedia onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />
 			);
-			const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
+			const playButton = await getByTestId("component-controls-media-button-play");
 
-			playButton.simulate("click");
+			fireEvent.click(playButton);
 
 			expect(onTogglePlayMock).toHaveBeenCalled();
 		});

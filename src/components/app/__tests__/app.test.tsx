@@ -1,11 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, cleanup } from "@testing-library/react"
 
 import App from "../index";
 
+afterEach(cleanup);
+
 describe("<App />", () => {
 	it("should render a visualizer", () => {
-		const component = shallow(<App />);
+		const component = render(<App />);
 
 		expect(component).toMatchSnapshot();
 	});
