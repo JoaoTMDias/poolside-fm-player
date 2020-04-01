@@ -18,7 +18,7 @@ const DemoComponent: React.FunctionComponent<IDemoComponentProps> = ({ title, va
 				data-testid="demo-component-input"
 				className="demo-component-input"
 				type="text"
-				value={value}
+				defaultValue={value}
 				placeholder="Foobar"
 			/>
 			<button type="button" id="demo-component-button" data-testid="demo-component-button">

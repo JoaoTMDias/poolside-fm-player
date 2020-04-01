@@ -1,7 +1,15 @@
-import * as React from "react";
-import { shallow } from "enzyme";
+import React from "react";
+import { render, cleanup } from "@testing-library/react"
+import {
+	findByAttribute,
+	findByClassname,
+	findById,
+	getAllByAttribute,
+	getAllByClassname,
+	getAllById
+} from "../index";
 
-import { findByTestAttr, findById, findByClass } from "../index";
+afterEach(cleanup);
 
 const DemoComponent = () => {
 	return (
@@ -11,46 +19,66 @@ const DemoComponent = () => {
 				data-testid="demo-component-input"
 				className="demo-component-input"
 				type="text"
-				value=""
+				defaultValue=""
 				placeholder="Foobar"
 			/>
-			<button type="button" id="demo-component-button" data-testid="demo-component-button">
+			<button type="button" data-demo="button" id="demo-component-button" data-testid="demo-component-button">
 				<span className="demo-component-span">A Demo Button</span>
 			</button>
 		</fieldset>
 	);
 };
 
-describe("findByTestAttr", () => {
-	it("should find an element by its test attribute", () => {
-		const component = shallow(<DemoComponent />);
-		const button = findByTestAttr(component, "demo-component-button");
+describe("findByAttribute", () => {
+	it("should find an element by its data attribute", async () => {
+		const { container } = render(<DemoComponent />);
+		const button = await findByAttribute(container, "[data-demo='button']");
 
-		expect(button.length).toBe(1);
+		expect(button?.tagName).toBe("BUTTON"); 
+	});
+});
+
+describe("getAllByAttribute", () => {
+	it("should find all element by its type attribute", async () => {
+		const { container } = render(<DemoComponent />);
+		const input = await getAllByAttribute(container, "[type='text']");
+
+		expect(input?.length).toBe(1);
 	});
 });
 
 describe("findById", () => {
-	it("should find an element by its id", () => {
-		const component = shallow(<DemoComponent />);
-		const input = findById(component, "demo-component-input");
+	it("should find an element by its id", async () => {
+		const { container } = render(<DemoComponent />);
+		const input = await findById(container, "#demo-component-input");
 
-		expect(input.length).toBe(1);
+		expect(input?.tagName).toBe("INPUT"); 
 	});
 });
 
-describe("findByClass", () => {
-	it("should find an element by its class as a string", () => {
-		const component = shallow(<DemoComponent />);
-		const span = findByClass(component, "demo-component-span");
+describe("getAllById", () => {
+	it("should find all elements by its id", async () => {
+		const { container } = render(<DemoComponent />);
+		const input = await getAllById(container, "#demo-component-input");
 
-		expect(span.length).toBe(1);
+		expect(input?.length).toBe(1);
 	});
+});
 
-	it("should find an element by its class with a dot", () => {
-		const component = shallow(<DemoComponent />);
-		const span = findByClass(component, ".demo-component-span");
+describe("findByClassname", () => {
+	it("should find an element by its class", async () => {
+		const { container } = render(<DemoComponent />);
+		const span = await findByClassname(container, ".demo-component-span");
 
-		expect(span.length).toBe(1);
+		expect(span?.tagName).toBe("SPAN");
+	});
+});
+
+describe("getAllByClassname", () => {
+	it("should find an element by its class", async () => {
+		const { container } = render(<DemoComponent />);
+		const span = await getAllByClassname(container, ".demo-component-span");
+
+		expect(span?.length).toBe(1);
 	});
 });

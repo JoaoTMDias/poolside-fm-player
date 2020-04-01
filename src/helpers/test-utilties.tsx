@@ -38,6 +38,8 @@ const getAllByAttribute = (component: HTMLElement, selector: string): HTMLElemen
 };
 
 export {
+	findByAttribute,
+	getAllByAttribute,
 	findByAttribute as findById,
 	findByAttribute as findByClassname,
 	getAllByAttribute as getAllById,

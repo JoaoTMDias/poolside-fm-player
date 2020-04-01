@@ -1,25 +1,43 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
 import { render, cleanup, fireEvent } from "@testing-library/react"
 
 import ControlsMedia from "components/player/controls-media";
-import { EPlayingStatus } from "components/player/media-player/player.interfaces";
-import { KEY_CODES, hasPressedSpaceOrEnter, findByTestAttr, getAllById } from "helpers";
+import { EPlayingStatus, IControlsMediaProps } from "components/player/media-player/player.interfaces";
+import { KEY_CODES, hasPressedSpaceOrEnter, getAllById } from "helpers";
 import { HashRouter as Router } from "react-router-dom";
-import ButtonVolume from "../button-volume";
 
 afterEach(cleanup);
 
+const ControlsMediaWithRouter: React.FunctionComponent<IControlsMediaProps> = ({
+	onClickOnPrevious,
+	onTogglePlay,
+	onClickOnNext,
+	onChangeVolume,
+	status,
+}) => {
+	return (
+		<Router>
+			<ControlsMedia
+				onClickOnPrevious={onClickOnPrevious}
+				onTogglePlay={onTogglePlay}
+				onClickOnNext={onClickOnNext}
+				onChangeVolume={onChangeVolume}
+				status={status}
+			/>
+		</Router>
+	);
+};
+
 describe("<ControlsMedia />", () => {
 	it("should render the component without errors", () => {
-		const component = render(<ControlsMedia status={EPlayingStatus.paused} />);
+		const component = render(<ControlsMediaWithRouter status={EPlayingStatus.paused} />);
 
 		expect(component).toMatchSnapshot();
 	});
 
 	describe("Play button", () => {
 		it("should be paused by default", async () => {
-			const { getByTestId } = render(<ControlsMedia status={EPlayingStatus.paused} />);
+			const { getByTestId } = render(<ControlsMediaWithRouter status={EPlayingStatus.paused} />);
 			const playButton = await getByTestId("component-controls-media-button-play");
 
 			const iconPlay = await getAllById(playButton, "#icon-play");
@@ -30,7 +48,7 @@ describe("<ControlsMedia />", () => {
 		});
 
 		it("should be play when a song is playing", async () => {
-			const { getByTestId } = render(<ControlsMedia status={EPlayingStatus.playing} />);
+			const { getByTestId } = render(<ControlsMediaWithRouter status={EPlayingStatus.playing} />);
 			const playButton = await getByTestId("component-controls-media-button-play");
 			const iconPlay = getAllById(playButton, "#icon-play");
 			const iconPause = getAllById(playButton, "#icon-pause");
@@ -44,7 +62,7 @@ describe("<ControlsMedia />", () => {
 		it("should call on click", async () => {
 			const onTogglePlayMock = jest.fn();
 			const { getByTestId } = render(
-				<ControlsMedia onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />
+				<ControlsMediaWithRouter onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />
 			);
 			const playButton = await getByTestId("component-controls-media-button-play");
 
@@ -53,46 +71,44 @@ describe("<ControlsMedia />", () => {
 			expect(onTogglePlayMock).toHaveBeenCalled();
 		});
 
-		it("should not call on click", () => {
+		it("should not call on click", async () => {
 			const onTogglePlayMock = jest.fn();
-			const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-			const playButton = findByTestAttr(component, "component-controls-media-button-play").first();
+			const { getByTestId } = render(
+				<ControlsMediaWithRouter
+					status={EPlayingStatus.playing}
+				/>
+			);
+			const playButton = await getByTestId("component-controls-media-button-play");
 
-			playButton.simulate("click");
+			fireEvent.click(playButton);
 
 			expect(onTogglePlayMock).not.toHaveBeenCalled();
 		});
 
 		describe("should call on press", () => {
-			it("on SPACE key", () => {
+			it("on SPACE key", async () => {
 				const onTogglePlayMock = jest.fn();
-				const component = shallow(
-					<ControlsMedia onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />
+				const { getAllByTestId } = render(
+					<ControlsMediaWithRouter onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />
 				);
-				const playButton = findByTestAttr(
-					component,
-					"component-controls-media-button-play"
-				).first();
+				const playButton = await getAllByTestId("component-controls-media-button-play")[0];
 
-				playButton.simulate("keyup", {
+				fireEvent.keyUp(playButton, {
 					keyCode: KEY_CODES.SPACE,
 				});
 
 				expect(onTogglePlayMock).toHaveBeenCalled();
 			});
 
-			it("on ENTER key", () => {
+			it("on ENTER key", async () => {
 				const onTogglePlayMock = jest.fn();
-				const component = shallow(
-					<ControlsMedia onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />
+				const { getAllByTestId } = render(
+					<ControlsMediaWithRouter onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />
 				);
-				const playButton = findByTestAttr(
-					component,
-					"component-controls-media-button-play"
-				).first();
+				const playButton = await getAllByTestId("component-controls-media-button-play")[0];
 
-				playButton.simulate("keyup", {
-					keyCode: KEY_CODES.ENTER,
+				fireEvent.keyUp(playButton, {
+					keyCode: KEY_CODES.SPACE,
 				});
 
 				expect(onTogglePlayMock).toHaveBeenCalled();
@@ -100,30 +116,28 @@ describe("<ControlsMedia />", () => {
 		});
 
 		describe("should not call on press", () => {
-			it("on SPACE key", () => {
+			it("on SPACE key", async () => {
 				const onTogglePlayMock = jest.fn();
-				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-				const playButton = findByTestAttr(
-					component,
-					"component-controls-media-button-play"
-				).first();
+				const { getAllByTestId } = render(
+					<ControlsMediaWithRouter status={EPlayingStatus.playing} />
+				);
+				const playButton = await getAllByTestId("component-controls-media-button-play")[0];
 
-				playButton.simulate("keyup", {
+				fireEvent.keyUp(playButton, {
 					keyCode: KEY_CODES.SPACE,
 				});
 
 				expect(onTogglePlayMock).not.toHaveBeenCalled();
 			});
 
-			it("on ENTER key", () => {
+			it("on ENTER key", async () => {
 				const onTogglePlayMock = jest.fn();
-				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-				const playButton = findByTestAttr(
-					component,
-					"component-controls-media-button-play"
-				).first();
+				const { getAllByTestId } = render(
+					<ControlsMediaWithRouter status={EPlayingStatus.playing} />
+				);
+				const playButton = await getAllByTestId("component-controls-media-button-play")[0];
 
-				playButton.simulate("keyup", {
+				fireEvent.keyUp(playButton, {
 					keyCode: KEY_CODES.ENTER,
 				});
 
@@ -147,71 +161,64 @@ describe("<ControlsMedia />", () => {
 	});
 
 	describe("onClickOnPrevious", () => {
-		it("should call on click", () => {
+		it("should call on click", async () => {
 			const onClickOnPreviousMock = jest.fn();
-			const component = shallow(
-				<ControlsMedia onClickOnPrevious={onClickOnPreviousMock} status={EPlayingStatus.playing} />
+			const { getAllByTestId } = render(
+				<ControlsMediaWithRouter
+					onClickOnPrevious={onClickOnPreviousMock}
+					status={EPlayingStatus.playing}
+				/>
 			);
-			const previousButton = findByTestAttr(
-				component,
-				"component-controls-media-button-previous"
-			).first();
+			const previousButton = await getAllByTestId("component-controls-media-button-previous")[0];
 
-			previousButton.simulate("click");
+			fireEvent.click(previousButton);
 
 			expect(onClickOnPreviousMock).toHaveBeenCalled();
 		});
 
-		it("should not call on click if no props are passed", () => {
+		it("should not call on click if no props are passed", async () => {
 			const onClickOnPreviousMock = jest.fn();
-			const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-			const previousButton = findByTestAttr(
-				component,
-				"component-controls-media-button-previous"
-			).first();
+			const { getAllByTestId } = render(
+				<ControlsMediaWithRouter
+					status={EPlayingStatus.playing}
+				/>
+			);
+			const previousButton = await getAllByTestId("component-controls-media-button-previous")[0];
 
-			previousButton.simulate("click");
+			fireEvent.click(previousButton);
 
 			expect(onClickOnPreviousMock).not.toHaveBeenCalled();
 		});
 
 		describe("should call on press", () => {
-			it("on SPACE key", () => {
+			it("on SPACE key", async () => {
 				const onClickOnPreviousMock = jest.fn();
-				const component = shallow(
-					<ControlsMedia
+				const { getAllByTestId } = render(
+					<ControlsMediaWithRouter
 						onClickOnPrevious={onClickOnPreviousMock}
 						status={EPlayingStatus.playing}
 					/>
 				);
+				const previousButton = await getAllByTestId("component-controls-media-button-previous")[0];
 
-				const previousButton = findByTestAttr(
-					component,
-					"component-controls-media-button-previous"
-				).first();
-
-				previousButton.simulate("keyup", {
+				fireEvent.keyUp(previousButton, {
 					keyCode: KEY_CODES.SPACE,
 				});
 
 				expect(onClickOnPreviousMock).toHaveBeenCalled();
 			});
 
-			it("on ENTER key", () => {
+			it("on ENTER key", async () => {
 				const onClickOnPreviousMock = jest.fn();
-				const component = shallow(
-					<ControlsMedia
+				const { getAllByTestId } = render(
+					<ControlsMediaWithRouter
 						onClickOnPrevious={onClickOnPreviousMock}
 						status={EPlayingStatus.playing}
 					/>
 				);
+				const previousButton = await getAllByTestId("component-controls-media-button-previous")[0];
 
-				const previousButton = findByTestAttr(
-					component,
-					"component-controls-media-button-previous"
-				).first();
-
-				previousButton.simulate("keyup", {
+				fireEvent.keyUp(previousButton, {
 					keyCode: KEY_CODES.ENTER,
 				});
 
@@ -220,32 +227,32 @@ describe("<ControlsMedia />", () => {
 		});
 
 		describe("should not call on press", () => {
-			it("on SPACE key", () => {
+			it("on SPACE key", async () => {
 				const onClickOnPreviousMock = jest.fn();
-				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
+				const { getByTestId } = render(
+					<ControlsMediaWithRouter
+						status={EPlayingStatus.playing}
+					/>
+				);
+				const previousButton = await getByTestId("component-controls-media-button-previous");
 
-				const previousButton = findByTestAttr(
-					component,
-					"component-controls-media-button-previous"
-				).first();
-
-				previousButton.simulate("keyup", {
+				fireEvent.keyUp(previousButton, {
 					keyCode: KEY_CODES.SPACE,
 				});
 
 				expect(onClickOnPreviousMock).not.toHaveBeenCalled();
 			});
 
-			it("on ENTER key", () => {
+			it("on ENTER key", async () => {
 				const onClickOnPreviousMock = jest.fn();
-				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
+				const { getByTestId } = render(
+					<ControlsMediaWithRouter
+						status={EPlayingStatus.playing}
+					/>
+				);
+				const previousButton = await getByTestId("component-controls-media-button-previous");
 
-				const previousButton = findByTestAttr(
-					component,
-					"component-controls-media-button-previous"
-				).first();
-
-				previousButton.simulate("keyup", {
+				fireEvent.keyUp(previousButton, {
 					keyCode: KEY_CODES.ENTER,
 				});
 
@@ -255,191 +262,103 @@ describe("<ControlsMedia />", () => {
 	});
 
 	describe("onClickOnNext", () => {
-		it("should call on click", () => {
+		it("should call on click", async () => {
 			const onClickOnNextMock = jest.fn();
-			const component = shallow(
-				<ControlsMedia onClickOnNext={onClickOnNextMock} status={EPlayingStatus.playing} />
+			const { getByTestId } = render(
+				<ControlsMediaWithRouter
+					onClickOnNext={onClickOnNextMock}
+					status={EPlayingStatus.playing}
+				/>
 			);
-			const nextButton = findByTestAttr(component, "component-controls-media-button-next").first();
+			const nextButton = await getByTestId("component-controls-media-button-next");
 
-			nextButton.simulate("click");
+			fireEvent.click(nextButton);
 
 			expect(onClickOnNextMock).toHaveBeenCalled();
 		});
 
-		it("should not call on click", () => {
+		it("should not call on click", async () => {
 			const onClickOnNextMock = jest.fn();
-			const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-			const nextButton = findByTestAttr(component, "component-controls-media-button-next").first();
+			const { getByTestId } = render(
+				<ControlsMediaWithRouter
+					status={EPlayingStatus.playing}
+				/>
+			);
+			const nextButton = await getByTestId("component-controls-media-button-next");
 
-			nextButton.simulate("click");
+			fireEvent.click(nextButton);
 
 			expect(onClickOnNextMock).not.toHaveBeenCalled();
 		});
 
 		describe("should call on press", () => {
-			it("on SPACE key", () => {
+			it("on SPACE key", async () => {
 				const onClickOnNextMock = jest.fn();
-				const component = shallow(
-					<ControlsMedia onClickOnNext={onClickOnNextMock} status={EPlayingStatus.playing} />
+				const { getByTestId } = render(
+					<ControlsMediaWithRouter
+						onClickOnNext={onClickOnNextMock}
+						status={EPlayingStatus.playing}
+					/>
 				);
-				const nextButton = findByTestAttr(
-					component,
-					"component-controls-media-button-next"
-				).first();
-
-				nextButton.simulate("keyup", {
+				const nextButton = await getByTestId("component-controls-media-button-next");
+	
+				fireEvent.keyUp(nextButton, {
 					keyCode: KEY_CODES.SPACE,
 				});
-
+	
 				expect(onClickOnNextMock).toHaveBeenCalled();
 			});
 
-			it("on ENTER key", () => {
+			it("on ENTER key", async () => {
 				const onClickOnNextMock = jest.fn();
-				const component = shallow(
-					<ControlsMedia onClickOnNext={onClickOnNextMock} status={EPlayingStatus.playing} />
+				const { getByTestId } = render(
+					<ControlsMediaWithRouter
+						onClickOnNext={onClickOnNextMock}
+						status={EPlayingStatus.playing}
+					/>
 				);
-				const nextButton = findByTestAttr(
-					component,
-					"component-controls-media-button-next"
-				).first();
-
-				nextButton.simulate("keyup", {
+				const nextButton = await getByTestId("component-controls-media-button-next");
+	
+				fireEvent.keyUp(nextButton, {
 					keyCode: KEY_CODES.ENTER,
 				});
-
+	
 				expect(onClickOnNextMock).toHaveBeenCalled();
 			});
 		});
 
 		describe("should not call on press", () => {
-			it("on SPACE key", () => {
+			it("on SPACE key", async () => {
 				const onClickOnNextMock = jest.fn();
-				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-				const nextButton = findByTestAttr(
-					component,
-					"component-controls-media-button-next"
-				).first();
-
-				nextButton.simulate("keyup", {
+				const { getByTestId } = render(
+					<ControlsMediaWithRouter
+						status={EPlayingStatus.playing}
+					/>
+				);
+				const nextButton = await getByTestId("component-controls-media-button-next");
+	
+				fireEvent.keyUp(nextButton, {
 					keyCode: KEY_CODES.SPACE,
 				});
-
+	
 				expect(onClickOnNextMock).not.toHaveBeenCalled();
 			});
 
-			it("on ENTER key", () => {
+			it("on ENTER key", async () => {
 				const onClickOnNextMock = jest.fn();
-				const component = shallow(<ControlsMedia status={EPlayingStatus.playing} />);
-				const nextButton = findByTestAttr(
-					component,
-					"component-controls-media-button-next"
-				).first();
-
-				nextButton.simulate("keyup", {
+				const { getByTestId } = render(
+					<ControlsMediaWithRouter
+						status={EPlayingStatus.playing}
+					/>
+				);
+				const nextButton = await getByTestId("component-controls-media-button-next");
+	
+				fireEvent.keyUp(nextButton, {
 					keyCode: KEY_CODES.ENTER,
 				});
-
+	
 				expect(onClickOnNextMock).not.toHaveBeenCalled();
 			});
-		});
-	});
-
-	describe("handleOnClick", () => {
-		it("should call on click", () => {
-			ButtonVolume.prototype.handleOnClick = jest.fn();
-
-			const component = mount(
-				<Router>
-					<ControlsMedia status={EPlayingStatus.playing} />
-				</Router>
-			);
-
-			const ButtonComponent = component.find(ButtonVolume).first();
-			const volumeButton = findByTestAttr(
-				ButtonComponent,
-				"component-controls-media-button-volume"
-			).first();
-			volumeButton.simulate("click");
-
-			expect(ButtonVolume.prototype.handleOnClick).toHaveBeenCalled();
-		});
-
-		describe("should call on press", () => {
-			it("on SPACE key", () => {
-				ButtonVolume.prototype.handleOnClick = jest.fn();
-
-				const component = mount(
-					<Router>
-						<ControlsMedia status={EPlayingStatus.playing} />
-					</Router>
-				);
-
-				const ButtonComponent = component.find(ButtonVolume).first();
-				const volumeButton = ButtonComponent.find(
-					"button[data-testid='component-controls-media-button-volume']"
-				).first();
-
-				volumeButton.simulate("keyup", {
-					keyCode: KEY_CODES.SPACE,
-				});
-
-				expect(ButtonVolume.prototype.handleOnClick).toHaveBeenCalled();
-			});
-
-			it("on ENTER key", () => {
-				ButtonVolume.prototype.handleOnClick = jest.fn();
-
-				const component = mount(
-					<Router>
-						<ControlsMedia status={EPlayingStatus.playing} />
-					</Router>
-				);
-
-				const ButtonComponent = component.find(ButtonVolume).first();
-				const volumeButton = ButtonComponent.find(
-					"button[data-testid='component-controls-media-button-volume']"
-				).first();
-
-				volumeButton.simulate("keyup", {
-					keyCode: KEY_CODES.ENTER,
-				});
-
-				expect(ButtonVolume.prototype.handleOnClick).toHaveBeenCalled();
-			});
-		});
-	});
-
-	describe("onChangeVolume", () => {
-		it("should call on change on button input", () => {
-			const onChangeVolumeMock = jest.fn();
-
-			const component = mount(
-				<Router>
-					<ControlsMedia onChangeVolume={onChangeVolumeMock} status={EPlayingStatus.playing} />
-				</Router>
-			);
-
-			const ButtonComponent = component.find(ButtonVolume).first();
-			ButtonComponent.instance().onChangeRangeInput("0.6");
-
-			expect(onChangeVolumeMock).toHaveBeenCalled();
-		});
-
-		it("should not call on change on button input", () => {
-			const onChangeVolumeMock = jest.fn();
-
-			const component = mount(
-				<Router>
-					<ControlsMedia status={EPlayingStatus.playing} />
-				</Router>
-			);
-
-			const ButtonComponent = component.find(ButtonVolume).first();
-			ButtonComponent.instance().onChangeRangeInput("0.6");
-
-			expect(onChangeVolumeMock).not.toHaveBeenCalled();
 		});
 	});
 });

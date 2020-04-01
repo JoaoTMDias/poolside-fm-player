@@ -5,6 +5,7 @@ import * as S from "./button-volume.styled";
 
 interface IButtonVolumeProps {
 	onChangeVolume?: (value: string) => void;
+	onClick?: () => void;
 }
 
 export interface IButtonVolumeState {
@@ -17,7 +18,7 @@ export interface IButtonVolumeState {
  *
  * @extends {FunctionComponent<IButtonVolumeProps>}
  */
-const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume }) => {
+const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume, onClick }) => {
 	const [showControls, setShowControls] = useState(false);
 	const [value, setValue] = useState("1");
 
@@ -33,16 +34,22 @@ const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume })
 		setValue(rangeValue);
 
 		if (onChangeVolume) {
-			onChangeVolume(value);
+			onChangeVolume(rangeValue);
 		}
 	}
 
 	/**
-	 *
-	 *
+	 * Handles the onClick
+	 * 
+	 * @returns {void}
 	 */
-	function handleOnClick() {
+	
+	function handleOnClick(): void {
 		setShowControls(!showControls);
+
+		if (onClick) {
+			onClick();
+		}
 	}
 
 	return (
@@ -50,6 +57,7 @@ const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume })
 			<button
 				id="controls-button-volume"
 				data-testid="component-controls-media-button-volume"
+				data-volume={value}
 				title="Control Volume"
 				aria-label="Click to control the volume of the song"
 				type="button"

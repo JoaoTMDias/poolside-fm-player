@@ -1,3 +1,678 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<App /> should render a visualizer 1`] = `ShallowWrapper {}`;
+exports[`<App /> should render a visualizer 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="window"
+        id="window"
+      >
+        <header
+          class="sc-AxheI kOtDQe row"
+          id="top-bar"
+        >
+          <button
+            class="top-bar__button button"
+            data-testid="component-top-bar-button"
+            type="button"
+          >
+            <span
+              class="sr-only"
+            >
+              Close this window
+            </span>
+          </button>
+          <div
+            class="top-bar__handle"
+            role="presentation"
+          >
+            <span
+              class="top-bar__handle__item"
+            />
+            <span
+              class="top-bar__handle__item"
+            />
+            <span
+              class="top-bar__handle__item"
+            />
+            <span
+              class="top-bar__handle__item"
+            />
+            <span
+              class="top-bar__handle__item"
+            />
+            <span
+              class="top-bar__handle__item"
+            />
+          </div>
+          <h2
+            class="top-bar__title"
+          >
+            Poolside FM
+          </h2>
+        </header>
+        <main
+          class="window__main row"
+          id="main-content"
+        >
+          <figure
+            class="sc-fzozJi kyKRMl player-visualizer "
+            data-testid="player-visualizer-wrapper"
+            id="player-visualizer"
+            role="presentation"
+          >
+            <figcaption
+              class="player-visualizer__label"
+              id="player-visualizer-label"
+            >
+              Press play to start
+            </figcaption>
+            <canvas
+              aria-labelledby="player-visualizer-label"
+              class="player-visualizer__canvas"
+              height="32"
+              id="player-visualizer-canvas"
+              width="256"
+            />
+          </figure>
+          <div
+            class="sc-Axmtr fNgEwy select-input "
+            data-testid="component-select"
+            id="channel"
+          >
+            <div
+              class="select-input__container"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-labelledby="channel-label channel-title"
+                class="row select-input__button "
+                data-testid="component-select-button"
+                id="channel-button"
+                type="button"
+              >
+                <div
+                  class="select-input__left"
+                >
+                  <span
+                    class="select-input__label"
+                    id="channel-label"
+                  >
+                    Channel:
+                  </span>
+                  <span
+                    class="select-input__value as-paragraph"
+                    id="channel-title"
+                  >
+                    Poolside.Fm (Official Playlist)
+                  </span>
+                </div>
+                <svg
+                  class="select-input__arrow"
+                  fill="none"
+                  height="13"
+                  viewBox="0 0 12 13"
+                  width="12"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 10.35l-4.157-5.4h8.314L6 10.35z"
+                    fill="var(--color-select-button-arrow)"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            class="media-player row"
+            id="media-player"
+          >
+            <div
+              class="sc-AxjAm gwaxrd current-song"
+              data-testid="component-current-song"
+              id="current-song"
+            >
+              <h5
+                class="current-song__time ui-label"
+              >
+                <span
+                  class="current-song__time__initial"
+                >
+                  00:00
+                </span>
+                <span
+                  class="current-song__time__divider"
+                >
+                  /
+                </span>
+                <span
+                  class="current-song__time__current"
+                >
+                  0
+                </span>
+              </h5>
+              <h4
+                class="current-song__title"
+                title="Loading..."
+              >
+                Loading...
+              </h4>
+              <h6
+                class="current-song__artist ui-label"
+                title="We'll be right back"
+              >
+                We'll be right back
+              </h6>
+            </div>
+            <nav
+              class="sc-AxirZ bGWXHp controls"
+              id="controls"
+            >
+              <ul
+                class="sc-AxiKw kRFqoN controls__media"
+                id="controls-media"
+              >
+                <li
+                  class="controls-media__item controls-media__item--first"
+                >
+                  <button
+                    aria-label="Click play the previous song"
+                    class="controls-media__button button button--large"
+                    data-testid="component-controls-media-button-previous"
+                    id="controls-media-button-previous"
+                    title="Previous Song"
+                    type="button"
+                  >
+                    <svg
+                      class="icon"
+                      fill="none"
+                      height="9"
+                      viewBox="0 0 12 9"
+                      width="12"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 0v9h-1V8h-1V7H9V6H8V5H7v4H6V8H5V7H4V6H3V5H2v4H0V0h2v4h1V3h1V2h1V1h1V0h1v4h1V3h1V2h1V1h1V0h1z"
+                        fill="var(--color-icon, #000)"
+                      />
+                    </svg>
+                  </button>
+                </li>
+                <li
+                  class="controls-media__item controls-media__item--middle"
+                >
+                  <button
+                    aria-label="Click play the song"
+                    class="controls-media__button button button--large"
+                    data-testid="component-controls-media-button-play"
+                    id="controls-media-button-play"
+                    title="Play song"
+                    type="button"
+                  >
+                    <svg
+                      class="icon"
+                      fill="none"
+                      height="9"
+                      id="icon-pause"
+                      viewBox="0 0 9 9"
+                      width="9"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 9V0h1v1h1v1h1v1h1v1h1v1H7v1H6v1H5v1H4v1H3z"
+                        fill="var(--color-icon, #000)"
+                      />
+                    </svg>
+                  </button>
+                </li>
+                <li
+                  class="controls-media__item controls-media__item--last"
+                >
+                  <button
+                    aria-label="Click play the next song"
+                    class="controls-media__button button button--large"
+                    data-testid="component-controls-media-button-next"
+                    id="controls-media-button-next"
+                    title="Next Song"
+                    type="button"
+                  >
+                    <svg
+                      class="icon"
+                      fill="none"
+                      height="9"
+                      viewBox="0 0 12 9"
+                      width="12"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 9V0h1v1h1v1h1v1h1v1h1V0h1v1h1v1h1v1h1v1h1V0h2v9h-2V5H9v1H8v1H7v1H6v1H5V5H4v1H3v1H2v1H1v1H0z"
+                        fill="var(--color-icon, #000)"
+                      />
+                    </svg>
+                  </button>
+                </li>
+              </ul>
+              <div
+                class="controls-media__item"
+              >
+                <button
+                  aria-label="Click to control the volume of the song"
+                  class="controls-media__button button button--large"
+                  data-testid="component-controls-media-button-volume"
+                  data-volume="1"
+                  id="controls-button-volume"
+                  title="Control Volume"
+                  type="button"
+                >
+                  <svg
+                    class="icon"
+                    fill="none"
+                    height="9"
+                    viewBox="0 0 9 9"
+                    width="9"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6.652.587V0H5.478v.587h-.587v.587h-.587v.587h-.587v.587h-1.37v.587h-.586v3.13h.587v.587h1.37v.587h.586v.587h.587v.587h.587V9h1.174v-.587h.587V.587h-.587z"
+                      fill="var(--color-icon, #000)"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="controls-media__item"
+              >
+                <a
+                  aria-label="Click to navigate to the app's settings page"
+                  class="controls-media__button button button--large"
+                  data-testid="component-controls-button-settings"
+                  href="#/settings"
+                  id="controls-button-settings"
+                  title="Settings"
+                >
+                  <svg
+                    class="icon"
+                    fill="none"
+                    height="9"
+                    viewBox="0 0 9 9"
+                    width="9"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.413 3.913v-.587h-.587V2.152h.587v-.978h-.587V.587h-.978v.587H5.674V.587h-.587V0H3.913v.587h-.587v.587H2.152V.587h-.978v.587H.587v.978h.587v1.174H.587v.587H0v1.174h.587v.587h.587v1.174H.587v.978h.587v.587h.978v-.587h1.174v.587h.587V9h1.174v-.587h.587v-.587h1.174v.587h.978v-.587h.587v-.978h-.587V5.674h.587v-.587H9V3.913h-.587zM6.065 5.478h-.587v.587H3.522v-.587h-.587V3.522h.587v-.587h1.956v.587h.587v1.956z"
+                      fill="var(--color-icon, #000)"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </nav>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="window"
+      id="window"
+    >
+      <header
+        class="sc-AxheI kOtDQe row"
+        id="top-bar"
+      >
+        <button
+          class="top-bar__button button"
+          data-testid="component-top-bar-button"
+          type="button"
+        >
+          <span
+            class="sr-only"
+          >
+            Close this window
+          </span>
+        </button>
+        <div
+          class="top-bar__handle"
+          role="presentation"
+        >
+          <span
+            class="top-bar__handle__item"
+          />
+          <span
+            class="top-bar__handle__item"
+          />
+          <span
+            class="top-bar__handle__item"
+          />
+          <span
+            class="top-bar__handle__item"
+          />
+          <span
+            class="top-bar__handle__item"
+          />
+          <span
+            class="top-bar__handle__item"
+          />
+        </div>
+        <h2
+          class="top-bar__title"
+        >
+          Poolside FM
+        </h2>
+      </header>
+      <main
+        class="window__main row"
+        id="main-content"
+      >
+        <figure
+          class="sc-fzozJi kyKRMl player-visualizer "
+          data-testid="player-visualizer-wrapper"
+          id="player-visualizer"
+          role="presentation"
+        >
+          <figcaption
+            class="player-visualizer__label"
+            id="player-visualizer-label"
+          >
+            Press play to start
+          </figcaption>
+          <canvas
+            aria-labelledby="player-visualizer-label"
+            class="player-visualizer__canvas"
+            height="32"
+            id="player-visualizer-canvas"
+            width="256"
+          />
+        </figure>
+        <div
+          class="sc-Axmtr fNgEwy select-input "
+          data-testid="component-select"
+          id="channel"
+        >
+          <div
+            class="select-input__container"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-labelledby="channel-label channel-title"
+              class="row select-input__button "
+              data-testid="component-select-button"
+              id="channel-button"
+              type="button"
+            >
+              <div
+                class="select-input__left"
+              >
+                <span
+                  class="select-input__label"
+                  id="channel-label"
+                >
+                  Channel:
+                </span>
+                <span
+                  class="select-input__value as-paragraph"
+                  id="channel-title"
+                >
+                  Poolside.Fm (Official Playlist)
+                </span>
+              </div>
+              <svg
+                class="select-input__arrow"
+                fill="none"
+                height="13"
+                viewBox="0 0 12 13"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 10.35l-4.157-5.4h8.314L6 10.35z"
+                  fill="var(--color-select-button-arrow)"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="media-player row"
+          id="media-player"
+        >
+          <div
+            class="sc-AxjAm gwaxrd current-song"
+            data-testid="component-current-song"
+            id="current-song"
+          >
+            <h5
+              class="current-song__time ui-label"
+            >
+              <span
+                class="current-song__time__initial"
+              >
+                00:00
+              </span>
+              <span
+                class="current-song__time__divider"
+              >
+                /
+              </span>
+              <span
+                class="current-song__time__current"
+              >
+                0
+              </span>
+            </h5>
+            <h4
+              class="current-song__title"
+              title="Loading..."
+            >
+              Loading...
+            </h4>
+            <h6
+              class="current-song__artist ui-label"
+              title="We'll be right back"
+            >
+              We'll be right back
+            </h6>
+          </div>
+          <nav
+            class="sc-AxirZ bGWXHp controls"
+            id="controls"
+          >
+            <ul
+              class="sc-AxiKw kRFqoN controls__media"
+              id="controls-media"
+            >
+              <li
+                class="controls-media__item controls-media__item--first"
+              >
+                <button
+                  aria-label="Click play the previous song"
+                  class="controls-media__button button button--large"
+                  data-testid="component-controls-media-button-previous"
+                  id="controls-media-button-previous"
+                  title="Previous Song"
+                  type="button"
+                >
+                  <svg
+                    class="icon"
+                    fill="none"
+                    height="9"
+                    viewBox="0 0 12 9"
+                    width="12"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 0v9h-1V8h-1V7H9V6H8V5H7v4H6V8H5V7H4V6H3V5H2v4H0V0h2v4h1V3h1V2h1V1h1V0h1v4h1V3h1V2h1V1h1V0h1z"
+                      fill="var(--color-icon, #000)"
+                    />
+                  </svg>
+                </button>
+              </li>
+              <li
+                class="controls-media__item controls-media__item--middle"
+              >
+                <button
+                  aria-label="Click play the song"
+                  class="controls-media__button button button--large"
+                  data-testid="component-controls-media-button-play"
+                  id="controls-media-button-play"
+                  title="Play song"
+                  type="button"
+                >
+                  <svg
+                    class="icon"
+                    fill="none"
+                    height="9"
+                    id="icon-pause"
+                    viewBox="0 0 9 9"
+                    width="9"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 9V0h1v1h1v1h1v1h1v1h1v1H7v1H6v1H5v1H4v1H3z"
+                      fill="var(--color-icon, #000)"
+                    />
+                  </svg>
+                </button>
+              </li>
+              <li
+                class="controls-media__item controls-media__item--last"
+              >
+                <button
+                  aria-label="Click play the next song"
+                  class="controls-media__button button button--large"
+                  data-testid="component-controls-media-button-next"
+                  id="controls-media-button-next"
+                  title="Next Song"
+                  type="button"
+                >
+                  <svg
+                    class="icon"
+                    fill="none"
+                    height="9"
+                    viewBox="0 0 12 9"
+                    width="12"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 9V0h1v1h1v1h1v1h1v1h1V0h1v1h1v1h1v1h1v1h1V0h2v9h-2V5H9v1H8v1H7v1H6v1H5V5H4v1H3v1H2v1H1v1H0z"
+                      fill="var(--color-icon, #000)"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <div
+              class="controls-media__item"
+            >
+              <button
+                aria-label="Click to control the volume of the song"
+                class="controls-media__button button button--large"
+                data-testid="component-controls-media-button-volume"
+                data-volume="1"
+                id="controls-button-volume"
+                title="Control Volume"
+                type="button"
+              >
+                <svg
+                  class="icon"
+                  fill="none"
+                  height="9"
+                  viewBox="0 0 9 9"
+                  width="9"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.652.587V0H5.478v.587h-.587v.587h-.587v.587h-.587v.587h-1.37v.587h-.586v3.13h.587v.587h1.37v.587h.586v.587h.587v.587h.587V9h1.174v-.587h.587V.587h-.587z"
+                    fill="var(--color-icon, #000)"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              class="controls-media__item"
+            >
+              <a
+                aria-label="Click to navigate to the app's settings page"
+                class="controls-media__button button button--large"
+                data-testid="component-controls-button-settings"
+                href="#/settings"
+                id="controls-button-settings"
+                title="Settings"
+              >
+                <svg
+                  class="icon"
+                  fill="none"
+                  height="9"
+                  viewBox="0 0 9 9"
+                  width="9"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8.413 3.913v-.587h-.587V2.152h.587v-.978h-.587V.587h-.978v.587H5.674V.587h-.587V0H3.913v.587h-.587v.587H2.152V.587h-.978v.587H.587v.978h.587v1.174H.587v.587H0v1.174h.587v.587h.587v1.174H.587v.978h.587v.587h.978v-.587h1.174v.587h.587V9h1.174v-.587h.587v-.587h1.174v.587h.978v-.587h.587v-.978h-.587V5.674h.587v-.587H9V3.913h-.587zM6.065 5.478h-.587v.587H3.522v-.587h-.587V3.522h.587v-.587h1.956v.587h.587v1.956z"
+                    fill="var(--color-icon, #000)"
+                  />
+                </svg>
+              </a>
+            </div>
+          </nav>
+        </div>
+      </main>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

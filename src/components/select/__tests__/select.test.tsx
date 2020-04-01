@@ -46,9 +46,9 @@ describe("<Select />", () => {
 	});
 
 	it("should be closed by default", async () => {
-		const { getAllByTestId } = render(<Select {...initialProps} />);
-		const selectOptionsList = await getAllByTestId("component-select-list");
-		expect(selectOptionsList.length).toBe(0);
+		const { queryByTestId } = render(<Select {...initialProps} />);
+		const selectOptionsList = await queryByTestId("component-select-list");
+		expect(selectOptionsList).toBeNull();
 	});
 
 	it("should display a list on click on the button", async () => {
