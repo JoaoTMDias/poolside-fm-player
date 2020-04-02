@@ -124,6 +124,8 @@ Object {
         </div>
         <div
           class="media-player row"
+          data-current-track="0"
+          data-playing-status="paused"
           id="media-player"
         >
           <div
@@ -429,6 +431,8 @@ Object {
       </div>
       <div
         class="media-player row"
+        data-current-track="0"
+        data-playing-status="paused"
         id="media-player"
       >
         <div
