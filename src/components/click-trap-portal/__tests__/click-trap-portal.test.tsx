@@ -1,13 +1,18 @@
 import React from "react";
-import { mount } from "enzyme";
-import { KEY_CODES, findByTestAttr } from "helpers";
+import { render, cleanup, fireEvent } from "@testing-library/react";
+import { KEY_CODES } from "helpers";
 import ClickTrapPortal from "..";
+
+afterEach(cleanup);
 
 describe("<ClickTrapPortal />", () => {
 	it("should render the portal", () => {
-		const wrapper = mount(
+		const wrapper = render(
 			<div id="app-portal">
-				<ClickTrapPortal onClickToClose={() => {}}>
+				<ClickTrapPortal
+					title="Title"
+					onClickToClose={() => {}}
+				>
 					<p>Test</p>
 				</ClickTrapPortal>
 			</div>
@@ -20,16 +25,20 @@ describe("<ClickTrapPortal />", () => {
 		it("on click", () => {
 			const onClickToCloseMock = jest.fn();
 
-			const wrapper = mount(
+			const { getByTestId } = render(
 				<div id="app-portal">
-					<ClickTrapPortal onClickToClose={onClickToCloseMock}>
+					<ClickTrapPortal
+						title="Title"
+						onClickToClose={onClickToCloseMock}
+					>
 						<p>I am trapped inside the portal</p>
 					</ClickTrapPortal>
 				</div>
 			);
 
-			const button = findByTestAttr(wrapper, "component-portal-click-trap").first();
-			button.simulate("click");
+			const button = getByTestId("component-portal-click-trap");
+
+			fireEvent.click(button);
 
 			expect(onClickToCloseMock).toHaveBeenCalled();
 		});
@@ -45,9 +54,12 @@ describe("<ClickTrapPortal />", () => {
 
 			const onClickToCloseMock = jest.fn();
 
-			mount(
+			render(
 				<div id="app-portal">
-					<ClickTrapPortal onClickToClose={onClickToCloseMock}>
+					<ClickTrapPortal
+						title="Title"
+						onClickToClose={onClickToCloseMock}
+					>
 						<p>I am trapped inside the portal</p>
 					</ClickTrapPortal>
 				</div>
@@ -72,9 +84,12 @@ describe("<ClickTrapPortal />", () => {
 
 		const onClickToCloseMock = jest.fn();
 
-		mount(
+		render(
 			<div id="app-portal">
-				<ClickTrapPortal onClickToClose={onClickToCloseMock}>
+				<ClickTrapPortal
+					title="Title"
+					onClickToClose={onClickToCloseMock}
+				>
 					<p>I am trapped inside the portal</p>
 				</ClickTrapPortal>
 			</div>
@@ -92,9 +107,12 @@ describe("<ClickTrapPortal />", () => {
 
 		const onClickToCloseMock = jest.fn();
 
-		const wrapper = mount(
+		const wrapper = render(
 			<div id="app-portal">
-				<ClickTrapPortal onClickToClose={onClickToCloseMock}>
+				<ClickTrapPortal
+					title="Title"
+					onClickToClose={onClickToCloseMock}
+				>
 					<p>I am trapped inside the portal</p>
 				</ClickTrapPortal>
 			</div>

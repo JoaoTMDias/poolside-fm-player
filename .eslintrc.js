@@ -56,6 +56,7 @@ module.exports = {
 		],
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn",
+		"react/jsx-props-no-spreading": "off",
 		"import/extensions": [
 			"error",
 			"ignorePackages",
@@ -66,6 +67,7 @@ module.exports = {
 				tsx: "never",
 			},
 		],
+		"no-param-reassign": ["error", { props: true, ignorePropertyModificationsFor: ["draftState"] }],
 	},
 	settings: {
 		"import/parsers": {

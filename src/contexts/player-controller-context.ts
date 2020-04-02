@@ -5,6 +5,7 @@ export interface IPlayerControllerTrack {
 	current: number;
 	last: number;
 }
+
 export interface IPlayerControllerState {
 	track: IPlayerControllerTrack;
 	currentIndex: number;

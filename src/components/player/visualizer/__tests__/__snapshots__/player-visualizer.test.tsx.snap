@@ -1,3 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<PlayerVisualizer /> render should render a visualizer 1`] = `ShallowWrapper {}`;
+exports[`<PlayerVisualizer /> render should render a visualizer 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <figure
+        class="sc-AxjAm jpoiFA player-visualizer "
+        data-testid="player-visualizer-wrapper"
+        id="player-visualizer"
+        role="presentation"
+      >
+        <figcaption
+          class="player-visualizer__label"
+          id="player-visualizer-label"
+        >
+          Press play to start
+        </figcaption>
+        <canvas
+          aria-labelledby="player-visualizer-label"
+          class="player-visualizer__canvas"
+          height="32"
+          id="player-visualizer-canvas"
+          width="256"
+        />
+      </figure>
+    </div>
+  </body>,
+  "container": <div>
+    <figure
+      class="sc-AxjAm jpoiFA player-visualizer "
+      data-testid="player-visualizer-wrapper"
+      id="player-visualizer"
+      role="presentation"
+    >
+      <figcaption
+        class="player-visualizer__label"
+        id="player-visualizer-label"
+      >
+        Press play to start
+      </figcaption>
+      <canvas
+        aria-labelledby="player-visualizer-label"
+        class="player-visualizer__canvas"
+        height="32"
+        id="player-visualizer-canvas"
+        width="256"
+      />
+    </figure>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

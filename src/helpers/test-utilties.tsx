@@ -1,54 +1,47 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ShallowWrapper, ReactWrapper, HTMLAttributes } from "enzyme";
-
-type EnzymeComponentType =
-	| ShallowWrapper<HTMLAttributes, any, React.Component<{}, {}, any>>
-	| ReactWrapper<HTMLAttributes, any, React.Component<{}, {}, any>>;
+/**
+ * Returns the first node found with a given attribute.
+ *
+ * It uses the HTML DOM *document.querySelector()* method under the hood,
+ * so you need to pass the hash or the period notation
+ *
+ * @example <caption>Example of finding an id</caption>
+ * findById(wrapper, "#fdz-js-skiplink-wrapper");
+ * @example <caption>Example of finding a class</caption>
+ * findByClassname(wrapper, ".fdz-js-skiplink-wrapper");
+ *
+ * @param {HTMLElement} component
+ * @param {string} selector
+ * @returns {HTMLElement | null}
+ */
+const findByAttribute = (component: HTMLElement, selector: string): HTMLElement | null  => {
+	return component.querySelector(selector);
+};
 
 /**
- * Find a component by its test attribute
- *
- * @export
- * @param {(ShallowWrapper | ReactWrapper)} wrapper
- * @param {string} value
- * @returns {EnzymeComponentType}
- */
-export function findByTestAttr(
-	wrapper: ShallowWrapper | ReactWrapper,
-	value: string
-): EnzymeComponentType {
-	return wrapper.find(`[data-testid='${value}']`);
-}
+* Returns all nodes found with a given attribute.
+*
+* It uses the HTML DOM *document.querySelectorAll()* method under the hood,
+* so you need to pass the hash or the period notation
+*
+* @example <caption>Example of finding all by an id</caption>
+* getAllById(wrapper, "#fdz-js-skiplink-wrapper");
+* @example <caption>Example of finding all by a class</caption>
+* getAllByClassname(wrapper, ".fdz-js-skiplink-wrapper");
+*
+* @export
+* @param {HTMLElement} component
+* @param {string} selector
+* @returns {HTMLElement[] | null}
+*/
+const getAllByAttribute = (component: HTMLElement, selector: string): HTMLElement[] | null  => {
+	return Array.from(component.querySelectorAll(selector));
+};
 
-/**
- * Find a component by its id attribute
- *
- * @export
- * @param {(ShallowWrapper | ReactWrapper)} wrapper
- * @param {string} value
- * @returns {EnzymeComponentType}
- */
-export function findById(
-	wrapper: ShallowWrapper | ReactWrapper,
-	value: string
-): EnzymeComponentType {
-	return wrapper.find(`#${value}`);
-}
-
-/**
- * Find a component by its class attribute
- *
- * @export
- * @param {(ShallowWrapper | ReactWrapper)} wrapper
- * @param {string} value
- * @returns {EnzymeComponentType}
- */
-export function findByClass(
-	wrapper: ShallowWrapper | ReactWrapper,
-	value: string
-): EnzymeComponentType {
-	const hasDotAtBeginning = !!(value.indexOf(".") === 0);
-	const string = hasDotAtBeginning ? `${value}` : `.${value}`;
-	return wrapper.find(string);
-}
+export {
+	findByAttribute,
+	getAllByAttribute,
+	findByAttribute as findById,
+	findByAttribute as findByClassname,
+	getAllByAttribute as getAllById,
+	getAllByAttribute as getAllByClassname
+};

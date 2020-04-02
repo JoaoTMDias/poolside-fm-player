@@ -1,12 +1,12 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { render, cleanup, fireEvent } from "@testing-library/react"
 
 import Select from "components/select/select";
-import SelectInputOptions from "../select-option";
 import { ISelectProps } from "../select.interface";
 
 const initialProps: ISelectProps = {
 	id: "component-select",
+	currentIndex: 0,
 	options: [
 		{
 			id: "poolside-fm",
@@ -36,34 +36,36 @@ const initialProps: ISelectProps = {
 	],
 };
 
+afterEach(cleanup);
+
 describe("<Select />", () => {
 	it("should render a select component", () => {
-		const component = shallow(<Select {...initialProps} />);
+		const component = render(<Select {...initialProps} />);
 
 		expect(component).toMatchSnapshot();
 	});
 
-	it("should be closed by default", () => {
-		const component = shallow(<Select {...initialProps} />);
-		const selectOptionsList = component.find(SelectInputOptions);
-		expect(selectOptionsList.length).toBe(0);
+	it("should be closed by default", async () => {
+		const { queryByTestId } = render(<Select {...initialProps} />);
+		const selectOptionsList = await queryByTestId("component-select-list");
+		expect(selectOptionsList).toBeNull();
 	});
 
-	it("should display a list on click on the button", () => {
-		const component = mount(<Select {...initialProps} />);
-		const selectButton = component.find("[data-testid='component-select-button']").first();
+	it("should display a list on click on the button", async () => {
+		const { getByTestId, getAllByTestId } = render(<Select {...initialProps} />);
+		const selectButton = await getByTestId("component-select-button");
 
-		selectButton.simulate("click");
+		fireEvent.click(selectButton);
 
-		const selectOptionsList = component.find(SelectInputOptions);
+		const selectOptionsList = await getAllByTestId("component-select-list");
 		expect(selectOptionsList.length).toBe(1);
 	});
 
-	it("should display a default label on the button", () => {
-		const component = mount(<Select {...initialProps} />);
-		const selectButton = component.find("[data-testid='component-select-button']");
-		const selectButtonValue = selectButton.find(".select-input__value");
+	it("should display a default label on the button", async () => {
+		const { getByTestId } = render(<Select {...initialProps} />);
+		const selectButton = await getByTestId('component-select-button');
+		const selectButtonValue = await selectButton.querySelector(".select-input__value");
 
-		expect(selectButtonValue.text()).toBe(initialProps.options[0].label);
+		expect(selectButtonValue?.textContent).toBe(initialProps.options[0].label);
 	});
 });
