@@ -1,5 +1,6 @@
 import React, { useRef, useState, useReducer } from "react";
 import SoundCloudAudio from "soundcloud-audio";
+import useSound from 'use-sound';
 import { PoolsidePlaylists } from "data/constants";
 import {
 	PlayerControllerContext,
@@ -12,10 +13,11 @@ import {
 	EPlayingStatus,
 	ISoundcloudPlaylist,
 	ESoundCloudPlayerEvents,
-	IMediaPlayerTrackMetadata,
+	IMediaPlayerTrackMetadata
 } from "../media-player/player.interfaces";
 import { updateTrackReducer } from "./update-tracker-reducer";
 import { updateStatusReducer } from "./update-status-reducer";
+
 
 /**
  * Get a random number between a range
@@ -106,16 +108,17 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 	 * @returns {void}
 	 */
 	function handleNewStatus(): void {
-		if (player?.play && player?.pause) {
+		if (player && player.play && player.pause) {
 			switch (status) {
 				case EPlayingStatus.playing:
+					player.pause();
+					break;
+
+				case EPlayingStatus.ready:
+				case EPlayingStatus.paused:
 					player.play({
 						playlistIndex: track.current,
 					});
-					break;
-
-				case EPlayingStatus.paused:
-					player.pause();
 					break;
 
 				default:
@@ -131,11 +134,13 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 	 */
 	function onPlay(): void {
 		switch (status) {
+			case EPlayingStatus.ready:
 			case EPlayingStatus.paused:
 				updateStatus({
 					type: "PLAY",
 				});
 				break;
+
 
 			case EPlayingStatus.playing:
 				updateStatus({
@@ -144,6 +149,8 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 				break;
 
 			default:
+			case EPlayingStatus.loading:
+			case EPlayingStatus.error:
 				break;
 		}
 
@@ -181,11 +188,15 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 	 *
 	 * @param {ISoundcloudPlaylist} playlist
 	 */
-	function loadPlaylist(playlist: ISoundcloudPlaylist) {
 		const current = getRandomTrackIndex(playlist.track_count);
 		const last = playlist.track_count - 1;
 
-		if (player && player.on) {
+		updateStatus({
+			type: "LOAD",
+		});
+
+
+		if (player && player.on && player) {
 			// once playlist is loaded it can be played
 			updateTrack({
 				type: "TRACK",
@@ -195,18 +206,21 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 				},
 			});
 
+
+			updateStatus({
+				type: "READY",
+			});
+
+
 			player.on(ESoundCloudPlayerEvents.canplay, () => {
 				const { _playlistIndex } = player;
 				const metadata = _playlistIndex ? getCurrentTrackAndArtist(_playlistIndex) : null;
+
 
 				if (metadata) {
 					setTitle(metadata.title);
 					setArtist(metadata.artist);
 				}
-
-				updateStatus({
-					type: "READY",
-				});
 			});
 
 			// for playlists it's possible to switch to another track in queue
@@ -239,12 +253,10 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 	 * @returns {void}
 	 */
 	function onChangeOption(index: number): void {
+
 		if (index && player && player.stop) {
 			player.stop();
 
-			updateStatus({
-				type: "LOAD",
-			});
 			setCurrentIndex(index);
 			startPlaylist();
 		}
@@ -268,7 +280,7 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 		previous: () => onPrevious(),
 		next: () => onNext(),
 		togglePlay: () => onPlay(),
-		changeVolume: () => {},
+		changeVolume: () => { },
 		onChangeOption: (index: number) => onChangeOption(index),
 	};
 

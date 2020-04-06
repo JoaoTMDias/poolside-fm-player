@@ -53,7 +53,7 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 		status: EPlayingStatus.paused,
 	};
 
-	constructor(props: IPlayerVisualizerProps) {
+	constructor (props: IPlayerVisualizerProps) {
 		super(props);
 
 		this.canvas = React.createRef<HTMLCanvasElement>();
@@ -187,6 +187,66 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	}
 
 	/**
+	 *
+	 *
+	 * @returns
+	 * @memberof PlayerVisualizer
+	 */
+	getStatusMetadata() {
+		const { status } = this.props;
+
+		const defaultState = {
+			classname: "",
+			caption: {
+				title: "Press play to start",
+				classname: "sr-only"
+			}
+		};
+
+		const metadata = produce(defaultState, (draftState, action = status) => {
+			// eslint-disable-next-line default-case
+			switch (action) {
+				case EPlayingStatus.paused:
+					draftState.caption.title = "Press play to resume";
+					break;
+
+				case EPlayingStatus.error:
+					draftState.caption.title = "An error occurred"
+					draftState.caption.classname = "player-visualizer__label";
+					break;
+
+				case EPlayingStatus.loading:
+					draftState.caption.title = "Loading tape...";
+					break;
+
+				case EPlayingStatus.ready:
+					draftState.caption.title = "Ready!";
+					break;
+
+				case EPlayingStatus.playing:
+					draftState.classname = "is-playing";
+					draftState.caption.title = "Music is Playing";
+					break;
+			}
+
+			switch (action) {
+				case EPlayingStatus.error:
+				case EPlayingStatus.idle:
+				case EPlayingStatus.loading:
+				case EPlayingStatus.ready:
+				case EPlayingStatus.paused:
+					draftState.caption.classname = "player-visualizer__label";
+					break;
+
+				default:
+					break;
+			}
+		});
+
+		return metadata;
+	}
+
+	/**
 	 * Creates an object that provides methods and properties
 	 * for drawing graphics on the canvas element
 	 *
@@ -290,21 +350,17 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	}
 
 	render() {
-		const { status } = this.props;
-		const isPlaying = status === EPlayingStatus.playing;
-		const isPlayingClassname = isPlaying ? "is-playing" : "";
-		const caption = isPlaying ? "Music is playing" : "Press play to start";
-		const captionClassname = isPlaying ? "sr-only" : "player-visualizer__label";
+		const metadata = this.getStatusMetadata();
 
 		return (
 			<S.PlayerVisualizerWrapper
 				role="presentation"
 				data-testid="player-visualizer-wrapper"
 				id="player-visualizer"
-				className={`player-visualizer ${isPlayingClassname}`}
+				className={`player-visualizer ${metadata.classname}`}
 			>
-				<figcaption id="player-visualizer-label" className={captionClassname}>
-					{caption}
+				<figcaption id="player-visualizer-label" className={metadata.caption.classname}>
+					{metadata.caption.title}
 				</figcaption>
 				<canvas
 					ref={this.canvas}

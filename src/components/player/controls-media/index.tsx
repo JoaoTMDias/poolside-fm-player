@@ -20,6 +20,60 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 	onChangeVolume,
 	status,
 }) => {
+	/**
+	 * Returns the appropriate icon depending on the state of the player
+	 *
+	 * @returns {JSX.Element}
+	 */
+	function getButtonIcon(): JSX.Element {
+		switch (status) {
+			case EPlayingStatus.ready:
+			case EPlayingStatus.paused:
+			case EPlayingStatus.idle:
+				return (
+					<svg
+						id="icon-pause"
+						className="icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="9"
+						height="9"
+						fill="none"
+						viewBox="0 0 9 9"
+					>
+						<path
+							fill="var(--color-icon, #000)"
+							d="M3 9V0h1v1h1v1h1v1h1v1h1v1H7v1H6v1H5v1H4v1H3z"
+						/>
+					</svg>
+				);
+
+			case EPlayingStatus.loading:
+				return (
+					<svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" fill="none" viewBox="0 0 10 14">
+						<path fill="var(--color-icon, #000)" d="M1 10h1v1H1zM1 3h1v1H1zM2 0h6v3H2zM2 11h6v3H2zM8 10h1v1H8zM8 3h1v1H8zM5 4h1v4H5z" />
+						<path fill="var(--color-icon, #000)" d="M3 8V7h3v1zM0 4h1v6H0zM9 4h1v6H9z" />
+					</svg>
+				);
+
+			default:
+			case EPlayingStatus.playing:
+				return (
+					<svg
+						id="icon-play"
+						className="icon"
+						width="9"
+						height="9"
+						viewBox="0 0 9 9"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path d="M2 0H4V9H2V0Z" fill="var(--color-icon, #000)" />
+						<path d="M5 0H7V9H5V0Z" fill="var(--color-icon, #000)" />
+					</svg>
+				);
+		}
+	}
+
 	return (
 		<S.Wrapper id="controls" className="controls">
 			<S.Buttons id="controls-media" className="controls__media">
@@ -76,35 +130,7 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 							}
 						}}
 					>
-						{status === EPlayingStatus.paused ? (
-							<svg
-								id="icon-pause"
-								className="icon"
-								xmlns="http://www.w3.org/2000/svg"
-								width="9"
-								height="9"
-								fill="none"
-								viewBox="0 0 9 9"
-							>
-								<path
-									fill="var(--color-icon, #000)"
-									d="M3 9V0h1v1h1v1h1v1h1v1h1v1H7v1H6v1H5v1H4v1H3z"
-								/>
-							</svg>
-						) : (
-							<svg
-								id="icon-play"
-								className="icon"
-								width="9"
-								height="9"
-								viewBox="0 0 9 9"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path d="M2 0H4V9H2V0Z" fill="var(--color-icon, #000)" />
-								<path d="M5 0H7V9H5V0Z" fill="var(--color-icon, #000)" />
-							</svg>
-						)}
+						{getButtonIcon()}
 					</button>
 				</li>
 				<li className="controls-media__item controls-media__item--last">
