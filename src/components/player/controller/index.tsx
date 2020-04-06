@@ -8,6 +8,7 @@ import {
 	IPlayerControllerContext,
 } from "contexts/player-controller-context";
 import { useOnMount } from "helpers/custom-hooks/use-lifecycle-hooks";
+import { holdOn } from "helpers/index";
 import {
 	ISoundcloudPlayer,
 	EPlayingStatus,
@@ -18,6 +19,7 @@ import {
 import { updateTrackReducer } from "./update-tracker-reducer";
 import { updateStatusReducer } from "./update-status-reducer";
 
+const LoadTape = require("../../../assets/audio/load-tape.mp3");
 
 /**
  * Get a random number between a range
@@ -52,6 +54,8 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 		updateStatusReducer,
 		defaultPlayerControllerState.status
 	);
+	const [playLoadingTape] = useSound(LoadTape);
+
 
 	/**
 	 * Handles the click on the previous button
@@ -188,12 +192,15 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 	 *
 	 * @param {ISoundcloudPlaylist} playlist
 	 */
+	async function loadPlaylist(playlist: ISoundcloudPlaylist) {
 		const current = getRandomTrackIndex(playlist.track_count);
 		const last = playlist.track_count - 1;
 
 		updateStatus({
 			type: "LOAD",
 		});
+
+		await holdOn(5000);
 
 
 		if (player && player.on && player) {
@@ -253,6 +260,10 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 	 * @returns {void}
 	 */
 	function onChangeOption(index: number): void {
+		playLoadingTape({
+			forceSoundEnabled: false,
+			playbackRate: 1
+		});
 
 		if (index && player && player.stop) {
 			player.stop();

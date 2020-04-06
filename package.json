@@ -22,6 +22,7 @@
 		"build": "react-scripts build",
 		"package": "rimraf release && npm run build && electron-builder build --publish never",
 		"package-all": "rimraf release && npm run build && electron-builder build -mwl",
+		"app:browser": "cross-env BROWSER=true ELECTRON=false react-scripts start",
 		"app:dev": "cross-env BROWSER=false ELECTRON=true react-scripts start",
 		"app:build": "cross-env ELECTRON=true react-scripts build",
 		"electron:compile": "tsc --project tsconfig.json",
@@ -55,7 +56,8 @@
 		"soundcloud-audio": "^1.4.0",
 		"styled-components": "^5.0.1",
 		"typescript": "^3.8.3",
-		"use-immer": "^0.3.5"
+		"use-immer": "^0.3.5",
+		"use-sound": "^1.0.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
@@ -113,13 +115,23 @@
 		}
 	},
 	"lint-staged": {
-		"*.{ts,tsx}": ["eslint", "prettier --ignore-path .eslintignore --write", "git add"],
+		"*.{ts,tsx}": [
+			"eslint",
+			"prettier --ignore-path .eslintignore --write",
+			"git add"
+		],
 		"{*.json,.{babelrc,eslintrc,prettierrc}}": [
 			"prettier --ignore-path .eslintignore --parser json --write",
 			"git add"
 		],
-		"*.{css,scss}": ["prettier --ignore-path .eslintignore --single-quote --write", "git add"],
-		"*.{yml,md}": ["prettier --ignore-path .eslintignore --single-quote --write", "git add"]
+		"*.{css,scss}": [
+			"prettier --ignore-path .eslintignore --single-quote --write",
+			"git add"
+		],
+		"*.{yml,md}": [
+			"prettier --ignore-path .eslintignore --single-quote --write",
+			"git add"
+		]
 	},
 	"build": {
 		"productName": "Poolside",
@@ -128,10 +140,21 @@
 			"buildResources": "public",
 			"output": "release"
 		},
-		"files": ["build/index.html", "build/**/*", "*.js", "package.json"],
-		"extraFiles": ["credentials"],
+		"files": [
+			"build/index.html",
+			"build/**/*",
+			"*.js",
+			"package.json"
+		],
+		"extraFiles": [
+			"credentials"
+		],
 		"mac": {
-			"target": ["dmg", "pkg", "zip"],
+			"target": [
+				"dmg",
+				"pkg",
+				"zip"
+			],
 			"darkModeSupport": true,
 			"icon": "public/images/icons/iconTemplate.png",
 			"type": "distribution"
@@ -154,7 +177,11 @@
 			"license": "LICENSE"
 		},
 		"win": {
-			"target": ["nsis", "portable", "zip"],
+			"target": [
+				"nsis",
+				"portable",
+				"zip"
+			],
 			"icon": "public/images/icons/favicon.ico"
 		},
 		"nsis": {
@@ -163,12 +190,19 @@
 			"warningsAsErrors": false
 		},
 		"linux": {
-			"target": ["AppImage", "deb", "rpm", "snap"],
+			"target": [
+				"AppImage",
+				"deb",
+				"rpm",
+				"snap"
+			],
 			"icon": "public/icon"
 		},
 		"snap": {
 			"grade": "stable"
 		}
 	},
-	"browserslist": ["last 1 chrome version"]
+	"browserslist": [
+		"last 1 chrome version"
+	]
 }
