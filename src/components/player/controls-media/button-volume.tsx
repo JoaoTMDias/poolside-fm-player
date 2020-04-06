@@ -40,10 +40,10 @@ const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume, o
 
 	/**
 	 * Handles the onClick
-	 * 
+	 *
 	 * @returns {void}
 	 */
-	
+
 	function handleOnClick(): void {
 		setShowControls(!showControls);
 

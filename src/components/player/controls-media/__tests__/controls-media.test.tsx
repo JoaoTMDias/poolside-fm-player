@@ -1,8 +1,11 @@
 import React from "react";
-import { render, cleanup, fireEvent } from "@testing-library/react"
+import { render, cleanup, fireEvent } from "@testing-library/react";
 
 import ControlsMedia from "components/player/controls-media";
-import { EPlayingStatus, IControlsMediaProps } from "components/player/media-player/player.interfaces";
+import {
+	EPlayingStatus,
+	IControlsMediaProps,
+} from "components/player/media-player/player.interfaces";
 import { KEY_CODES, hasPressedSpaceOrEnter, getAllById } from "helpers";
 import { HashRouter as Router } from "react-router-dom";
 
@@ -73,11 +76,7 @@ describe("<ControlsMedia />", () => {
 
 		it("should not call on click", async () => {
 			const onTogglePlayMock = jest.fn();
-			const { getByTestId } = render(
-				<ControlsMediaWithRouter
-					status={EPlayingStatus.playing}
-				/>
-			);
+			const { getByTestId } = render(<ControlsMediaWithRouter status={EPlayingStatus.playing} />);
 			const playButton = await getByTestId("component-controls-media-button-play");
 
 			fireEvent.click(playButton);
@@ -89,7 +88,10 @@ describe("<ControlsMedia />", () => {
 			it("on SPACE key", async () => {
 				const onTogglePlayMock = jest.fn();
 				const { getAllByTestId } = render(
-					<ControlsMediaWithRouter onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />
+					<ControlsMediaWithRouter
+						onTogglePlay={onTogglePlayMock}
+						status={EPlayingStatus.playing}
+					/>
 				);
 				const playButton = await getAllByTestId("component-controls-media-button-play")[0];
 
@@ -103,7 +105,10 @@ describe("<ControlsMedia />", () => {
 			it("on ENTER key", async () => {
 				const onTogglePlayMock = jest.fn();
 				const { getAllByTestId } = render(
-					<ControlsMediaWithRouter onTogglePlay={onTogglePlayMock} status={EPlayingStatus.playing} />
+					<ControlsMediaWithRouter
+						onTogglePlay={onTogglePlayMock}
+						status={EPlayingStatus.playing}
+					/>
 				);
 				const playButton = await getAllByTestId("component-controls-media-button-play")[0];
 
@@ -179,9 +184,7 @@ describe("<ControlsMedia />", () => {
 		it("should not call on click if no props are passed", async () => {
 			const onClickOnPreviousMock = jest.fn();
 			const { getAllByTestId } = render(
-				<ControlsMediaWithRouter
-					status={EPlayingStatus.playing}
-				/>
+				<ControlsMediaWithRouter status={EPlayingStatus.playing} />
 			);
 			const previousButton = await getAllByTestId("component-controls-media-button-previous")[0];
 
@@ -229,11 +232,7 @@ describe("<ControlsMedia />", () => {
 		describe("should not call on press", () => {
 			it("on SPACE key", async () => {
 				const onClickOnPreviousMock = jest.fn();
-				const { getByTestId } = render(
-					<ControlsMediaWithRouter
-						status={EPlayingStatus.playing}
-					/>
-				);
+				const { getByTestId } = render(<ControlsMediaWithRouter status={EPlayingStatus.playing} />);
 				const previousButton = await getByTestId("component-controls-media-button-previous");
 
 				fireEvent.keyUp(previousButton, {
@@ -245,11 +244,7 @@ describe("<ControlsMedia />", () => {
 
 			it("on ENTER key", async () => {
 				const onClickOnPreviousMock = jest.fn();
-				const { getByTestId } = render(
-					<ControlsMediaWithRouter
-						status={EPlayingStatus.playing}
-					/>
-				);
+				const { getByTestId } = render(<ControlsMediaWithRouter status={EPlayingStatus.playing} />);
 				const previousButton = await getByTestId("component-controls-media-button-previous");
 
 				fireEvent.keyUp(previousButton, {
@@ -279,11 +274,7 @@ describe("<ControlsMedia />", () => {
 
 		it("should not call on click", async () => {
 			const onClickOnNextMock = jest.fn();
-			const { getByTestId } = render(
-				<ControlsMediaWithRouter
-					status={EPlayingStatus.playing}
-				/>
-			);
+			const { getByTestId } = render(<ControlsMediaWithRouter status={EPlayingStatus.playing} />);
 			const nextButton = await getByTestId("component-controls-media-button-next");
 
 			fireEvent.click(nextButton);
@@ -301,11 +292,11 @@ describe("<ControlsMedia />", () => {
 					/>
 				);
 				const nextButton = await getByTestId("component-controls-media-button-next");
-	
+
 				fireEvent.keyUp(nextButton, {
 					keyCode: KEY_CODES.SPACE,
 				});
-	
+
 				expect(onClickOnNextMock).toHaveBeenCalled();
 			});
 
@@ -318,11 +309,11 @@ describe("<ControlsMedia />", () => {
 					/>
 				);
 				const nextButton = await getByTestId("component-controls-media-button-next");
-	
+
 				fireEvent.keyUp(nextButton, {
 					keyCode: KEY_CODES.ENTER,
 				});
-	
+
 				expect(onClickOnNextMock).toHaveBeenCalled();
 			});
 		});
@@ -330,33 +321,25 @@ describe("<ControlsMedia />", () => {
 		describe("should not call on press", () => {
 			it("on SPACE key", async () => {
 				const onClickOnNextMock = jest.fn();
-				const { getByTestId } = render(
-					<ControlsMediaWithRouter
-						status={EPlayingStatus.playing}
-					/>
-				);
+				const { getByTestId } = render(<ControlsMediaWithRouter status={EPlayingStatus.playing} />);
 				const nextButton = await getByTestId("component-controls-media-button-next");
-	
+
 				fireEvent.keyUp(nextButton, {
 					keyCode: KEY_CODES.SPACE,
 				});
-	
+
 				expect(onClickOnNextMock).not.toHaveBeenCalled();
 			});
 
 			it("on ENTER key", async () => {
 				const onClickOnNextMock = jest.fn();
-				const { getByTestId } = render(
-					<ControlsMediaWithRouter
-						status={EPlayingStatus.playing}
-					/>
-				);
+				const { getByTestId } = render(<ControlsMediaWithRouter status={EPlayingStatus.playing} />);
 				const nextButton = await getByTestId("component-controls-media-button-next");
-	
+
 				fireEvent.keyUp(nextButton, {
 					keyCode: KEY_CODES.ENTER,
 				});
-	
+
 				expect(onClickOnNextMock).not.toHaveBeenCalled();
 			});
 		});

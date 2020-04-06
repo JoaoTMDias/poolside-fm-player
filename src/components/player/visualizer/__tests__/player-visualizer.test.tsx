@@ -23,11 +23,7 @@ describe("<PlayerVisualizer />", () => {
 		});
 
 		it("should render the playing classname if is playing audio", async () => {
-			const { getByTestId } = render(
-				<PlayerVisualizer
-					status={EPlayingStatus.playing}
-				/>
-			);
+			const { getByTestId } = render(<PlayerVisualizer status={EPlayingStatus.playing} />);
 			const visualizer = await getByTestId("player-visualizer-wrapper");
 
 			expect(visualizer.classList.contains("is-playing")).toBe(true);

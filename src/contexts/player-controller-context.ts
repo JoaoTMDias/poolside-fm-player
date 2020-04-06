@@ -32,7 +32,7 @@ export const defaultPlayerControllerState = {
 	},
 	currentIndex: 0,
 	currentTime: 0,
-	status: EPlayingStatus.paused,
+	status: EPlayingStatus.idle,
 	duration: 0,
 	artist: "We'll be right back",
 	title: "Loading...",

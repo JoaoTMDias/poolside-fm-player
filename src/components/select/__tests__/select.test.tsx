@@ -1,5 +1,5 @@
 import React from "react";
-import { render, cleanup, fireEvent } from "@testing-library/react"
+import { render, cleanup, fireEvent } from "@testing-library/react";
 
 import Select from "components/select/select";
 import { ISelectProps } from "../select.interface";
@@ -63,7 +63,7 @@ describe("<Select />", () => {
 
 	it("should display a default label on the button", async () => {
 		const { getByTestId } = render(<Select {...initialProps} />);
-		const selectButton = await getByTestId('component-select-button');
+		const selectButton = await getByTestId("component-select-button");
 		const selectButtonValue = await selectButton.querySelector(".select-input__value");
 
 		expect(selectButtonValue?.textContent).toBe(initialProps.options[0].label);

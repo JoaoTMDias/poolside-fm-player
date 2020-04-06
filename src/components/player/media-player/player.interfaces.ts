@@ -6,6 +6,10 @@ export interface IMediaPlayerTrackMetadata {
 export enum EPlayingStatus {
 	playing = "playing",
 	paused = "paused",
+	loading = "loading",
+	ready = "ready",
+	error = "error",
+	idle = "idle",
 }
 
 export enum ESoundCloudPlayerEvents {

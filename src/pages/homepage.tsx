@@ -20,19 +20,21 @@ const Homepage: React.FunctionComponent = () => (
 		<main id="main-content" className="window__main row">
 			<PlayerController>
 				<PlayerControllerContext.Consumer>
-					{({ currentIndex, onChangeOption, audio, status }) => (
-						<>
-							<PlayerVisualizer status={status} audio={audio} />
-							<Select
-								id="channel"
-								label="Channel:"
-								placeholder="Choose a radio channel"
-								options={PoolsidePlaylists}
-								currentIndex={currentIndex}
-								onChange={(index) => onChangeOption(index)}
-							/>
-						</>
-					)}
+					{({ currentIndex, onChangeOption, audio, status }) => {
+						return (
+							<>
+								<PlayerVisualizer status={status} audio={audio} />
+								<Select
+									id="channel"
+									label="Channel:"
+									placeholder="Choose a radio channel"
+									options={PoolsidePlaylists}
+									currentIndex={currentIndex}
+									onChange={(index) => onChangeOption(index)}
+								/>
+							</>
+						);
+					}}
 				</PlayerControllerContext.Consumer>
 				<MediaPlayer />
 			</PlayerController>

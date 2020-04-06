@@ -199,7 +199,7 @@ export const SelectOptionsList = styled.ul`
 			background-color: var(--color-select-option-hover);
 		}
 
-		&.is-selected {
+		&[aria-selected="true"] {
 			background-color: var(--color-select-option-selected);
 			color: var(--color-select-option-selected-text);
 
@@ -240,7 +240,10 @@ export const SelectOptionsList = styled.ul`
 	.select-input__option__label {
 		width: 100%;
 		height: 100%;
-
+		-webkit-appearance: none;
+		border: none;
+		background-color: initial;
+		color: unset;
 		margin: 0;
 		padding: 0;
 		display: flex;
