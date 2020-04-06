@@ -1,5 +1,5 @@
 import React from "react";
-import { render, cleanup } from "@testing-library/react"
+import { render, cleanup } from "@testing-library/react";
 
 import TopBar from "components/top-bar/index";
 

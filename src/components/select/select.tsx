@@ -1,5 +1,5 @@
 import React from "react";
-import SelectInputOptions from "./select-option";
+import SelectInputOptionsList from "./select-options-list";
 import { ISelectProps } from "./select.interface";
 import * as S from "./select.styled";
 
@@ -39,20 +39,13 @@ const Select: React.FunctionComponent<ISelectProps> = ({
 	 * Handles the onChange event on the list.
 	 *
 	 * @param {(number | null)} index
-	 * @param {(React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>)} event
 	 * @memberof Select
 	 */
-	function onChangeOptionFromList(
-		index: number | null,
-		event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>
-	) {
-		event.preventDefault();
+	function onChangeOptionFromList(index: number) {
 		const hasIndex = index && index >= 0;
 
 		if (onChange && index && hasIndex) {
 			onChange(index);
-		} else {
-			event.stopPropagation();
 		}
 
 		setIsOpen(false);
@@ -104,15 +97,12 @@ const Select: React.FunctionComponent<ISelectProps> = ({
 					</svg>
 				</button>
 				{isOpen && options && (
-					<SelectInputOptions
+					<SelectInputOptionsList
 						id={id}
 						activeElement={selected}
 						isOpen={isOpen}
 						options={options}
-						onChangeOptionFromList={(
-							index: number | null,
-							event: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLLabelElement>
-						) => onChangeOptionFromList(index, event)}
+						onChangeOptionFromList={onChangeOptionFromList}
 					/>
 				)}
 			</div>

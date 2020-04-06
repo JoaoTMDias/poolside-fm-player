@@ -43,6 +43,7 @@
 		"extends": "react-app"
 	},
 	"dependencies": {
+		"@testing-library/react-hooks": "^3.2.1",
 		"immer": "^6.0.2",
 		"module-alias": "^2.2.2",
 		"node-sass": "^4.13.1",
@@ -53,7 +54,8 @@
 		"react-scripts": "^3.4.1",
 		"soundcloud-audio": "^1.4.0",
 		"styled-components": "^5.0.1",
-		"typescript": "^3.8.3"
+		"typescript": "^3.8.3",
+		"use-immer": "^0.3.5"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
@@ -97,6 +99,7 @@
 		"eslint-plugin-react-hooks": "^2.5.1",
 		"foreman": "^3.0.1",
 		"husky": "^4.2.3",
+		"js-logger": "^1.6.0",
 		"jsdom": "^16.2.1",
 		"lint-staged": "^10.0.9",
 		"mock-audio-element": "0.0.0-beta.2",

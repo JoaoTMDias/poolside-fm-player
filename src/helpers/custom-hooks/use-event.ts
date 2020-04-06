@@ -13,7 +13,7 @@ import { useEffect } from "react";
  * @param {*} listener
  * @param {boolean} [passive=false]
  */
-export default function useEvent<T extends keyof WindowEventMap>(
+export function useEvent<T extends keyof WindowEventMap>(
 	event: T,
 	listener: (this: Window, ev: WindowEventMap[T]) => any,
 	passive = false
@@ -28,3 +28,5 @@ export default function useEvent<T extends keyof WindowEventMap>(
 		};
 	});
 }
+
+export default useEvent;

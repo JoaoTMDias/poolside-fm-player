@@ -50,9 +50,7 @@ describe("<ButtonVolume />", () => {
 			const ButtonVolumeWithPortal = () => (
 				<div id="wrapper">
 					<div id="app">
-						<ButtonVolume
-							onChangeVolume={onChangeVolumeMock}
-						/>
+						<ButtonVolume onChangeVolume={onChangeVolumeMock} />
 					</div>
 					<div id="app-portal" />
 				</div>
@@ -82,9 +80,7 @@ describe("<ButtonVolume />", () => {
 			const ButtonVolumeWithPortal = () => (
 				<div id="wrapper">
 					<div id="app">
-						<ButtonVolume
-							onClick={onClickMock}
-						/>
+						<ButtonVolume onClick={onClickMock} />
 					</div>
 					<div id="app-portal" />
 				</div>
@@ -105,25 +101,23 @@ describe("<ButtonVolume />", () => {
 		describe("should have been called on change on key up", () => {
 			it("on ENTER input", async () => {
 				const onClickMock = jest.fn();
-	
+
 				const ButtonVolumeWithPortal = () => (
 					<div id="wrapper">
 						<div id="app">
-							<ButtonVolume
-								onClick={onClickMock}
-							/>
+							<ButtonVolume onClick={onClickMock} />
 						</div>
 						<div id="app-portal" />
 					</div>
 				);
-	
+
 				const { getByTestId } = render(<ButtonVolumeWithPortal />);
 				const button = await getByTestId("component-controls-media-button-volume");
-	
+
 				fireEvent.keyUp(button, {
 					keyCode: KEY_CODES.ENTER,
 				});
-	
+
 				expect(onClickMock).toHaveBeenCalled();
 			});
 
@@ -133,9 +127,7 @@ describe("<ButtonVolume />", () => {
 				const ButtonVolumeWithPortal = () => (
 					<div id="wrapper">
 						<div id="app">
-							<ButtonVolume
-								onClick={onClickMock}
-							/>
+							<ButtonVolume onClick={onClickMock} />
 						</div>
 						<div id="app-portal" />
 					</div>
@@ -154,21 +146,19 @@ describe("<ButtonVolume />", () => {
 
 		it("should not have been called on change on key up with any other key", async () => {
 			const onClickMock = jest.fn();
-	
+
 			const ButtonVolumeWithPortal = () => (
 				<div id="wrapper">
 					<div id="app">
-						<ButtonVolume
-							onClick={onClickMock}
-						/>
+						<ButtonVolume onClick={onClickMock} />
 					</div>
 					<div id="app-portal" />
 				</div>
 			);
-	
+
 			const { getByTestId } = render(<ButtonVolumeWithPortal />);
 			const button = await getByTestId("component-controls-media-button-volume");
-	
+
 			fireEvent.keyUp(button, {
 				keyCode: KEY_CODES.ARROW_DOWN,
 			});
@@ -180,7 +170,7 @@ describe("<ButtonVolume />", () => {
 			fireEvent.keyUp(button, {
 				keyCode: KEY_CODES.PLAY_PAUSE,
 			});
-	
+
 			expect(onClickMock).not.toHaveBeenCalled();
 		});
 	});

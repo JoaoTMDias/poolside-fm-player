@@ -1,12 +1,12 @@
 import React from "react";
-import { render, cleanup } from "@testing-library/react"
+import { render, cleanup } from "@testing-library/react";
 import {
 	findByAttribute,
 	findByClassname,
 	findById,
 	getAllByAttribute,
 	getAllByClassname,
-	getAllById
+	getAllById,
 } from "../index";
 
 afterEach(cleanup);
@@ -22,7 +22,12 @@ const DemoComponent = () => {
 				defaultValue=""
 				placeholder="Foobar"
 			/>
-			<button type="button" data-demo="button" id="demo-component-button" data-testid="demo-component-button">
+			<button
+				type="button"
+				data-demo="button"
+				id="demo-component-button"
+				data-testid="demo-component-button"
+			>
 				<span className="demo-component-span">A Demo Button</span>
 			</button>
 		</fieldset>
@@ -34,7 +39,7 @@ describe("findByAttribute", () => {
 		const { container } = render(<DemoComponent />);
 		const button = await findByAttribute(container, "[data-demo='button']");
 
-		expect(button?.tagName).toBe("BUTTON"); 
+		expect(button?.tagName).toBe("BUTTON");
 	});
 });
 
@@ -52,7 +57,7 @@ describe("findById", () => {
 		const { container } = render(<DemoComponent />);
 		const input = await findById(container, "#demo-component-input");
 
-		expect(input?.tagName).toBe("INPUT"); 
+		expect(input?.tagName).toBe("INPUT");
 	});
 });
 

@@ -9,10 +9,7 @@ describe("<ClickTrapPortal />", () => {
 	it("should render the portal", () => {
 		const wrapper = render(
 			<div id="app-portal">
-				<ClickTrapPortal
-					title="Title"
-					onClickToClose={() => {}}
-				>
+				<ClickTrapPortal title="Title" onClickToClose={() => {}}>
 					<p>Test</p>
 				</ClickTrapPortal>
 			</div>
@@ -27,10 +24,7 @@ describe("<ClickTrapPortal />", () => {
 
 			const { getByTestId } = render(
 				<div id="app-portal">
-					<ClickTrapPortal
-						title="Title"
-						onClickToClose={onClickToCloseMock}
-					>
+					<ClickTrapPortal title="Title" onClickToClose={onClickToCloseMock}>
 						<p>I am trapped inside the portal</p>
 					</ClickTrapPortal>
 				</div>
@@ -56,10 +50,7 @@ describe("<ClickTrapPortal />", () => {
 
 			render(
 				<div id="app-portal">
-					<ClickTrapPortal
-						title="Title"
-						onClickToClose={onClickToCloseMock}
-					>
+					<ClickTrapPortal title="Title" onClickToClose={onClickToCloseMock}>
 						<p>I am trapped inside the portal</p>
 					</ClickTrapPortal>
 				</div>
@@ -86,10 +77,7 @@ describe("<ClickTrapPortal />", () => {
 
 		render(
 			<div id="app-portal">
-				<ClickTrapPortal
-					title="Title"
-					onClickToClose={onClickToCloseMock}
-				>
+				<ClickTrapPortal title="Title" onClickToClose={onClickToCloseMock}>
 					<p>I am trapped inside the portal</p>
 				</ClickTrapPortal>
 			</div>
@@ -109,10 +97,7 @@ describe("<ClickTrapPortal />", () => {
 
 		const wrapper = render(
 			<div id="app-portal">
-				<ClickTrapPortal
-					title="Title"
-					onClickToClose={onClickToCloseMock}
-				>
+				<ClickTrapPortal title="Title" onClickToClose={onClickToCloseMock}>
 					<p>I am trapped inside the portal</p>
 				</ClickTrapPortal>
 			</div>

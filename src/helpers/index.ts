@@ -1,6 +1,6 @@
 import hasPressedSpaceOrEnter from "./has-pressed-space-or-enter";
-import useEvent from "./use-event";
 
+export * from "./custom-hooks/index";
 export * from "./test-utilties";
 export * from "./logger.helper";
 export * from "./key-codes";
@@ -10,4 +10,4 @@ export * from "./hover-focus.helper";
 export * from "./history.helper";
 export * from "./localStorage";
 
-export { hasPressedSpaceOrEnter, useEvent };
+export { hasPressedSpaceOrEnter };
