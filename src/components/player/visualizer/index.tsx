@@ -5,11 +5,12 @@ import { EPlayingStatus } from "components/player/media-player/player.interfaces
 import produce from "immer";
 import * as S from "./player-visualizer.styled";
 
-interface IPlayerVisualizerProps {
+export interface IPlayerVisualizerProps {
 	audio: HTMLAudioElement | null;
 	status: EPlayingStatus;
+	devicePixelRatio?: number | null;
 }
-interface IPlayerVisualizerState {
+export interface IPlayerVisualizerState {
 	width: number;
 	height: number;
 	bars: {
@@ -17,6 +18,15 @@ interface IPlayerVisualizerState {
 		background: string;
 		color: string;
 	};
+}
+
+export const CAPTIONS = {
+	idle: "Press play to start",
+	paused: "Press play to resume",
+	error: "An error occurred",
+	loading: "Loading tape...",
+	ready: "Ready!",
+	playing: "Music is Playing"
 }
 
 /**
@@ -32,7 +42,7 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 
 	private canvasElement: HTMLCanvasElement | null;
 
-	private canvasContext: CanvasRenderingContext2D | null;
+	public canvasContext: CanvasRenderingContext2D | null;
 
 	private audioContext: AudioContext | null;
 
@@ -50,7 +60,8 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 
 	static defaultProps: IPlayerVisualizerProps = {
 		audio: null,
-		status: EPlayingStatus.paused,
+		status: EPlayingStatus.idle,
+		devicePixelRatio: window.devicePixelRatio
 	};
 
 	constructor (props: IPlayerVisualizerProps) {
@@ -85,10 +96,10 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	 * @memberof PlayerVisualizer
 	 */
 	componentDidMount() {
-		const { audio } = this.props;
+		const { audio, devicePixelRatio } = this.props;
 		const { width, height } = this.state;
 
-		const dpi = this.getDevicePixelRatio();
+		const dpi = devicePixelRatio || 1;
 
 		this.getColorsFromRoot();
 
@@ -125,7 +136,7 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	 * @param {IPlayerVisualizerProps} prevProps
 	 * @memberof PlayerVisualizer
 	 */
-	componentDidUpdate(prevProps: IPlayerVisualizerProps) {
+	componentDidUpdate() {
 		const { audio } = this.props;
 
 		if (audio && audio.src) {
@@ -153,16 +164,6 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 			this.canvasElement.setAttribute("width", `${width}`);
 			this.canvasElement.setAttribute("height", `${height}`);
 		}
-	}
-
-	/**
-	 * Gets the device pixel ratio
-	 *
-	 * @returns {void}
-	 * @memberof PlayerVisualizer
-	 */
-	getDevicePixelRatio() {
-		return window.devicePixelRatio || 1;
 	}
 
 	/**
@@ -206,26 +207,29 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 		const metadata = produce(defaultState, (draftState, action = status) => {
 			// eslint-disable-next-line default-case
 			switch (action) {
+				case EPlayingStatus.idle:
+					draftState.caption.title = CAPTIONS.idle;
+					break;
+
 				case EPlayingStatus.paused:
-					draftState.caption.title = "Press play to resume";
+					draftState.caption.title = CAPTIONS.paused;
 					break;
 
 				case EPlayingStatus.error:
-					draftState.caption.title = "An error occurred"
-					draftState.caption.classname = "player-visualizer__label";
+					draftState.caption.title = CAPTIONS.error;
 					break;
 
 				case EPlayingStatus.loading:
-					draftState.caption.title = "Loading tape...";
+					draftState.caption.title = CAPTIONS.loading;
 					break;
 
 				case EPlayingStatus.ready:
-					draftState.caption.title = "Ready!";
+					draftState.caption.title = CAPTIONS.ready;
 					break;
 
 				case EPlayingStatus.playing:
 					draftState.classname = "is-playing";
-					draftState.caption.title = "Music is Playing";
+					draftState.caption.title = CAPTIONS.playing;
 					break;
 			}
 
@@ -350,6 +354,7 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	}
 
 	render() {
+		const { audio, devicePixelRatio, status } = this.props;
 		const metadata = this.getStatusMetadata();
 
 		return (
@@ -359,12 +364,20 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 				id="player-visualizer"
 				className={`player-visualizer ${metadata.classname}`}
 			>
-				<figcaption id="player-visualizer-label" className={metadata.caption.classname}>
+				<figcaption id="player-visualizer-label" data-testid="component-player-visualizer-label" className={metadata.caption.classname}>
 					{metadata.caption.title}
 				</figcaption>
+				<div
+					className="sr-only"
+					data-testid="player-visualizer-meta"
+					data-status={status}
+					data-audio={audio?.src}
+					data-devicepixelratio={`${devicePixelRatio}`}
+				/>
 				<canvas
 					ref={this.canvas}
 					id="player-visualizer-canvas"
+					data-testid="component-player-visualizer-canvas"
 					aria-labelledby="player-visualizer-label"
 					width="272"
 					height="40"

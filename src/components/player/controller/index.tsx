@@ -1,6 +1,5 @@
 import React, { useRef, useState, useReducer } from "react";
 import SoundCloudAudio from "soundcloud-audio";
-import useSound from 'use-sound';
 import { PoolsidePlaylists } from "data/constants";
 import {
 	PlayerControllerContext,
@@ -8,7 +7,6 @@ import {
 	IPlayerControllerContext,
 } from "contexts/player-controller-context";
 import { useOnMount } from "helpers/custom-hooks/use-lifecycle-hooks";
-import { holdOn } from "helpers/index";
 import {
 	ISoundcloudPlayer,
 	EPlayingStatus,
@@ -19,7 +17,6 @@ import {
 import { updateTrackReducer } from "./update-tracker-reducer";
 import { updateStatusReducer } from "./update-status-reducer";
 
-const LoadTape = require("../../../assets/audio/load-tape.mp3");
 
 /**
  * Get a random number between a range
@@ -33,6 +30,13 @@ export function getRandomTrackIndex(allTracks: number) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
+export interface IPlayerControllerProps {
+	onPrevious?: (hasChanged: boolean) => void;
+	onNext?: (hasChanged: boolean) => void;
+	onPlay?: (status: EPlayingStatus) => void;
+	children: React.ReactNode;
+}
+
 /**
  * PlayerController
  *
@@ -40,9 +44,14 @@ export function getRandomTrackIndex(allTracks: number) {
  * Plays, pauses, changes tracks and then updates the state and sends it through the Context API.
  *
  */
-const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> = ({ children }) => {
+const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
+	onPrevious,
+	onNext,
+	onPlay,
+	children
+}) => {
 	const { current: player } = useRef<ISoundcloudPlayer>(
-		new SoundCloudAudio("1df3275a3b94dfba2d1d4fac65562601")
+		new SoundCloudAudio(process.env.REACT_APP_API_KEY)
 	);
 	const [artist, setArtist] = useState(defaultPlayerControllerState.artist);
 	const [title, setTitle] = useState(defaultPlayerControllerState.title);
@@ -54,7 +63,6 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 		updateStatusReducer,
 		defaultPlayerControllerState.status
 	);
-	const [playLoadingTape] = useSound(LoadTape);
 
 
 	/**
@@ -62,7 +70,7 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 	 *
 	 * @returns {boolean}
 	 */
-	function onPrevious(): boolean {
+	function _onPrevious(): boolean {
 		let hasChanged = false;
 
 		if (player && track) {
@@ -81,15 +89,22 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 			hasChanged = true;
 		}
 
+		if (onPrevious) {
+			onPrevious(hasChanged);
+		}
+
+
 		return hasChanged;
 	}
 
 	/**
 	 * Handles the click on the next button
 	 *
-	 * @returns {void}
+	 * @returns {boolean}
 	 */
-	function onNext() {
+	function _onNext(): boolean {
+		let hasChanged = false;
+
 		if (player && track) {
 			const { current, last } = track;
 
@@ -103,7 +118,16 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 			if (player?.next && player?.playing) {
 				player.next();
 			}
+
+			hasChanged = true;
 		}
+
+		if (onNext) {
+			onNext(hasChanged);
+		}
+
+
+		return hasChanged;
 	}
 
 	/**
@@ -136,7 +160,7 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 	 *
 	 * @returns {EPlayingStatus | null}
 	 */
-	function onPlay(): void {
+	function _onPlay(): void {
 		switch (status) {
 			case EPlayingStatus.ready:
 			case EPlayingStatus.paused:
@@ -153,12 +177,17 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 				break;
 
 			default:
+			case EPlayingStatus.idle:
 			case EPlayingStatus.loading:
 			case EPlayingStatus.error:
 				break;
 		}
 
 		handleNewStatus();
+
+		if (onPlay) {
+			onPlay(status);
+		}
 	}
 
 	/**
@@ -200,9 +229,6 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 			type: "LOAD",
 		});
 
-		await holdOn(5000);
-
-
 		if (player && player.on && player) {
 			// once playlist is loaded it can be played
 			updateTrack({
@@ -233,7 +259,7 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 			// for playlists it's possible to switch to another track in queue
 			// e.g. we do it here when playing track is finished
 			player.on(ESoundCloudPlayerEvents.ended, () => {
-				onNext();
+				_onNext();
 			});
 		}
 	}
@@ -260,11 +286,6 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 	 * @returns {void}
 	 */
 	function onChangeOption(index: number): void {
-		playLoadingTape({
-			forceSoundEnabled: false,
-			playbackRate: 1
-		});
-
 		if (index && player && player.stop) {
 			player.stop();
 
@@ -288,9 +309,9 @@ const PlayerController: React.FunctionComponent<{ children: React.ReactNode }> =
 		currentIndex,
 		track,
 		audio: player.audio,
-		previous: () => onPrevious(),
-		next: () => onNext(),
-		togglePlay: () => onPlay(),
+		previous: () => _onPrevious(),
+		next: () => _onNext(),
+		togglePlay: () => _onPlay(),
 		changeVolume: () => { },
 		onChangeOption: (index: number) => onChangeOption(index),
 	};

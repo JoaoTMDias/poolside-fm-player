@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, KeyboardEvent, ChangeEvent } from "react";
 import ClickTrapPortal from "components/click-trap-portal";
 import { hasPressedSpaceOrEnter } from "helpers";
-import * as S from "./button-volume.styled";
+import * as S from "./index.styles";
 
 interface IButtonVolumeProps {
 	onChangeVolume?: (value: string) => void;

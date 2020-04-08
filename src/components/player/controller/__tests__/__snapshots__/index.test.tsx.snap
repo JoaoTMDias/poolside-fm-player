@@ -1,53 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<PlayerVisualizer /> render should render a visualizer 1`] = `
+exports[`<PlayerController /> render should render the controller 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <figure
-        class="sc-AxjAm jpoiFA player-visualizer "
-        data-testid="player-visualizer-wrapper"
-        id="player-visualizer"
-        role="presentation"
-      >
-        <figcaption
-          class="player-visualizer__label"
-          id="player-visualizer-label"
-        >
-          Press play to start
-        </figcaption>
-        <canvas
-          aria-labelledby="player-visualizer-label"
-          class="player-visualizer__canvas"
-          height="32"
-          id="player-visualizer-canvas"
-          width="256"
-        />
-      </figure>
+      <p>
+        Children
+      </p>
     </div>
   </body>,
   "container": <div>
-    <figure
-      class="sc-AxjAm jpoiFA player-visualizer "
-      data-testid="player-visualizer-wrapper"
-      id="player-visualizer"
-      role="presentation"
-    >
-      <figcaption
-        class="player-visualizer__label"
-        id="player-visualizer-label"
-      >
-        Press play to start
-      </figcaption>
-      <canvas
-        aria-labelledby="player-visualizer-label"
-        class="player-visualizer__canvas"
-        height="32"
-        id="player-visualizer-canvas"
-        width="256"
-      />
-    </figure>
+    <p>
+      Children
+    </p>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],

@@ -61,13 +61,22 @@ Object {
         >
           <figcaption
             class="player-visualizer__label"
+            data-testid="component-player-visualizer-label"
             id="player-visualizer-label"
           >
             Press play to start
           </figcaption>
+          <div
+            class="sr-only"
+            data-audio=""
+            data-devicepixelratio="1"
+            data-status="idle"
+            data-testid="player-visualizer-meta"
+          />
           <canvas
             aria-labelledby="player-visualizer-label"
             class="player-visualizer__canvas"
+            data-testid="component-player-visualizer-canvas"
             height="32"
             id="player-visualizer-canvas"
             width="256"
@@ -125,7 +134,8 @@ Object {
         <div
           class="media-player row"
           data-current-track="0"
-          data-playing-status="paused"
+          data-playing-status="idle"
+          data-testid="component-media-player"
           id="media-player"
         >
           <div
@@ -368,13 +378,22 @@ Object {
       >
         <figcaption
           class="player-visualizer__label"
+          data-testid="component-player-visualizer-label"
           id="player-visualizer-label"
         >
           Press play to start
         </figcaption>
+        <div
+          class="sr-only"
+          data-audio=""
+          data-devicepixelratio="1"
+          data-status="idle"
+          data-testid="player-visualizer-meta"
+        />
         <canvas
           aria-labelledby="player-visualizer-label"
           class="player-visualizer__canvas"
+          data-testid="component-player-visualizer-canvas"
           height="32"
           id="player-visualizer-canvas"
           width="256"
@@ -432,7 +451,8 @@ Object {
       <div
         class="media-player row"
         data-current-track="0"
-        data-playing-status="paused"
+        data-playing-status="idle"
+        data-testid="component-media-player"
         id="media-player"
       >
         <div

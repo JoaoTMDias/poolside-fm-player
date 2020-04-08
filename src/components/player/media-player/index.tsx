@@ -18,6 +18,7 @@ const MediaPlayer = () => {
 				return (
 					<div
 						id="media-player"
+						data-testid="component-media-player"
 						className="media-player row"
 						data-current-track={track?.current.toString()}
 						data-playing-status={status}

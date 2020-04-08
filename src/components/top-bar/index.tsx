@@ -1,6 +1,6 @@
 // Libraries
 import * as React from "react";
-import * as S from "./top-bar.styled";
+import * as S from "./index.styles";
 
 interface ITopBarProps {
 	title?: string;

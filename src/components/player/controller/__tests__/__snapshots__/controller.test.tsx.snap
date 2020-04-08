@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`<PlayerController /> render should render the controller 1`] = `ShallowWrapper {}`;
