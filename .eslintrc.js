@@ -3,8 +3,11 @@ module.exports = {
 		browser: true,
 		es6: true,
 		node: true,
+		"cypress/globals": true,
 	},
 	extends: [
+		"plugin:cypress/recommended",
+		"plugin:chai-friendly/recommended",
 		"plugin:jest/recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:react/recommended",
@@ -34,7 +37,7 @@ module.exports = {
 		ecmaVersion: 2018,
 		sourceType: "module",
 	},
-	plugins: ["react", "react-hooks", "@typescript-eslint", "prettier"],
+	plugins: ["cypress", "chai-friendly", "react", "react-hooks", "@typescript-eslint", "prettier"],
 	rules: {
 		"@typescript-eslint/interface-name-prefix": [2, "always"],
 		"@typescript-eslint/class-name-casing": 2,
@@ -68,6 +71,8 @@ module.exports = {
 			},
 		],
 		"no-param-reassign": ["error", { props: true, ignorePropertyModificationsFor: ["draftState"] }],
+		"no-unused-expressions": 0,
+		"chai-friendly/no-unused-expressions": 2,
 	},
 	settings: {
 		"import/parsers": {

@@ -1,0 +1,2 @@
+export const DEFAULT_TIMEOUT = 1000;
+export const TIMEOUT_LONGER = DEFAULT_TIMEOUT * 2;

@@ -27,12 +27,12 @@ const CurrentSong: React.FunctionComponent<ICurrentSongProps> = ({
 				<span className="current-song__time__divider">/</span>
 				<span className="current-song__time__current">{currentTime}</span>
 			</h5>
-			<h4 className="current-song__title" title={title}>
+			<h4 className="current-song__title">
 				{title}
 			</h4>
-			<h6 className="current-song__artist ui-label" title={artist}>
+			<p className="current-song__artist ui-label">
 				{artist}
-			</h6>
+			</p>
 		</S.Wrapper>
 	);
 };

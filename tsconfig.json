@@ -1,40 +1,25 @@
 {
-  "compilerOptions": {
-    "baseUrl": "src",
-    "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noEmit": true,
-    "jsx": "react",
-    "types": [
-      "node",
-      "jest"
-    ]
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/sw-*.js",
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "__tests__"
-  ]
+	"compilerOptions": {
+		"baseUrl": "src",
+		"target": "es6",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noEmit": true,
+		"jsx": "react",
+		"types": ["node", "jest", "cypress"]
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "src/sw-*.js", "**/*.spec.ts", "**/*.test.ts", "__tests__"]
 }

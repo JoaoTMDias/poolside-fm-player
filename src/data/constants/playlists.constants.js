@@ -1,8 +1,4 @@
-import { ISelectOption } from "./select.constants";
-
-/* eslint-disable import/prefer-default-export */
-
-export const PoolsidePlaylists: ISelectOption[] = [
+export const PoolsidePlaylists = [
 	{
 		id: "poolside-fm",
 		value: "poolside-fm",
@@ -35,3 +31,5 @@ export const PoolsidePlaylists: ISelectOption[] = [
 		url: "https://soundcloud.com/poolsidefm/sets/hangover-club",
 	},
 ];
+
+export default PoolsidePlaylists;

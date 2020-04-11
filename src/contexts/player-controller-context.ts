@@ -34,13 +34,13 @@ export const defaultPlayerControllerState = {
 	currentTime: 0,
 	status: EPlayingStatus.idle,
 	duration: 0,
-	artist: "We'll be right back",
-	title: "Loading...",
-	previous: () => {},
-	next: () => {},
-	togglePlay: () => {},
-	changeVolume: () => {},
-	onChangeOption: () => {},
+	artist: "No artist",
+	title: "No title",
+	previous: () => { },
+	next: () => { },
+	togglePlay: () => { },
+	changeVolume: () => { },
+	onChangeOption: () => { },
 };
 
 export const defaultPlayerControllerContext = {

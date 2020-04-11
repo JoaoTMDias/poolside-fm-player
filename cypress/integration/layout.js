@@ -1,14 +1,14 @@
-/// <reference types="cypress" />
+// / <reference types="cypress" />
 
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from "../../src/data/constants/native";
- 
+import { setupLayout } from "../mocks/setupLayout";
+
 describe("Layout", () => {
 	beforeEach(() => {
-		cy.visit("http://localhost:3000");
-		cy.viewport(WINDOW_WIDTH, WINDOW_HEIGHT);
+		setupLayout();
+
+		cy.get("@getPoolsideFMOfficialPlaylist");
+		cy.get("@getSoundcloudResolve");
 	});
 
-	it("cy.go() - go back or forward in the browser's history", () => {
-
-	});
+	it("cy.go() - go back or forward in the browser's history", () => {});
 });
