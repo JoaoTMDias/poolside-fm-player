@@ -168,16 +168,14 @@ Object {
               </h5>
               <h4
                 class="current-song__title"
-                title="Loading..."
               >
-                Loading...
+                No title
               </h4>
-              <h6
+              <p
                 class="current-song__artist ui-label"
-                title="We'll be right back"
               >
-                We'll be right back
-              </h6>
+                No artist
+              </p>
             </div>
             <nav
               class="sc-AxirZ bGWXHp controls"
@@ -490,16 +488,14 @@ Object {
             </h5>
             <h4
               class="current-song__title"
-              title="Loading..."
             >
-              Loading...
+              No title
             </h4>
-            <h6
+            <p
               class="current-song__artist ui-label"
-              title="We'll be right back"
             >
-              We'll be right back
-            </h6>
+              No artist
+            </p>
           </div>
           <nav
             class="sc-AxirZ bGWXHp controls"

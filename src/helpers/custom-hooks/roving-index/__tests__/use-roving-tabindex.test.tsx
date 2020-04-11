@@ -3,7 +3,7 @@ import { render, fireEvent } from "@testing-library/react";
 import KEY_CODES from "helpers/key-codes";
 import Provider from "../roving-provider";
 import useRovingTabIndex from "../use-roving-tabindex";
-import { EKeyDirection } from "../types";
+import { EKeyDirection } from "../types.d";
 
 const TestButton: React.FC<{
 	disabled: boolean;
