@@ -17,7 +17,7 @@ export interface IPlayerControllerState {
 	previous: () => void;
 	next: () => void;
 	togglePlay: () => void;
-	changeVolume: () => void;
+	changeVolume: (volume: number) => void;
 	onChangeOption: (index: number) => void;
 }
 

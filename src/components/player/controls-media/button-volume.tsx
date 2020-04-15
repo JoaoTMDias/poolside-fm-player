@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useState, KeyboardEvent, ChangeEvent } from "react";
 import ClickTrapPortal from "components/click-trap-portal";
-import { hasPressedSpaceOrEnter } from "helpers";
+import { hasPressedSpaceOrEnter, useDebouncedEffect } from "helpers";
 import * as S from "./index.styles";
 
 interface IButtonVolumeProps {
-	onChangeVolume?: (value: string) => void;
+	onChangeVolume?: (value: number) => void;
 	onClick?: () => void;
 }
 
@@ -32,10 +32,6 @@ const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume, o
 	 */
 	function onChangeRangeInput(rangeValue: string) {
 		setValue(rangeValue);
-
-		if (onChangeVolume) {
-			onChangeVolume(rangeValue);
-		}
 	}
 
 	/**
@@ -51,6 +47,15 @@ const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume, o
 			onClick();
 		}
 	}
+
+	useDebouncedEffect<string>(
+		() => {
+			if (onChangeVolume) {
+				onChangeVolume(parseFloat(value));
+			}
+		}, 250, [value]
+	);
+
 
 	return (
 		<>

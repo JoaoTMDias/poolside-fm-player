@@ -1,5 +1,5 @@
 // Libraries
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { ROUTE_SETTINGS } from "data/constants/routes";
 import { hasPressedSpaceOrEnter } from "helpers";
@@ -170,8 +170,9 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 			</S.Buttons>
 			<div className="controls-media__item">
 				<ButtonVolume
-					onChangeVolume={(value: string) => {
+					onChangeVolume={(value) => {
 						if (onChangeVolume) {
+
 							onChangeVolume(value);
 						}
 					}}

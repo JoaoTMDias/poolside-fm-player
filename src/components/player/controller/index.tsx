@@ -34,6 +34,7 @@ export interface IPlayerControllerProps {
 	onPrevious?: (hasChanged: boolean) => void;
 	onNext?: (hasChanged: boolean) => void;
 	onPlay?: (status: EPlayingStatus) => void;
+	onChangeVolume?: (volume: number) => void;
 	children: React.ReactNode;
 }
 
@@ -48,6 +49,7 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 	onPrevious,
 	onNext,
 	onPlay,
+	onChangeVolume,
 	children
 }) => {
 	const { current: player } = useRef<ISoundcloudPlayer>(
@@ -191,6 +193,22 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 	}
 
 	/**
+	 * Changes the volume of the current playing audio
+	 *
+	 * @param {number} volume
+	 */
+	function _onChangeVolume(volume: number) {
+		const { audio } = player;
+		if (player && audio && volume) {
+			audio.volume = volume;
+
+			if (onChangeVolume) {
+				onChangeVolume(volume);
+			}
+		}
+	}
+
+	/**
 	 * Returns the current tracks title and artist
 	 *
 	 * @param {number} index
@@ -285,7 +303,7 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 	 * @param {number} index
 	 * @returns {void}
 	 */
-	function onChangeOption(index: number): void {
+	function _onChangeOption(index: number): void {
 		if (index && player && player.stop) {
 			player.stop();
 
@@ -312,8 +330,8 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 		previous: () => _onPrevious(),
 		next: () => _onNext(),
 		togglePlay: () => _onPlay(),
-		changeVolume: () => { },
-		onChangeOption: (index: number) => onChangeOption(index),
+		changeVolume: (volume) => _onChangeVolume(volume),
+		onChangeOption: (index) => _onChangeOption(index),
 	};
 
 	return (

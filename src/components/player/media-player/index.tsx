@@ -14,7 +14,17 @@ import ControlsMedia from "../controls-media/index";
 const MediaPlayer = () => {
 	return (
 		<PlayerControllerContext.Consumer>
-			{({ title, artist, currentTime, next, previous, togglePlay, status, track }) => {
+			{({ 
+				artist,
+				changeVolume,
+				currentTime,
+				next,
+				previous,
+				status,
+				title,
+				togglePlay,
+				track
+			}) => {
 				return (
 					<div
 						id="media-player"
@@ -29,6 +39,7 @@ const MediaPlayer = () => {
 							onClickOnPrevious={previous}
 							onTogglePlay={togglePlay}
 							onClickOnNext={next}
+							onChangeVolume={changeVolume}
 						/>
 					</div>
 				);
