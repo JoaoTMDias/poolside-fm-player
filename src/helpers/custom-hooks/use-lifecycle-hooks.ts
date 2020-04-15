@@ -1,4 +1,4 @@
-import { useEffect, EffectCallback, useRef } from "react";
+import { useEffect, EffectCallback, useRef, DependencyList } from "react";
 import { Logger } from "../logger.helper";
 
 /**
@@ -25,7 +25,7 @@ export function useFirstMountState(): boolean {
  * @export
  * @returns {void}
  */
-export const useDidUpdate: typeof useEffect = (effect, deps) => {
+export const useDidUpdate: typeof useEffect = (effect: EffectCallback, deps?: DependencyList) => {
 	const isFirstMount = useFirstMountState();
 
 	useEffect(() => {
@@ -74,7 +74,7 @@ export const useLifecycleHooks = (mount: () => void, unmount?: () => void) => {
 				unmount();
 			}
 		};
-	}, []);
+	});
 };
 
 /**

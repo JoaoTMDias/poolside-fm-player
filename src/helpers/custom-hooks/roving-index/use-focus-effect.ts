@@ -11,5 +11,5 @@ export default function useFocusEffect(
 		if (focused && ref.current) {
 			ref.current.focus();
 		}
-	}, [focused]);
+	}, [ref, focused]);
 }

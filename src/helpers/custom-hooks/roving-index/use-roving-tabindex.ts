@@ -44,14 +44,17 @@ export default function useRovingTabIndex(
 		if (disabled) {
 			return;
 		}
+
+		const id = tabIndexId.current;
+
 		dispatch({
 			type: ActionTypes.REGISTER,
-			payload: { id: tabIndexId.current, domElementRef },
+			payload: { id, domElementRef },
 		});
 		return (): void => {
 			dispatch({
 				type: ActionTypes.UNREGISTER,
-				payload: { id: tabIndexId.current },
+				payload: { id },
 			});
 		};
 	}, [disabled]);
