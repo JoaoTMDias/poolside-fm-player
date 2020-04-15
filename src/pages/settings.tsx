@@ -7,6 +7,7 @@ import { Themes } from "../data/constants";
 import Select from "../components/select/select";
 import ThemeContext from "../contexts/theme-context";
 import TopBar from "../components/top-bar/index";
+import Tabs from "components/tabs";
 
 /**
  * Settings page
@@ -36,7 +37,7 @@ const Settings: React.FunctionComponent = () => {
 		<>
 			<TopBar onClick={redirectToHome} title="Settings" />
 			<main id="main-content" className="window__main row">
-				<p>Settings Page here</p>
+				<Tabs />
 				<Select
 					id="theme"
 					label="Theme:"
