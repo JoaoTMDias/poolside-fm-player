@@ -41,7 +41,8 @@ export const Item = styled.button`
 	font-size: 1rem;
 	font-family: var(--heading-font-family);
 
-	&[aria-selected="true"] {
+	&[aria-selected="true"],
+	&:focus {
 		background-color: var(--color-button-hover);
 		color: var(--color-button);
 	}
@@ -65,8 +66,7 @@ export const Panel = styled.div`
 	justify-content: flex-start;
 	align-items: center;
 	overflow-x: hidden;
-	overflow-y: scroll;
-	border: 1px solid var(--color-black);
+	overflow-y: visible;
 
 	&[hidden],
 	&[tabindex="-1"] {

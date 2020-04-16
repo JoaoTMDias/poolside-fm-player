@@ -6,7 +6,7 @@ import {
 	defaultPlayerControllerState,
 	IPlayerControllerContext,
 } from "contexts/player-controller-context";
-import { useOnMount } from "helpers/custom-hooks/use-lifecycle-hooks";
+import { useDidMount } from "helpers/custom-hooks/use-lifecycle-hooks";
 import {
 	ISoundcloudPlayer,
 	EPlayingStatus,
@@ -312,7 +312,7 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 		}
 	}
 
-	useOnMount(() => {
+	useDidMount(() => {
 		if (player) {
 			startPlaylist();
 		}
