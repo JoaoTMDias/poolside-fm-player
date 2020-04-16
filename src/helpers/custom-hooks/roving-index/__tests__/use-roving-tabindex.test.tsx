@@ -10,14 +10,14 @@ const TestButton: React.FC<{
 	id?: string;
 }> = ({ disabled, children, id }) => {
 	const ref = React.useRef<HTMLButtonElement>(null);
-	const [tabIndex, focused, handleKeyDown, handleClick] = useRovingTabIndex(ref, disabled, id);
+	const [tabIndex, focused, handleOnKeyPress, handleClick] = useRovingTabIndex(ref, disabled, id);
 
 	return (
 		<button
 			ref={ref}
 			type="button"
 			id={id}
-			onKeyDown={handleKeyDown}
+			onKeyUp={handleOnKeyPress}
 			onClick={handleClick}
 			tabIndex={tabIndex}
 			data-focused={focused}

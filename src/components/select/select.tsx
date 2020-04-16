@@ -10,6 +10,9 @@ export const defaultProps = {
 	type: "playlist",
 };
 
+const isNil = (val: any) => val == null
+
+
 /**
  * Select component
  *
@@ -42,9 +45,7 @@ const Select: React.FunctionComponent<ISelectProps> = ({
 	 * @memberof Select
 	 */
 	function onChangeOptionFromList(index: number) {
-		const hasIndex = index && index >= 0;
-
-		if (onChange && index && hasIndex) {
+		if (onChange && !isNil(index)) {
 			onChange(index);
 		}
 

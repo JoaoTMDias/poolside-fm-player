@@ -121,8 +121,8 @@ export function reducer(state: RovingState, action: RovingAction): RovingState {
 						? state.tabStops.length - 1
 						: index - 1
 					: index >= state.tabStops.length - 1
-					? 0
-					: index + 1;
+						? 0
+						: index + 1;
 
 			return {
 				...state,
@@ -166,7 +166,7 @@ export const RovingTabIndexContext = createContext<RovingContext>({
 	state: {
 		...initialState,
 	},
-	dispatch: () => {},
+	dispatch: () => { },
 });
 
 const Provider = ({ children, direction = EKeyDirection.VERTICAL }: Props): ReactElement => {

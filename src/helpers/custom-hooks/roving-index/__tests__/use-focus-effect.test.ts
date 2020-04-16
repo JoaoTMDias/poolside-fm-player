@@ -1,12 +1,12 @@
 import { renderHook } from "@testing-library/react-hooks";
-import useFocusEffect from "../use-focus-effect";
+import useFocusOnElement from "../use-focus-effect";
 
-describe("useFocusEffect", () => {
+describe("useFocusOnElement", () => {
 	test("does not focus on mount when false", () => {
 		const focusMock = jest.fn();
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const mockRef = { current: { focus: focusMock } } as React.RefObject<any>;
-		const { rerender } = renderHook(() => useFocusEffect(false, mockRef));
+		const { rerender } = renderHook(() => useFocusOnElement(false, mockRef));
 		expect(focusMock).toBeCalledTimes(0);
 		rerender();
 		expect(focusMock).toBeCalledTimes(0);
@@ -16,7 +16,7 @@ describe("useFocusEffect", () => {
 		const focusMock = jest.fn();
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const mockRef = { current: { focus: focusMock } } as React.RefObject<any>;
-		const { rerender } = renderHook(() => useFocusEffect(true, mockRef));
+		const { rerender } = renderHook(() => useFocusOnElement(true, mockRef));
 		expect(focusMock).toBeCalledTimes(1);
 		rerender();
 		expect(focusMock).toBeCalledTimes(1);
@@ -27,7 +27,7 @@ describe("useFocusEffect", () => {
 		const focusMock = jest.fn();
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const mockRef = { current: { focus: focusMock } } as React.RefObject<any>;
-		const { rerender } = renderHook(() => useFocusEffect(focused, mockRef));
+		const { rerender } = renderHook(() => useFocusOnElement(focused, mockRef));
 
 		focused = true;
 		rerender();

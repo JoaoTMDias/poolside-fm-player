@@ -4,6 +4,7 @@ import { ISelectOption } from "data/constants";
 import { RovingTabIndexProvider } from "helpers/custom-hooks/roving-index";
 import * as S from "./select.styled";
 import { SelectOption } from "./select-option";
+import { useDidMount } from "helpers";
 
 // Interface
 interface ISelectInputOptionsListProps {
@@ -17,6 +18,14 @@ interface ISelectInputOptionsListProps {
 const SelectInputOptionsList: React.FunctionComponent<ISelectInputOptionsListProps> = (props) => {
 	const { activeElement, id, isOpen, options, onChangeOptionFromList } = props;
 
+	useDidMount(() => {
+		const element = document.getElementById(activeElement.id);
+
+		if (element) {
+			element.focus();
+		}
+	});
+
 	/**
 	 * @description Constroi uma lista de opções
 	 * @author João Dias
@@ -27,7 +36,7 @@ const SelectInputOptionsList: React.FunctionComponent<ISelectInputOptionsListPro
 	 */
 	function renderListOfOptions() {
 		const list = options.map((option: ISelectOption, index: number) => {
-			const key = `${option.id}-id-${index}`;
+			const key = option.id;
 
 			const element = (
 				<SelectOption
