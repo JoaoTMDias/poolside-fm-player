@@ -1,12 +1,13 @@
 // Libraries
-import React, { useEffect, useState, FunctionComponent, useContext } from "react";
+import React, { useState, FunctionComponent, useContext } from "react";
 import ThemeContext, {
 	ETHEME,
 	IThemeContext,
 	POOLSIDE_THEMES,
 	defaultThemeContext,
 } from "contexts/theme-context";
-import { get, set } from "helpers";
+import { useDidUpdate } from "helpers";
+import { writeStorage, useLocalStorage } from "helpers/custom-hooks/use-localstorage/index";
 
 export const useTheme = () => useContext(ThemeContext);
 
@@ -20,17 +21,13 @@ export const useTheme = () => useContext(ThemeContext);
 const ThemeManager: FunctionComponent = ({ children }) => {
 	const [currentIndex, updateCurrentIndex] = useState(defaultThemeContext.currentIndex);
 	const [theme, updateThemeState] = useState(ETHEME.poolside);
+	const [storageTheme] = useLocalStorage("theme");
 
-	useEffect(() => {
-		const currentTheme = get("theme");
-
-		if (currentTheme) {
-			updateThemeState(theme);
-		} else {
-			set("theme", theme);
+	useDidUpdate(() => {
+		if (theme !== storageTheme) {
+			writeStorage("theme", theme);
+			document.documentElement.setAttribute("data-theme", theme);
 		}
-
-		document.documentElement.setAttribute("data-theme", theme);
 	}, [theme]);
 
 	/**
@@ -50,6 +47,7 @@ const ThemeManager: FunctionComponent = ({ children }) => {
 		theme,
 		onChangeOption: (index) => handleChangeTheme(index),
 	};
+
 
 	return <ThemeContext.Provider value={context}>{children}</ThemeContext.Provider>;
 };

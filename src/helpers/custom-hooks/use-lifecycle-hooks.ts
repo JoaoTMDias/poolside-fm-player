@@ -51,7 +51,7 @@ export function useEffectOnce(effect: EffectCallback) {
  *
  * @param {mixed} initial
  */
-export function useOnMount(callback: () => any): void {
+export function useDidMount(callback: () => any): void {
 	useEffectOnce(() => {
 		if (typeof callback === "function") {
 			callback();
@@ -107,4 +107,4 @@ export function useLogComponentLifecycles(componentName: string, props: any) {
 	});
 }
 
-export default useOnMount;
+export default useDidMount;

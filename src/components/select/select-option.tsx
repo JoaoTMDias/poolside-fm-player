@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { ISelectOption } from "data/constants";
-import { useFocusEffect, useRovingTabIndex } from "helpers/custom-hooks/roving-index";
-import { uniqueId } from "helpers/unique-id";
+import { useFocusOnElement, useRovingTabIndex } from "helpers/custom-hooks/roving-index";
+import { useDidMount } from "helpers";
 
 interface ISelectOptionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	id: string;
@@ -41,13 +41,14 @@ export const SelectOption: React.FC<ISelectOptionProps> = ({
 	onSelect,
 	...rest
 }) => {
-	const refId = React.useRef<string>(uniqueId());
+	const refId = React.useRef<string>(id);
 	const ref = useRef<HTMLButtonElement>(null);
-	const [tabIndex, focused, handleKeyDown, handleClick] = useRovingTabIndex(ref, disabled);
-
-	useFocusEffect(focused, ref);
+	const [tabIndex, focused, handleOnKeyPress, handleClick] = useRovingTabIndex(ref, disabled, id);
 
 	const isSelected = !!(tabIndex === 0);
+
+	useFocusOnElement<HTMLButtonElement>(focused, ref);
+
 
 	function _onClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		event.preventDefault();
@@ -57,14 +58,14 @@ export const SelectOption: React.FC<ISelectOptionProps> = ({
 	}
 
 	return (
-		<li id={id} role="option" className="select-input__option" aria-selected={isSelected}>
+		<li role="option" className="select-input__option" aria-selected={isSelected}>
 			<button
 				ref={ref}
 				id={refId.current}
 				type="button"
 				className="select-input__option__label"
 				disabled={disabled}
-				onKeyDown={handleKeyDown}
+				onKeyUp={handleOnKeyPress}
 				onClick={_onClick}
 				tabIndex={tabIndex}
 				aria-disabled={disabled}
