@@ -2,6 +2,7 @@ import React from "react";
 import SelectInputOptionsList from "./select-options-list";
 import { ISelectProps } from "./select.interface";
 import * as S from "./select.styled";
+import { isNil } from "helpers";
 
 export const defaultProps = {
 	id: "select-channel",
@@ -9,8 +10,6 @@ export const defaultProps = {
 	placeholder: "Music channel",
 	type: "playlist",
 };
-
-const isNil = (val: any) => val == null;
 
 /**
  * Select component

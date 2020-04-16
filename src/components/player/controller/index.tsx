@@ -16,6 +16,7 @@ import {
 } from "../media-player/player.interfaces";
 import { updateTrackReducer } from "./update-tracker-reducer";
 import { updateStatusReducer } from "./update-status-reducer";
+import { isNil } from "helpers";
 
 /**
  * Get a random number between a range
@@ -296,7 +297,7 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 	 * @returns {void}
 	 */
 	function _onChangeOption(index: number): void {
-		if (index && player && player.stop) {
+		if (!isNil(index) && player && player.stop) {
 			player.stop();
 
 			setCurrentIndex(index);
