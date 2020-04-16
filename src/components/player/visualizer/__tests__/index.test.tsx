@@ -2,7 +2,11 @@ import React from "react";
 import Audio from "mock-audio-element";
 import { render, cleanup } from "@testing-library/react";
 import { mount, ReactWrapper } from "enzyme";
-import PlayerVisualizer, { CAPTIONS, IPlayerVisualizerProps, IPlayerVisualizerState } from "components/player/visualizer/index";
+import PlayerVisualizer, {
+	CAPTIONS,
+	IPlayerVisualizerProps,
+	IPlayerVisualizerState,
+} from "components/player/visualizer/index";
 import { EPlayingStatus } from "components/player/media-player/player.interfaces";
 import { createCanvas } from "canvas";
 
@@ -35,8 +39,8 @@ describe("<PlayerVisualizer />", () => {
 
 			return {
 				visualizer: getByTestId("player-visualizer-wrapper"),
-				label: getByTestId("component-player-visualizer-label")
-			}
+				label: getByTestId("component-player-visualizer-label"),
+			};
 		}
 
 		it("should render the metadata when the status is idle", () => {
@@ -102,9 +106,7 @@ describe("<PlayerVisualizer />", () => {
 
 			expect(status).toBe("paused");
 
-			rerender(
-				<PlayerVisualizer status={EPlayingStatus.loading} />
-			);
+			rerender(<PlayerVisualizer status={EPlayingStatus.loading} />);
 
 			const newStatus = getByTestId("player-visualizer-meta").getAttribute("data-status");
 

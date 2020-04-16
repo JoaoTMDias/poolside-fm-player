@@ -26,8 +26,8 @@ export const CAPTIONS = {
 	error: "An error occurred",
 	loading: "Loading tape...",
 	ready: "Ready!",
-	playing: "Music is Playing"
-}
+	playing: "Music is Playing",
+};
 
 /**
  * @description An audio visualizer for the player
@@ -61,10 +61,10 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 	static defaultProps: IPlayerVisualizerProps = {
 		audio: null,
 		status: EPlayingStatus.idle,
-		devicePixelRatio: window.devicePixelRatio
+		devicePixelRatio: window.devicePixelRatio,
 	};
 
-	constructor (props: IPlayerVisualizerProps) {
+	constructor(props: IPlayerVisualizerProps) {
 		super(props);
 
 		this.canvas = React.createRef<HTMLCanvasElement>();
@@ -200,8 +200,8 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 			classname: "",
 			caption: {
 				title: "Press play to start",
-				classname: "sr-only"
-			}
+				classname: "sr-only",
+			},
 		};
 
 		const metadata = produce(defaultState, (draftState, action = status) => {
@@ -364,7 +364,11 @@ class PlayerVisualizer extends React.Component<IPlayerVisualizerProps, IPlayerVi
 				id="player-visualizer"
 				className={`player-visualizer ${metadata.classname}`}
 			>
-				<figcaption id="player-visualizer-label" data-testid="component-player-visualizer-label" className={metadata.caption.classname}>
+				<figcaption
+					id="player-visualizer-label"
+					data-testid="component-player-visualizer-label"
+					className={metadata.caption.classname}
+				>
 					{metadata.caption.title}
 				</figcaption>
 				<div

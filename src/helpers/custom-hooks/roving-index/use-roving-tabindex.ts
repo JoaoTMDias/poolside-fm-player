@@ -26,12 +26,12 @@ export default function useRovingTabIndex<T>(
 	disabled: boolean,
 	id?: string
 ): [
-		number,
-		boolean,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		(event: KeyboardEvent<T | any>) => void,
-		() => void
-	] {
+	number,
+	boolean,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(event: KeyboardEvent<T | any>) => void,
+	() => void
+] {
 	// This id is stable for the life of the component:
 	const tabIndexId = useRef(id || uniqueId("roving-tabindex_"));
 	const { state, dispatch } = useContext(RovingTabIndexContext);
@@ -118,5 +118,5 @@ export default function useRovingTabIndex<T>(
 	const selected = !disabled && tabIndexId.current === state.selectedId;
 	const tabIndex = selected ? 0 : -1;
 	const focused = selected && state.lastActionOrigin !== null;
-	return [tabIndex, focused, handleOnKeyPress, handleClick,];
+	return [tabIndex, focused, handleOnKeyPress, handleClick];
 }

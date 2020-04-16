@@ -9,10 +9,7 @@ import TabsContext from "./TabsContext";
  * @author João Dias
  * @returns {React.FC<ITabPanelProps>}
  */
-export const TabPanel: React.FC<ITabPanelProps> = ({
-	id,
-	children,
-}) => {
+export const TabPanel: React.FC<ITabPanelProps> = ({ id, children }) => {
 	const refId = useRef<string>(`${id}-panel`);
 	const { activeTab } = useContext(TabsContext);
 

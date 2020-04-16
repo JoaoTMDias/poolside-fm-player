@@ -49,8 +49,17 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 
 			case EPlayingStatus.loading:
 				return (
-					<svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" fill="none" viewBox="0 0 10 14">
-						<path fill="var(--color-icon, #000)" d="M1 10h1v1H1zM1 3h1v1H1zM2 0h6v3H2zM2 11h6v3H2zM8 10h1v1H8zM8 3h1v1H8zM5 4h1v4H5z" />
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="10"
+						height="14"
+						fill="none"
+						viewBox="0 0 10 14"
+					>
+						<path
+							fill="var(--color-icon, #000)"
+							d="M1 10h1v1H1zM1 3h1v1H1zM2 0h6v3H2zM2 11h6v3H2zM8 10h1v1H8zM8 3h1v1H8zM5 4h1v4H5z"
+						/>
 						<path fill="var(--color-icon, #000)" d="M3 8V7h3v1zM0 4h1v6H0zM9 4h1v6H9z" />
 					</svg>
 				);
@@ -172,7 +181,6 @@ const ControlsMedia: React.FunctionComponent<IControlsMediaProps> = ({
 				<ButtonVolume
 					onChangeVolume={(value) => {
 						if (onChangeVolume) {
-
 							onChangeVolume(value);
 						}
 					}}

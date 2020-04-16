@@ -6,10 +6,7 @@ import { ITabs } from "./types.d";
 import { useDidMount } from "helpers";
 import TabsContext, { ITabsContext } from "./TabsContext";
 
-export const Tabs: React.FunctionComponent<ITabs> = ({
-	children,
-	initialTab
-}) => {
+export const Tabs: React.FunctionComponent<ITabs> = ({ children, initialTab }) => {
 	const [activePanel, setActivePanel] = useState(initialTab);
 
 	useDidMount(() => {
@@ -32,18 +29,16 @@ export const Tabs: React.FunctionComponent<ITabs> = ({
 
 	const value: ITabsContext = {
 		activeTab: activePanel,
-		onActive: (id) => _setActivePanel(id)
+		onActive: (id) => _setActivePanel(id),
 	};
 
 	return (
 		<S.Wrapper id="tabs" data-testid="component-tabs" className="tabs">
 			<RovingTabIndexProvider direction={EKeyDirection.HORIZONTAL}>
-				<TabsContext.Provider value={value}>
-					{children}
-				</TabsContext.Provider>
+				<TabsContext.Provider value={value}>{children}</TabsContext.Provider>
 			</RovingTabIndexProvider>
 		</S.Wrapper>
 	);
-}
+};
 
 export default Tabs;

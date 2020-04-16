@@ -48,7 +48,6 @@ const ThemeManager: FunctionComponent = ({ children }) => {
 		onChangeOption: (index) => handleChangeTheme(index),
 	};
 
-
 	return <ThemeContext.Provider value={context}>{children}</ThemeContext.Provider>;
 };
 

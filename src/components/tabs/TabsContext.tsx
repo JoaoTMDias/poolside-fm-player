@@ -7,7 +7,7 @@ export interface ITabsContext {
 
 export const defaultTabsContext: ITabsContext = {
 	activeTab: "",
-	onActive: () => { }
+	onActive: () => {},
 };
 
 /**

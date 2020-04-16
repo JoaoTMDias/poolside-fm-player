@@ -10,18 +10,15 @@ import TabsContext from "./TabsContext";
  * @author João Dias
  * @returns {React.FC<ITabItemProps>}
  */
-export const TabItem: React.FC<ITabItemProps> = ({
-	id,
-	text,
-	ariaLabel,
-	disabled = false,
-}) => {
+export const TabItem: React.FC<ITabItemProps> = ({ id, text, ariaLabel, disabled = false }) => {
 	const { current: refId } = useRef<string>(id);
 	const ariaControls = `${id}-panel`;
 	const ref = useRef<HTMLButtonElement>(null);
-	const [tabIndex, focused, handleOnKeyPress, handleClick] = useRovingTabIndex<HTMLButtonElement>(ref, disabled);
+	const [tabIndex, focused, handleOnKeyPress, handleClick] = useRovingTabIndex<HTMLButtonElement>(
+		ref,
+		disabled
+	);
 	const { onActive } = useContext(TabsContext);
-
 
 	useFocusOnElement<HTMLButtonElement>(focused, ref);
 
@@ -29,7 +26,7 @@ export const TabItem: React.FC<ITabItemProps> = ({
 		if (onActive && focused) {
 			onActive(refId);
 		}
-	}, [focused])
+	}, [focused]);
 
 	return (
 		<S.Item
@@ -51,8 +48,7 @@ export const TabItem: React.FC<ITabItemProps> = ({
 };
 
 TabItem.defaultProps = {
-	disabled: false
-}
-
+	disabled: false,
+};
 
 export default TabItem;

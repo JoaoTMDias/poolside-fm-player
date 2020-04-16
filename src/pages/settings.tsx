@@ -32,7 +32,7 @@ const Settings: React.FunctionComponent = () => {
 			id: uniqueId("preferences-"),
 			text: "Preferences",
 			ariaLabel: "Customize the preferences for the player",
-		}
+		},
 	]);
 	const { push } = useHistory();
 	const { currentIndex, onChangeOption } = useContext(ThemeContext);
@@ -56,20 +56,10 @@ const Settings: React.FunctionComponent = () => {
 			<main id="main-content" className="window__main row">
 				<Tabs initialTab={tabs[0].id}>
 					<TabList>
-						<TabItem
-							id={tabs[0].id}
-							text={tabs[0].text}
-							ariaLabel={tabs[0].ariaLabel}
-						/>
-						<TabItem
-							id={tabs[1].id}
-							text={tabs[1].text}
-							ariaLabel={tabs[1].ariaLabel}
-						/>
+						<TabItem id={tabs[0].id} text={tabs[0].text} ariaLabel={tabs[0].ariaLabel} />
+						<TabItem id={tabs[1].id} text={tabs[1].text} ariaLabel={tabs[1].ariaLabel} />
 					</TabList>
-					<TabPanel
-						id={tabs[0].id}
-					>
+					<TabPanel id={tabs[0].id}>
 						<Select
 							id="theme"
 							label="Theme:"
@@ -79,9 +69,7 @@ const Settings: React.FunctionComponent = () => {
 							onChange={(index) => onChangeOption(index)}
 						/>
 					</TabPanel>
-					<TabPanel
-						id={tabs[1].id}
-					>
+					<TabPanel id={tabs[1].id}>
 						<p>Preferences</p>
 					</TabPanel>
 				</Tabs>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 /**
  * Custom hook that will wait to perform a useEffect until the state hasn't
@@ -11,9 +11,7 @@ import { useEffect, useRef } from 'react';
  */
 export function useDebouncedEffect<T>(callback: any, delay: number, deps: T[] = []) {
 	const firstUpdate = useRef(true);
-	const dependencyArray = [
-		...deps
-	];
+	const dependencyArray = [...deps];
 
 	useEffect(() => {
 		if (firstUpdate.current) {
@@ -27,9 +25,7 @@ export function useDebouncedEffect<T>(callback: any, delay: number, deps: T[] = 
 		return () => {
 			clearTimeout(handler);
 		};
-	},
-		[callback, delay, dependencyArray],
-	);
+	}, [callback, delay, dependencyArray]);
 }
 
 export default useDebouncedEffect;

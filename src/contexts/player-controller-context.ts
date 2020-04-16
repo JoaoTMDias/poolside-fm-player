@@ -36,11 +36,11 @@ export const defaultPlayerControllerState = {
 	duration: 0,
 	artist: "No artist",
 	title: "No title",
-	previous: () => { },
-	next: () => { },
-	togglePlay: () => { },
-	changeVolume: () => { },
-	onChangeOption: () => { },
+	previous: () => {},
+	next: () => {},
+	togglePlay: () => {},
+	changeVolume: () => {},
+	onChangeOption: () => {},
 };
 
 export const defaultPlayerControllerContext = {

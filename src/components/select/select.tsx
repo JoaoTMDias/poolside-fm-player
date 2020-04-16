@@ -10,8 +10,7 @@ export const defaultProps = {
 	type: "playlist",
 };
 
-const isNil = (val: any) => val == null
-
+const isNil = (val: any) => val == null;
 
 /**
  * Select component

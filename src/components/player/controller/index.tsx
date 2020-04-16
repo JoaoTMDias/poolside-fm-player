@@ -12,11 +12,10 @@ import {
 	EPlayingStatus,
 	ISoundcloudPlaylist,
 	ESoundCloudPlayerEvents,
-	IMediaPlayerTrackMetadata
+	IMediaPlayerTrackMetadata,
 } from "../media-player/player.interfaces";
 import { updateTrackReducer } from "./update-tracker-reducer";
 import { updateStatusReducer } from "./update-status-reducer";
-
 
 /**
  * Get a random number between a range
@@ -50,7 +49,7 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 	onNext,
 	onPlay,
 	onChangeVolume,
-	children
+	children,
 }) => {
 	const { current: player } = useRef<ISoundcloudPlayer>(
 		new SoundCloudAudio(process.env.REACT_APP_API_KEY)
@@ -65,7 +64,6 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 		updateStatusReducer,
 		defaultPlayerControllerState.status
 	);
-
 
 	/**
 	 * Handles the click on the previous button
@@ -94,7 +92,6 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 		if (onPrevious) {
 			onPrevious(hasChanged);
 		}
-
 
 		return hasChanged;
 	}
@@ -127,7 +124,6 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 		if (onNext) {
 			onNext(hasChanged);
 		}
-
 
 		return hasChanged;
 	}
@@ -170,7 +166,6 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 					type: "PLAY",
 				});
 				break;
-
 
 			case EPlayingStatus.playing:
 				updateStatus({
@@ -257,16 +252,13 @@ const PlayerController: React.FunctionComponent<IPlayerControllerProps> = ({
 				},
 			});
 
-
 			updateStatus({
 				type: "READY",
 			});
 
-
 			player.on(ESoundCloudPlayerEvents.canplay, () => {
 				const { _playlistIndex } = player;
 				const metadata = _playlistIndex ? getCurrentTrackAndArtist(_playlistIndex) : null;
-
 
 				if (metadata) {
 					setTitle(metadata.title);

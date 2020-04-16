@@ -105,7 +105,7 @@ describe("<PlayerController />", () => {
 
 			await fireEvent.click(playButton);
 
-			expect(onPlayMock).toHaveBeenCalled()
+			expect(onPlayMock).toHaveBeenCalled();
 		});
 
 		it("should not call the on play prop", async () => {
@@ -123,7 +123,7 @@ describe("<PlayerController />", () => {
 
 			await fireEvent.click(playButton);
 
-			expect(onPlayMock).not.toHaveBeenCalled()
+			expect(onPlayMock).not.toHaveBeenCalled();
 		});
 	});
 
@@ -153,7 +153,9 @@ describe("<PlayerController />", () => {
 			await fireEvent.click(getByTestId("component-select-button"));
 
 			const selectList = getByTestId("component-select-list");
-			const options = await Array.from(selectList.querySelectorAll(".select-input__option:not([aria-selected='true'])"));
+			const options = await Array.from(
+				selectList.querySelectorAll(".select-input__option:not([aria-selected='true'])")
+			);
 			const firstOptionButton = await options[0].querySelector(".select-input__option__label");
 
 			if (firstOptionButton) {
@@ -162,7 +164,9 @@ describe("<PlayerController />", () => {
 
 			await fireEvent.click(getByTestId("component-select-button"));
 
-			const activeOption = await getByTestId("component-select-list").getAttribute("aria-activedescendant");
+			const activeOption = await getByTestId("component-select-list").getAttribute(
+				"aria-activedescendant"
+			);
 
 			expect(activeOption).toBe(PoolsidePlaylists[1].id);
 		});

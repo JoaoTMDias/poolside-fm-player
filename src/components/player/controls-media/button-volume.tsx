@@ -53,9 +53,10 @@ const ButtonVolume: FunctionComponent<IButtonVolumeProps> = ({ onChangeVolume, o
 			if (onChangeVolume) {
 				onChangeVolume(parseFloat(value));
 			}
-		}, 250, [value]
+		},
+		250,
+		[value]
 	);
-
 
 	return (
 		<>

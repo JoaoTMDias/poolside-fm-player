@@ -14,7 +14,7 @@ import ControlsMedia from "../controls-media/index";
 const MediaPlayer = () => {
 	return (
 		<PlayerControllerContext.Consumer>
-			{({ 
+			{({
 				artist,
 				changeVolume,
 				currentTime,
@@ -23,7 +23,7 @@ const MediaPlayer = () => {
 				status,
 				title,
 				togglePlay,
-				track
+				track,
 			}) => {
 				return (
 					<div

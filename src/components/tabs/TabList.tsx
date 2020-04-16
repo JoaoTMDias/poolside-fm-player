@@ -3,7 +3,6 @@ import * as React from "react";
 import * as S from "./styles";
 import { ITabListProps } from "./types";
 
-
 /**
  * @description Component Description
  * @author João Dias
@@ -24,7 +23,7 @@ const TabList: React.FunctionComponent<ITabListProps> = ({ children, ariaLabel }
 };
 
 TabList.defaultProps = {
-	ariaLabel: "Tab List"
-}
+	ariaLabel: "Tab List",
+};
 
 export default React.memo(TabList);

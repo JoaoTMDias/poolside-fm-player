@@ -48,7 +48,6 @@ export const SelectOption: React.FC<ISelectOptionProps> = ({
 
 	useFocusOnElement<HTMLButtonElement>(focused, ref);
 
-
 	function _onClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		event.preventDefault();
 

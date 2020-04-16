@@ -1,4 +1,3 @@
-
 export interface ITabItemProps {
 	id: string;
 	text: string;
