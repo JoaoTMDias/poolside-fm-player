@@ -3,7 +3,6 @@ import React, { useRef, useEffect, useContext } from "react";
 import * as S from "./styles";
 import { useFocusOnElement, useRovingTabIndex } from "helpers/custom-hooks/roving-index";
 import { ITabItemProps } from "./types";
-import { useDidMount } from "helpers";
 import TabsContext from "./TabsContext";
 
 /**

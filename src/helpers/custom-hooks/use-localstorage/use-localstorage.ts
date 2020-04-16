@@ -4,7 +4,7 @@ import {
 	LocalStorageChanged,
 	isTypeOfLocalStorageChanged,
 } from './local-storage-events';
-import { useEffect, useState, Dispatch, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 function tryParse(value: string) {
 	try {

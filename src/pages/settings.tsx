@@ -1,5 +1,5 @@
 // Libraries
-import React, { useRef, useContext, useEffect } from "react";
+import React, { useRef, useContext } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import { ROUTE_HOME } from "../data/constants/routes";
 import { useEvent, KEY_CODES } from "../helpers/index";

@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { ISelectOption } from "data/constants";
 import { useFocusOnElement, useRovingTabIndex } from "helpers/custom-hooks/roving-index";
-import { useDidMount } from "helpers";
 
 interface ISelectOptionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	id: string;
