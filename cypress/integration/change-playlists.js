@@ -1,13 +1,12 @@
-// / <reference types="cypress" />
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from "../../src/data/constants/native";
+/// <reference types="cypress" />
+import { setupLayout } from "../mocks/setupLayout";
 
 describe("Change Playlists", () => {
 	beforeEach(() => {
-		cy.visit("http://localhost:3000");
-		cy.viewport(WINDOW_WIDTH, WINDOW_HEIGHT);
+		setupLayout();
 	});
 
-	it("should change the playlist to Indie Summer", () => {
+	it("should change the playlist to another", () => {
 		cy.getByTestId("component-select-button").click();
 		cy.get(".select-input__option[aria-selected='true'] button").focus().type("{downarrow}");
 		cy.get("#indie-summer-id-1 button").should("have.focus").type("{enter}").trigger("click");
