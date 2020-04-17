@@ -2,7 +2,7 @@
 import React, { useRef, useContext } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import { ROUTE_HOME } from "../data/constants/routes";
-import { useEvent, KEY_CODES } from "../helpers/index";
+import { useEvent, KEY_CODES, useDidMount } from "../helpers/index";
 import { Themes } from "../data/constants";
 import Select from "../components/select/select";
 import ThemeContext from "../contexts/theme-context";
@@ -13,6 +13,7 @@ import { uniqueId } from "helpers/unique-id";
 import TabPanel from "components/tabs/TabPanel";
 import TabItem from "components/tabs/TabItem";
 import TabList from "components/tabs/TabList";
+import AnnouncerContext from "contexts/announcer-context";
 
 /**
  * Settings page
@@ -36,6 +37,14 @@ const Settings: React.FunctionComponent = () => {
 	]);
 	const { push } = useHistory();
 	const { currentIndex, onChangeOption } = useContext(ThemeContext);
+	const { onDispatchAnnounce } = useContext(AnnouncerContext);
+
+
+	useDidMount(() => {
+		if (onDispatchAnnounce) {
+			onDispatchAnnounce("change", "Navigated to the Settings Page");
+		}
+	});
 
 	/**
 	 * Handles the click on the top bar close button

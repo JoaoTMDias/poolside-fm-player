@@ -8,7 +8,7 @@ export const SelectWrapper = styled.div`
 	--color-select-button-border: var(--color-primary);
 	--color-select-button-hover: var(--color-primary-dark);
 	--color-select-button-text-hover: var(--body-font-color);
-	--color-select-button-focus: var(--color-primary-dark);
+	--color-select-button-focus: var(--body-font-color);
 
 	html[data-theme="terminal"] && {
 		--color-select-button: var(--body-background);
@@ -76,7 +76,7 @@ export const SelectWrapper = styled.div`
 		}
 
 		&:focus {
-			outline-color: var(--color-select-button-border);
+			outline-color: var(--color-select-button-focus);
 			outline-style: dotted;
 			outline-width: 1px;
 		}
@@ -207,6 +207,7 @@ export const SelectOptionsList = styled.ul`
 				outline-color: var(--color-select-option-selected-text);
 				outline-style: dotted;
 				outline-width: 1px;
+				outline-offset: .25rem;
 			}
 
 			&:hover,

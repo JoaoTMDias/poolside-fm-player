@@ -5,7 +5,7 @@ export const Wrapper = styled.header`
 	width: 100%;
 	height: ${rem("24px")};
 	display: grid;
-	grid-template-columns: ${rem("14px")} 1fr ${rem("82px")};
+	grid-template-columns: ${rem("14px")} 1fr max-content;
 	align-items: center;
 	margin: 0;
 	border-top: 1px solid var(--color-white);

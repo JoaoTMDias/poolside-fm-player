@@ -6,6 +6,9 @@ import Homepage from "pages/homepage";
 import Settings from "pages/settings";
 import Theme from "components/theme";
 import Window from "../window/index";
+import AnnouncerContext from "contexts/announcer-context";
+import AnnouncerContextProvider from "components/announcer/provider";
+import { Announcer } from "components/announcer";
 
 /**
  * @description AppComponent
@@ -16,12 +19,19 @@ import Window from "../window/index";
 const App: React.FunctionComponent = () => {
 	return (
 		<Theme>
-			<Router basename="/">
-				<Switch>
-					<Window exact path={ROUTE_HOME} component={Homepage} />
-					<Window exact path={ROUTE_SETTINGS} component={Settings} />
-				</Switch>
-			</Router>
+			<AnnouncerContextProvider>
+				<AnnouncerContext.Consumer>
+					{({ text, politeness }) => {
+						return <Announcer text={text} politeness={politeness} />
+					}}
+				</AnnouncerContext.Consumer>
+				<Router basename={ROUTE_HOME}>
+					<Switch>
+						<Window exact path={ROUTE_HOME} component={Homepage} />
+						<Window exact path={ROUTE_SETTINGS} component={Settings} />
+					</Switch>
+				</Router>
+			</AnnouncerContextProvider>
 		</Theme>
 	);
 };
